@@ -14,7 +14,7 @@ paths:
             type: array
             items:
               $ref: "#/definitions/Organization"
-  /organizations/{organization_id}/projects:
+  /organizations/{organization_id}:
     get:
       parameters:
         - in: path
@@ -26,17 +26,32 @@ paths:
         200:
           description: OK
           schema:
+            $ref: "#/definitions/Organization"
+  /projects:
+    get:
+      responses:
+        200:
+          description: OK
+          schema:
             type: array
             items:
               $ref: "#/definitions/Project"
-  /organizations/{organization_id}/projects/{project_id}/check-ins:
+  /projects/{project_id}:
     get:
       parameters:
         - in: path
-          name: organization_id
+          name: project_id
           type: string
           format: uuid
           required: true
+      responses:
+        200:
+          description: OK
+          schema:
+              $ref: "#/definitions/Project"
+  /projects/{project_id}/check-ins:
+    get:
+      parameters:
         - in: path
           name: project_id
           type: string
@@ -49,14 +64,9 @@ paths:
             type: array
             items:
               $ref: "#/definitions/Check_In"
-  /organizations/{organization_id}/projects/{project_id}/users:
+  /projects/{project_id}/users:
     get:
       parameters:
-        - in: path
-          name: organization_id
-          type: string
-          format: uuid
-          required: true
         - in: path
           name: project_id
           type: string
