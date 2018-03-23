@@ -15,7 +15,10 @@ package org.dsmhack.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -23,62 +26,44 @@ import java.util.UUID;
  * Organization
  */
 @Entity
+@Table(name = "organization")
 public class Organization {
-    @JsonProperty("organization_id")
-    private UUID organizationId = null;
+    @Id
+    @Column(name = "org_guid")
+    private String organizationId;
 
-    @JsonProperty("name")
-    private String name = null;
+    @Column(name = "name")
+    private String name;
 
-    @JsonProperty("description")
+    @Column(name = "description")
     private String description = null;
 
-    @JsonProperty("email")
+    @Column(name = "email")
     private String email = null;
 
-    @JsonProperty("phone_number")
-    private String phoneNumber = null;
+    @Column(name = "phone")
+    private String phoneNumber;
 
-    @JsonProperty("website_url")
-    private String websiteUrl = null;
+    @Column(name = "web_url")
+    private String websiteUrl;
 
-    @JsonProperty("facebook_url")
-    private String facebookUrl = null;
+    @Column(name = "facebook")
+    private String facebookUrl;
 
-    @JsonProperty("twitter_url")
-    private String twitterUrl = null;
+    @Column(name = "twitter")
+    private String twitterUrl;
 
-    @JsonProperty("instagram_url")
-    private String instagramUrl = null;
+    @Column(name = "instagram")
+    private String instagramUrl;
 
-    public Organization organizationId(UUID organizationId) {
-        this.organizationId = organizationId;
-        return this;
-    }
-
-    /**
-     * Get organizationId
-     *
-     * @return organizationId
-     **/
-    public UUID getOrganizationId() {
+    public String getOrganizationId() {
         return organizationId;
     }
 
-    public void setOrganizationId(UUID organizationId) {
+    public void setOrganizationId(String orgGuid) {
         this.organizationId = organizationId;
     }
 
-    public Organization name(String name) {
-        this.name = name;
-        return this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return name
-     **/
     public String getName() {
         return name;
     }
@@ -87,16 +72,6 @@ public class Organization {
         this.name = name;
     }
 
-    public Organization description(String description) {
-        this.description = description;
-        return this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return description
-     **/
     public String getDescription() {
         return description;
     }
@@ -105,16 +80,6 @@ public class Organization {
         this.description = description;
     }
 
-    public Organization email(String email) {
-        this.email = email;
-        return this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return email
-     **/
     public String getEmail() {
         return email;
     }
@@ -123,16 +88,6 @@ public class Organization {
         this.email = email;
     }
 
-    public Organization phoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-        return this;
-    }
-
-    /**
-     * Get phoneNumber
-     *
-     * @return phoneNumber
-     **/
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -141,16 +96,6 @@ public class Organization {
         this.phoneNumber = phoneNumber;
     }
 
-    public Organization websiteUrl(String websiteUrl) {
-        this.websiteUrl = websiteUrl;
-        return this;
-    }
-
-    /**
-     * Get websiteUrl
-     *
-     * @return websiteUrl
-     **/
     public String getWebsiteUrl() {
         return websiteUrl;
     }
@@ -159,16 +104,6 @@ public class Organization {
         this.websiteUrl = websiteUrl;
     }
 
-    public Organization facebookUrl(String facebookUrl) {
-        this.facebookUrl = facebookUrl;
-        return this;
-    }
-
-    /**
-     * Get facebookUrl
-     *
-     * @return facebookUrl
-     **/
     public String getFacebookUrl() {
         return facebookUrl;
     }
@@ -177,16 +112,6 @@ public class Organization {
         this.facebookUrl = facebookUrl;
     }
 
-    public Organization twitterUrl(String twitterUrl) {
-        this.twitterUrl = twitterUrl;
-        return this;
-    }
-
-    /**
-     * Get twitterUrl
-     *
-     * @return twitterUrl
-     **/
     public String getTwitterUrl() {
         return twitterUrl;
     }
@@ -195,16 +120,6 @@ public class Organization {
         this.twitterUrl = twitterUrl;
     }
 
-    public Organization instagramUrl(String instagramUrl) {
-        this.instagramUrl = instagramUrl;
-        return this;
-    }
-
-    /**
-     * Get instagramUrl
-     *
-     * @return instagramUrl
-     **/
     public String getInstagramUrl() {
         return instagramUrl;
     }
@@ -212,62 +127,5 @@ public class Organization {
     public void setInstagramUrl(String instagramUrl) {
         this.instagramUrl = instagramUrl;
     }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Organization organization = (Organization) o;
-        return Objects.equals(this.organizationId, organization.organizationId) &&
-                Objects.equals(this.name, organization.name) &&
-                Objects.equals(this.description, organization.description) &&
-                Objects.equals(this.email, organization.email) &&
-                Objects.equals(this.phoneNumber, organization.phoneNumber) &&
-                Objects.equals(this.websiteUrl, organization.websiteUrl) &&
-                Objects.equals(this.facebookUrl, organization.facebookUrl) &&
-                Objects.equals(this.twitterUrl, organization.twitterUrl) &&
-                Objects.equals(this.instagramUrl, organization.instagramUrl);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(organizationId, name, description, email, phoneNumber, websiteUrl, facebookUrl, twitterUrl, instagramUrl);
-    }
-
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("class Organization {\n");
-
-        sb.append("    organizationId: ").append(toIndentedString(organizationId)).append("\n");
-        sb.append("    name: ").append(toIndentedString(name)).append("\n");
-        sb.append("    description: ").append(toIndentedString(description)).append("\n");
-        sb.append("    email: ").append(toIndentedString(email)).append("\n");
-        sb.append("    phoneNumber: ").append(toIndentedString(phoneNumber)).append("\n");
-        sb.append("    websiteUrl: ").append(toIndentedString(websiteUrl)).append("\n");
-        sb.append("    facebookUrl: ").append(toIndentedString(facebookUrl)).append("\n");
-        sb.append("    twitterUrl: ").append(toIndentedString(twitterUrl)).append("\n");
-        sb.append("    instagramUrl: ").append(toIndentedString(instagramUrl)).append("\n");
-        sb.append("}");
-        return sb.toString();
-    }
-
-    /**
-     * Convert the given object to string with each line indented by 4 spaces
-     * (except the first line).
-     */
-    private String toIndentedString(Object o) {
-        if (o == null) {
-            return "null";
-        }
-        return o.toString().replace("\n", "\n    ");
-    }
-
 }
 

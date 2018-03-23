@@ -26,7 +26,7 @@ public class OrganizationController {
 
     private Organization createFakeOrg(String name) {
         Organization organization = new Organization();
-        organization.setOrganizationId(new UUID(5L, 2L));
+        organization.setOrganizationId(new UUID(5L, 2L).toString());
         organization.setName(name);
         organization.setDescription("Org description");
         organization.setEmail("joeCool@aol.com");

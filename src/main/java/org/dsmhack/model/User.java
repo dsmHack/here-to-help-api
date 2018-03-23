@@ -15,7 +15,10 @@ package org.dsmhack.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -23,50 +26,43 @@ import java.util.UUID;
  * User
  */
 @Entity
+@Table(name = "user")
 public class User {
-    @JsonProperty("user_id")
-    private UUID userId = null;
+    @Id
+    @Column(name = "user_guid")
+    private String userGuid;
 
-    @JsonProperty("first_name")
-    private String firstName = null;
+    @Column(name = "user_id")
+    private String userId;
 
-    @JsonProperty("last_name")
-    private String lastName = null;
+    @Column(name = "first_name")
+    private String firstName;
 
-    @JsonProperty("email")
-    private String email = null;
+    @Column(name = "last_name")
+    private String lastName;
 
-    @JsonProperty("role")
-    private String role = null;
+    @Column(name = "email")
+    private String email;
 
-    public User userId(UUID userId) {
-        this.userId = userId;
-        return this;
+    @Column(name = "role")
+    private String role;
+
+    public String getUserGuid() {
+        return userGuid;
     }
 
-    /**
-     * Get userId
-     *
-     * @return userId
-     **/
-    public UUID getUserId() {
+    public void setUserGuid(String userGuid) {
+        this.userGuid = userGuid;
+    }
+
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(UUID userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    public User firstName(String firstName) {
-        this.firstName = firstName;
-        return this;
-    }
-
-    /**
-     * Get firstName
-     *
-     * @return firstName
-     **/
     public String getFirstName() {
         return firstName;
     }
@@ -75,16 +71,6 @@ public class User {
         this.firstName = firstName;
     }
 
-    public User lastName(String lastName) {
-        this.lastName = lastName;
-        return this;
-    }
-
-    /**
-     * Get lastName
-     *
-     * @return lastName
-     **/
     public String getLastName() {
         return lastName;
     }
@@ -93,16 +79,6 @@ public class User {
         this.lastName = lastName;
     }
 
-    public User email(String email) {
-        this.email = email;
-        return this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return email
-     **/
     public String getEmail() {
         return email;
     }
@@ -111,16 +87,6 @@ public class User {
         this.email = email;
     }
 
-    public User role(String role) {
-        this.role = role;
-        return this;
-    }
-
-    /**
-     * Order Status
-     *
-     * @return role
-     **/
     public String getRole() {
         return role;
     }
@@ -128,54 +94,5 @@ public class User {
     public void setRole(String role) {
         this.role = role;
     }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        User user = (User) o;
-        return Objects.equals(this.userId, user.userId) &&
-                Objects.equals(this.firstName, user.firstName) &&
-                Objects.equals(this.lastName, user.lastName) &&
-                Objects.equals(this.email, user.email) &&
-                Objects.equals(this.role, user.role);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(userId, firstName, lastName, email, role);
-    }
-
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("class User {\n");
-
-        sb.append("    userId: ").append(toIndentedString(userId)).append("\n");
-        sb.append("    firstName: ").append(toIndentedString(firstName)).append("\n");
-        sb.append("    lastName: ").append(toIndentedString(lastName)).append("\n");
-        sb.append("    email: ").append(toIndentedString(email)).append("\n");
-        sb.append("    role: ").append(toIndentedString(role)).append("\n");
-        sb.append("}");
-        return sb.toString();
-    }
-
-    /**
-     * Convert the given object to string with each line indented by 4 spaces
-     * (except the first line).
-     */
-    private String toIndentedString(Object o) {
-        if (o == null) {
-            return "null";
-        }
-        return o.toString().replace("\n", "\n    ");
-    }
-
 }
 

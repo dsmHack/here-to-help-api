@@ -15,7 +15,12 @@ package org.dsmhack.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 import java.util.UUID;
@@ -24,50 +29,54 @@ import java.util.UUID;
  * Project
  */
 @Entity
+@Table(name = "project")
 public class Project {
-    @JsonProperty("project_id")
-    private UUID projectId = null;
+    @Id
+    @Column(name = "proj_guid")
+    private String projGuid;
 
-    @JsonProperty("name")
-    private String name = null;
+    @Column(name = "org_guid")
+    private String orgGuid;
 
-    @JsonProperty("description")
-    private String description = null;
+    @Column(name = "proj_id")
+    private String projId;
 
-    @JsonProperty("start_date")
-    private OffsetDateTime startDate = null;
+    @Column(name = "name")
+    private String name;
 
-    @JsonProperty("end_date")
-    private OffsetDateTime endDate = null;
+    @Column(name = "description")
+    private String description;
 
-    public Project projectId(UUID projectId) {
-        this.projectId = projectId;
-        return this;
+    @Column(name = "start_dt")
+    private Timestamp startDate;
+
+    @Column(name = "end_dt")
+    private Timestamp endDate;
+
+    public String getProjGuid() {
+        return projGuid;
     }
 
-    /**
-     * Get projectId
-     *
-     * @return projectId
-     **/
-    public UUID getProjectId() {
-        return projectId;
+    public void setProjGuid(String projGuid) {
+        this.projGuid = projGuid;
     }
 
-    public void setProjectId(UUID projectId) {
-        this.projectId = projectId;
+    public String getOrgGuid() {
+        return orgGuid;
     }
 
-    public Project name(String name) {
-        this.name = name;
-        return this;
+    public void setOrgGuid(String orgGuid) {
+        this.orgGuid = orgGuid;
     }
 
-    /**
-     * Get name
-     *
-     * @return name
-     **/
+    public String getProjId() {
+        return projId;
+    }
+
+    public void setProjId(String projId) {
+        this.projId = projId;
+    }
+
     public String getName() {
         return name;
     }
@@ -76,107 +85,30 @@ public class Project {
         this.name = name;
     }
 
-    public Project description(String description) {
-        this.description = description;
-        return this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return description
-     **/
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public Project setDescription(String description) {
         this.description = description;
-    }
-
-    public Project startDate(OffsetDateTime startDate) {
-        this.startDate = startDate;
         return this;
     }
 
-    /**
-     * Get startDate
-     *
-     * @return startDate
-     **/
-    public OffsetDateTime getStartDate() {
+    public Timestamp getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(OffsetDateTime startDate) {
+    public void setStartDate(Timestamp startDate) {
         this.startDate = startDate;
     }
 
-    public Project endDate(OffsetDateTime endDate) {
-        this.endDate = endDate;
-        return this;
-    }
-
-    /**
-     * Get endDate
-     *
-     * @return endDate
-     **/
-    public OffsetDateTime getEndDate() {
+    public Timestamp getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(OffsetDateTime endDate) {
+    public Project setEndDate(Timestamp endDate) {
         this.endDate = endDate;
+        return this;
     }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Project project = (Project) o;
-        return Objects.equals(this.projectId, project.projectId) &&
-                Objects.equals(this.name, project.name) &&
-                Objects.equals(this.description, project.description) &&
-                Objects.equals(this.startDate, project.startDate) &&
-                Objects.equals(this.endDate, project.endDate);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(projectId, name, description, startDate, endDate);
-    }
-
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("class Project {\n");
-
-        sb.append("    projectId: ").append(toIndentedString(projectId)).append("\n");
-        sb.append("    name: ").append(toIndentedString(name)).append("\n");
-        sb.append("    description: ").append(toIndentedString(description)).append("\n");
-        sb.append("    startDate: ").append(toIndentedString(startDate)).append("\n");
-        sb.append("    endDate: ").append(toIndentedString(endDate)).append("\n");
-        sb.append("}");
-        return sb.toString();
-    }
-
-    /**
-     * Convert the given object to string with each line indented by 4 spaces
-     * (except the first line).
-     */
-    private String toIndentedString(Object o) {
-        if (o == null) {
-            return "null";
-        }
-        return o.toString().replace("\n", "\n    ");
-    }
-
 }
 
