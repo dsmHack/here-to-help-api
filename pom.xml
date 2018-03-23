@@ -8,6 +8,13 @@
     <artifactId>here-to-help</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <flyway.user>root</flyway.user>
+        <flyway.password>password</flyway.password>
+        <flyway.database.url>jdbc:mysql://localhost:3306/heretohelp</flyway.database.url>
+        <flyway.placeholders.stored-procedure-user>user</flyway.placeholders.stored-procedure-user>
+    </properties>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -57,6 +64,16 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>5.0.7</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.6</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -69,6 +86,22 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>4.1.2</version>
+                <configuration>
+                    <driver>com.mysql.jdbc.Driver</driver>
+                    <url>${flyway.database.url}</url>
+                    <user>${flyway.user}</user>
+                    <password>${flyway.password}</password>
+                    <sqlMigrationPrefix>v</sqlMigrationPrefix>
+                    <schemas>
+                        <schema>heretohelp</schema>
+                    </schemas>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
