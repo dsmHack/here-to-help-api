@@ -30,7 +30,7 @@ import java.util.UUID;
 public class Organization {
     @Id
     @Column(name = "org_guid")
-    private String orgGuid;
+    private String organizationId;
 
     @Column(name = "name")
     private String name;
@@ -42,26 +42,26 @@ public class Organization {
     private String email = null;
 
     @Column(name = "phone")
-    private String phone;
+    private String phoneNumber;
 
     @Column(name = "web_url")
-    private String website;
+    private String websiteUrl;
 
     @Column(name = "facebook")
-    private String facebook;
+    private String facebookUrl;
 
     @Column(name = "twitter")
-    private String twitter;
+    private String twitterUrl;
 
     @Column(name = "instagram")
-    private String instagram;
+    private String instagramUrl;
 
-    public String getOrgGuid() {
-        return orgGuid;
+    public String getOrganizationId() {
+        return organizationId;
     }
 
-    public void setOrgGuid(String orgGuid) {
-        this.orgGuid = orgGuid;
+    public void setOrganizationId(String orgGuid) {
+        this.organizationId = organizationId;
     }
 
     public String getName() {
@@ -88,44 +88,44 @@ public class Organization {
         this.email = email;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public String getWebsite() {
-        return website;
+    public String getWebsiteUrl() {
+        return websiteUrl;
     }
 
-    public void setWebsite(String website) {
-        this.website = website;
+    public void setWebsiteUrl(String websiteUrl) {
+        this.websiteUrl = websiteUrl;
     }
 
-    public String getFacebook() {
-        return facebook;
+    public String getFacebookUrl() {
+        return facebookUrl;
     }
 
-    public void setFacebook(String facebook) {
-        this.facebook = facebook;
+    public void setFacebookUrl(String facebookUrl) {
+        this.facebookUrl = facebookUrl;
     }
 
-    public String getTwitter() {
-        return twitter;
+    public String getTwitterUrl() {
+        return twitterUrl;
     }
 
-    public void setTwitter(String twitter) {
-        this.twitter = twitter;
+    public void setTwitterUrl(String twitterUrl) {
+        this.twitterUrl = twitterUrl;
     }
 
-    public String getInstagram() {
-        return instagram;
+    public String getInstagramUrl() {
+        return instagramUrl;
     }
 
-    public void setInstagram(String instagram) {
-        this.instagram = instagram;
+    public void setInstagramUrl(String instagramUrl) {
+        this.instagramUrl = instagramUrl;
     }
 }
 

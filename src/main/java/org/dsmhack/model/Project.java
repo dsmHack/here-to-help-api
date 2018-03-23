@@ -19,6 +19,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.OffsetDateTime;
 import java.util.Objects;
@@ -43,8 +44,14 @@ public class Project {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "description")
+    private String description;
+
     @Column(name = "start_dt")
-    private Timestamp startDt;
+    private Timestamp startDate;
+
+    @Column(name = "end_dt")
+    private Timestamp endDate;
 
     public String getProjGuid() {
         return projGuid;
@@ -78,12 +85,30 @@ public class Project {
         this.name = name;
     }
 
-    public Timestamp getStartDt() {
-        return startDt;
+    public String getDescription() {
+        return description;
     }
 
-    public void setStartDt(Timestamp startDt) {
-        this.startDt = startDt;
+    public Project setDescription(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public Timestamp getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Timestamp startDate) {
+        this.startDate = startDate;
+    }
+
+    public Timestamp getEndDate() {
+        return endDate;
+    }
+
+    public Project setEndDate(Timestamp endDate) {
+        this.endDate = endDate;
+        return this;
     }
 }
 
