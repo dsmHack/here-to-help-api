@@ -1,0 +1,76 @@
+swagger: "2.0"
+info:
+  description: "This is a restful web service used to log hours for non-profits to submit for money grants."
+  version: "1.0.0"
+  title: ""
+
+paths:
+  /ping:
+    get:
+      responses:
+        '200':
+          description: OK
+
+definitions:
+  User:
+    type: "object"
+    required:
+    - "user_id"
+    - "first_name"
+    - "last_name"
+    - "email"
+    - "role"
+    properties:
+      user_id:
+        type: "string"
+        format: "uuid"
+      first_name:
+        type: "string"
+      last_name:
+        type: "string"
+      email:
+        type: "string"
+        format: "email"
+      role:
+        type: "string"
+        description: "Order Status"
+  Organization:
+    type: "object"
+    properties:
+      organization_id:
+        type: "string"
+        format: "uuid"
+      name:
+        type: "string"
+      description:
+        type: "string"
+      website_url:
+        type: "string"
+      facebook_url:
+        type: "string"
+      twitter_url:
+        type: "string"
+      instagram_url:
+        type: "string"
+      phone_number:
+        type: "string"
+      email:
+        type: "string"
+        format: "email"
+
+  Project:
+    type: "object"
+    properties:
+      project_id:
+        type: "string"
+        format: "uuid"
+      name:
+        type: "string"
+      description:
+        type: "string"
+      start_date:
+        type: "string"
+        format: "date-time"
+      end_date:
+        type: "string"
+        format: "date-time"
