@@ -2,7 +2,7 @@ swagger: "2.0"
 info:
   description: "This is a restful web service used to log hours for non-profits to submit for money grants."
   version: "1.0.0"
-  title: ""
+  title: "Here to Help"
 
 paths:
   /organizations:
@@ -69,8 +69,6 @@ paths:
             type: array
             items:
               $ref: "#/definitions/User"
-
-
 definitions:
   User:
     type: "object"
