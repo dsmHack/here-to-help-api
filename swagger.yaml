@@ -34,8 +34,29 @@ definitions:
       role:
         type: "string"
         description: "Order Status"
+  Login_Token:
+    type: "object"
+    required:
+    - "user_id"
+    - "login_token"
+    - "login_token_expiration"
+    properties:
+      user_id:
+        type: "string"
+        format: "uuid"
+      login_token:
+        type: "string"
+      login_token_expiration:
+        type: "string"
+        format: "date-time"
   Organization:
     type: "object"
+    required:
+    - "organization_id"
+    - "name"
+    - "description"
+    - "email"
+    - "phone_number"
     properties:
       organization_id:
         type: "string"
@@ -43,6 +64,11 @@ definitions:
       name:
         type: "string"
       description:
+        type: "string"
+      email:
+        type: "string"
+        format: "email"
+      phone_number:
         type: "string"
       website_url:
         type: "string"
@@ -52,14 +78,25 @@ definitions:
         type: "string"
       instagram_url:
         type: "string"
-      phone_number:
+  User_Organization:
+    type: "object"
+    required:
+    - "user_id"
+    - "organization_id"
+    properties:
+      user_id:
         type: "string"
-      email:
+        format: "uuid"
+      organization_id:
         type: "string"
-        format: "email"
-
+        format: "uuid"
   Project:
     type: "object"
+    required:
+    - "project_id"
+    - "name"
+    - "start_date"
+    - "end_date"
     properties:
       project_id:
         type: "string"
@@ -74,3 +111,36 @@ definitions:
       end_date:
         type: "string"
         format: "date-time"
+  User_Project:
+    type: "object"
+    required:
+    - "user_id"
+    - "project_id"
+    properties:
+      user_id:
+        type: "string"
+        format: "uuid"
+      project_id:
+        type: "string"
+        format: "uuid"
+  Check_In:
+    type: "object"
+    required:
+    - "user_id"
+    - "project_id"
+    - "time_in"
+    - "time_out"
+    properties:
+      user_id:
+        type: "string"
+        format: "uuid"
+      project_id:
+        type: "string"
+        format: "uuid"
+      time_in:
+        type: "string"
+        format: "date-time"
+      time_out:
+        type: "string"
+        format: "date-time"
+  
