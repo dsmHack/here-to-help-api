@@ -44,7 +44,7 @@ public class UserController {
 
     private User createFakeUserWith(String firstName) {
         User user = new User();
-        user.setUserId(new UUID(5l, 1l));
+        user.setUserId("userId");
         user.setFirstName(firstName);
         user.setLastName("user description");
         return user;

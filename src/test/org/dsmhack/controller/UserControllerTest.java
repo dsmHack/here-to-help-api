@@ -48,7 +48,7 @@ public class UserControllerTest {
 
     @Test
     public void postCallsGuidGeneratorToGenerateUUIDBeforeSavingUser() throws Exception {
-        UUID userId = UUID.randomUUID();
+        String userId = "uuid";
         when(guidGenerator.generate()).thenReturn(userId);
         userController.save(new User());
         ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);

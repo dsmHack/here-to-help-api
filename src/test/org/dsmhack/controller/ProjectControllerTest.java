@@ -59,12 +59,12 @@ public class ProjectControllerTest {
 
     @Test
     public void postCallsGuidGeneratorToGenerateUUIDBeforeSavingProject() throws Exception {
-        UUID projectId = UUID.randomUUID();
+        String projectId = "randomUUID";
         when(guidGenerator.generate()).thenReturn(projectId);
         projectController.save(new Project());
         ArgumentCaptor<Project> captor = ArgumentCaptor.forClass(Project.class);
         verify(projectRepository).save(captor.capture());
-        assertEquals(projectId, captor.getValue().getProjectId());
+        assertEquals(projectId, captor.getValue().getProjId());
     }
 
     @Test

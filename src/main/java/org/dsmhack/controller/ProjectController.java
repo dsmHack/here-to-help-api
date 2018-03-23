@@ -37,7 +37,7 @@ public class ProjectController {
 
     @PostMapping("/projects")
     public Project save(Project project) {
-        project.setProjectId(guidGenerator.generate());
+        project.setProjId(guidGenerator.generate());
         return projectRepository.save(project);
     }
 

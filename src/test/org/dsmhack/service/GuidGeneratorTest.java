@@ -11,8 +11,8 @@ public class GuidGeneratorTest {
     @Test
     public void generateGuidReturnsUniqueUUID() throws Exception {
         GuidGenerator guidGenerator = new GuidGenerator();
-        UUID firstUUID = guidGenerator.generate();
-        UUID secondUUID = guidGenerator.generate();
+        String firstUUID = guidGenerator.generate();
+        String secondUUID = guidGenerator.generate();
         assertNotEquals(firstUUID, secondUUID);
     }
 }
