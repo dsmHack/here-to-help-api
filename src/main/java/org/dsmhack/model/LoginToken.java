@@ -13,124 +13,62 @@
 
 package org.dsmhack.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import javax.persistence.Entity;
-import java.time.OffsetDateTime;
-import java.util.Objects;
-import java.util.UUID;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.sql.Timestamp;
 
 /**
  * LoginToken
  */
 @Entity
+@Table(name = "LOGIN_TOKEN")
 public class LoginToken {
-    @JsonProperty("user_id")
-    private UUID userId = null;
+    @EmbeddedId
+    private MyKey myKey;
 
-    @JsonProperty("login_token")
-    private String loginToken = null;
-
-    @JsonProperty("login_token_expiration")
-    private OffsetDateTime loginTokenExpiration = null;
-
-    public LoginToken userId(UUID userId) {
-        this.userId = userId;
-        return this;
+    public MyKey getMyKey() {
+        return myKey;
     }
 
-    /**
-     * Get userId
-     *
-     * @return userId
-     **/
-    public UUID getUserId() {
-        return userId;
+    public void setMyKey(MyKey myKey) {
+        this.myKey = myKey;
     }
 
-    public void setUserId(UUID userId) {
-        this.userId = userId;
-    }
+    @Embeddable
+    public class MyKey implements Serializable {
 
-    public LoginToken loginToken(String loginToken) {
-        this.loginToken = loginToken;
-        return this;
-    }
+        @Column(name = "USER_GUID", nullable = false)
+        private String userGuid;
 
-    /**
-     * Get loginToken
-     *
-     * @return loginToken
-     **/
-    public String getLoginToken() {
-        return loginToken;
-    }
+        @Column(name = "TOKEN", nullable = false)
+        private String token;
 
-    public void setLoginToken(String loginToken) {
-        this.loginToken = loginToken;
-    }
+        @Column(name = "TOKEN_EXP_DATE", nullable = false)
+        private Timestamp tokenExpDate;
 
-    public LoginToken loginTokenExpiration(OffsetDateTime loginTokenExpiration) {
-        this.loginTokenExpiration = loginTokenExpiration;
-        return this;
-    }
-
-    /**
-     * Get loginTokenExpiration
-     *
-     * @return loginTokenExpiration
-     **/
-    public OffsetDateTime getLoginTokenExpiration() {
-        return loginTokenExpiration;
-    }
-
-    public void setLoginTokenExpiration(OffsetDateTime loginTokenExpiration) {
-        this.loginTokenExpiration = loginTokenExpiration;
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
+        public String getUserGuid() {
+            return userGuid;
         }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
+
+        public void setUserGuid(String userGuid) {
+            this.userGuid = userGuid;
         }
-        LoginToken loginToken = (LoginToken) o;
-        return Objects.equals(this.userId, loginToken.userId) &&
-                Objects.equals(this.loginToken, loginToken.loginToken) &&
-                Objects.equals(this.loginTokenExpiration, loginToken.loginTokenExpiration);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(userId, loginToken, loginTokenExpiration);
-    }
-
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("class LoginToken {\n");
-
-        sb.append("    userId: ").append(toIndentedString(userId)).append("\n");
-        sb.append("    loginToken: ").append(toIndentedString(loginToken)).append("\n");
-        sb.append("    loginTokenExpiration: ").append(toIndentedString(loginTokenExpiration)).append("\n");
-        sb.append("}");
-        return sb.toString();
-    }
-
-    /**
-     * Convert the given object to string with each line indented by 4 spaces
-     * (except the first line).
-     */
-    private String toIndentedString(Object o) {
-        if (o == null) {
-            return "null";
+        public String getToken() {
+            return token;
         }
-        return o.toString().replace("\n", "\n    ");
-    }
 
+        public void setToken(String token) {
+            this.token = token;
+        }
+
+        public Timestamp getTokenExpDate() {
+            return tokenExpDate;
+        }
+
+        public void setTokenExpDate(Timestamp tokenExpDate) {
+            this.tokenExpDate = tokenExpDate;
+        }
+    }
 }
 

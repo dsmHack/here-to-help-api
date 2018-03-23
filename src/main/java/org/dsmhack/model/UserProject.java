@@ -15,7 +15,8 @@ package org.dsmhack.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -23,90 +24,43 @@ import java.util.UUID;
  * UserProject
  */
 @Entity
+@Table(name = "user_project")
 public class UserProject {
-    @JsonProperty("user_id")
-    private UUID userId = null;
+    @EmbeddedId
+    private MyKey myKey;
 
-    @JsonProperty("project_id")
-    private UUID projectId = null;
-
-    public UserProject userId(UUID userId) {
-        this.userId = userId;
-        return this;
+    public MyKey getMyKey() {
+        return myKey;
     }
 
-    /**
-     * Get userId
-     *
-     * @return userId
-     **/
-    public UUID getUserId() {
-        return userId;
+    public void setMyKey(MyKey myKey) {
+        this.myKey = myKey;
     }
 
-    public void setUserId(UUID userId) {
-        this.userId = userId;
-    }
+    @Embeddable
+    public class MyKey implements Serializable {
 
-    public UserProject projectId(UUID projectId) {
-        this.projectId = projectId;
-        return this;
-    }
+        @Column(name = "USER_GUID", nullable = false)
+        private String userGuid;
 
-    /**
-     * Get projectId
-     *
-     * @return projectId
-     **/
-    public UUID getProjectId() {
-        return projectId;
-    }
+        @Column(name = "PROJ_GUID", nullable = false)
+        private String projGuid;
 
-    public void setProjectId(UUID projectId) {
-        this.projectId = projectId;
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
+        public String getUserGuid() {
+            return userGuid;
         }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
+
+        public void setUserGuid(String userGuid) {
+            this.userGuid = userGuid;
         }
-        UserProject userProject = (UserProject) o;
-        return Objects.equals(this.userId, userProject.userId) &&
-                Objects.equals(this.projectId, userProject.projectId);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(userId, projectId);
-    }
-
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("class UserProject {\n");
-
-        sb.append("    userId: ").append(toIndentedString(userId)).append("\n");
-        sb.append("    projectId: ").append(toIndentedString(projectId)).append("\n");
-        sb.append("}");
-        return sb.toString();
-    }
-
-    /**
-     * Convert the given object to string with each line indented by 4 spaces
-     * (except the first line).
-     */
-    private String toIndentedString(Object o) {
-        if (o == null) {
-            return "null";
+        public String getProjGuid() {
+            return projGuid;
         }
-        return o.toString().replace("\n", "\n    ");
-    }
 
+        public void setProjGuid(String projGuid) {
+            this.projGuid = projGuid;
+        }
+    }
 }
 

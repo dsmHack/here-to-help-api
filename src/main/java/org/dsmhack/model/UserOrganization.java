@@ -15,7 +15,9 @@ package org.dsmhack.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -23,90 +25,43 @@ import java.util.UUID;
  * UserOrganization
  */
 @Entity
+@Table(name = "user_org")
 public class UserOrganization {
-    @JsonProperty("user_id")
-    private UUID userId = null;
+    @EmbeddedId
+    private MyKey myKey;
 
-    @JsonProperty("organization_id")
-    private UUID organizationId = null;
-
-    public UserOrganization userId(UUID userId) {
-        this.userId = userId;
-        return this;
+    public MyKey getMyKey() {
+        return myKey;
     }
 
-    /**
-     * Get userId
-     *
-     * @return userId
-     **/
-    public UUID getUserId() {
-        return userId;
+    public void setMyKey(MyKey myKey) {
+        this.myKey = myKey;
     }
 
-    public void setUserId(UUID userId) {
-        this.userId = userId;
-    }
+    @Embeddable
+    public class MyKey implements Serializable {
 
-    public UserOrganization organizationId(UUID organizationId) {
-        this.organizationId = organizationId;
-        return this;
-    }
+        @Column(name = "USER_GUID", nullable = false)
+        private String userGuid;
 
-    /**
-     * Get organizationId
-     *
-     * @return organizationId
-     **/
-    public UUID getOrganizationId() {
-        return organizationId;
-    }
+        @Column(name = "ORG_GUID", nullable = false)
+        private String orgGuid;
 
-    public void setOrganizationId(UUID organizationId) {
-        this.organizationId = organizationId;
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
+        public String getUserGuid() {
+            return userGuid;
         }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
+
+        public void setUserGuid(String userGuid) {
+            this.userGuid = userGuid;
         }
-        UserOrganization userOrganization = (UserOrganization) o;
-        return Objects.equals(this.userId, userOrganization.userId) &&
-                Objects.equals(this.organizationId, userOrganization.organizationId);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(userId, organizationId);
-    }
-
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("class UserOrganization {\n");
-
-        sb.append("    userId: ").append(toIndentedString(userId)).append("\n");
-        sb.append("    organizationId: ").append(toIndentedString(organizationId)).append("\n");
-        sb.append("}");
-        return sb.toString();
-    }
-
-    /**
-     * Convert the given object to string with each line indented by 4 spaces
-     * (except the first line).
-     */
-    private String toIndentedString(Object o) {
-        if (o == null) {
-            return "null";
+        public String getOrgGuid() {
+            return orgGuid;
         }
-        return o.toString().replace("\n", "\n    ");
-    }
 
+        public void setOrgGuid(String orgGuid) {
+            this.orgGuid = orgGuid;
+        }
+    }
 }
 
