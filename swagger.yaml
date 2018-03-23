@@ -123,8 +123,6 @@ definitions:
     - "organization_id"
     - "name"
     - "description"
-    - "email"
-    - "phone_number"
     properties:
       organization_id:
         type: "string"
