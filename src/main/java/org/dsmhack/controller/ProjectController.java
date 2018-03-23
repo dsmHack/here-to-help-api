@@ -25,29 +25,17 @@ public class ProjectController {
 
     @GetMapping("/projects")
     public List<Project> getAllProjects() {
-        Project fakeProject = createFakeProjectWith("project name");
-        Project fakeProject1 = createFakeProjectWith("project name 2");
-        return Arrays.asList(fakeProject, fakeProject1);
+        return projectRepository.findAll();
     }
 
     @GetMapping("/projects/{projectId}")
     public Project getProjectById(@PathVariable String projectId) {
-        return createFakeProjectWith("project name and id: " + projectId);
+        return projectRepository.findOne(projectId);
     }
 
     @PostMapping("/projects")
     public Project save(Project project) {
         project.setProjId(guidGenerator.generate());
         return projectRepository.save(project);
-    }
-
-    private Project createFakeProjectWith(String project_name) {
-        Project project = new Project();
-        project.setProjId(new UUID(5l, 1l).toString());
-        project.setName(project_name);
-        project.setDescription("project description");
-        project.setStartDate(Timestamp.valueOf("2012-01-01 00:00:00"));
-        project.setEndDate(Timestamp.valueOf("2012-01-02 00:00:00"));
-        return project;
     }
 }

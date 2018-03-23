@@ -26,27 +26,17 @@ public class UserController {
 
     @GetMapping("/users")
     public List<User> getAllUsers() {
-        User fakeUser = createFakeUserWith("Joe Doe");
-        User fakeUser1 = createFakeUserWith("Joe Doe 2");
-        return Arrays.asList(fakeUser, fakeUser1);
+        return userRepository.findAll();
     }
 
     @GetMapping("/users/{userId}")
     public User getUserById(@PathVariable String userId) {
-        return createFakeUserWith("user name and id: " + userId);
+        return userRepository.findOne(userId);
     }
 
     @PostMapping("/users")
     public User save(User user) {
         user.setUserId(guidGenerator.generate());
         return userRepository.save(user);
-    }
-
-    private User createFakeUserWith(String firstName) {
-        User user = new User();
-        user.setUserId("userId");
-        user.setFirstName(firstName);
-        user.setLastName("user description");
-        return user;
     }
 }

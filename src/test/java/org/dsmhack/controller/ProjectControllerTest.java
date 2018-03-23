@@ -14,10 +14,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -36,7 +39,6 @@ public class ProjectControllerTest {
 
     @Test
     public void getAllProjectsReturns200() throws Exception {
-        ProjectController projectController = new ProjectController();
         mockMvc = MockMvcBuilders.standaloneSetup(projectController).build();
         mockMvc.perform(get("/projects"))
                 .andExpect(status().isOk());
@@ -44,7 +46,6 @@ public class ProjectControllerTest {
 
     @Test
     public void getProjectByIdReturns200() throws Exception {
-        ProjectController projectController = new ProjectController();
         mockMvc = MockMvcBuilders.standaloneSetup(projectController).build();
         mockMvc.perform(get("/projects/1"))
                 .andExpect(status().isOk());
@@ -73,5 +74,19 @@ public class ProjectControllerTest {
         when(projectRepository.save(any(Project.class))).thenReturn(expectedProject);
         Project actualProject = projectController.save(new Project());
         assertEquals(expectedProject, actualProject);
+    }
+
+    @Test
+    public void getAllProjectsCallsRepository() throws Exception {
+        List<Project> projects = Arrays.asList(new Project(), new Project());
+        when(projectRepository.findAll()).thenReturn(projects);
+        assertEquals(projects, projectController.getAllProjects());
+    }
+
+    @Test
+    public void getProjectsByIdCallsRepositoryFind() throws Exception {
+        Project project = new Project();
+        when(projectRepository.findOne(anyString())).thenReturn(project);
+        assertEquals(project, projectController.getProjectById(""));
     }
 }
