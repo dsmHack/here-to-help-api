@@ -8,13 +8,13 @@ import java.io.IOException;
 @Repository
 public class EmailSender {
 
-    private static final String SEND_GRID_API_KEY_PLEASE_CHANGE = "G.3oCPE_fzQ9OKkIREyMsKbg.Hs7bpk88QxnxG9BEG-l2i-1AxHMjnspsspoWYS4j9V8";
+    private static final String SEND_GRID_API_KEY_PLEASE_CHANGE = "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";
     private String TEMPLATE_ID = "3feb8c0d-3b96-42ef-9036-81bda76316af";
 
     public void sendTo(String emailAddress, String loginToken) {
         Email from = new Email("from@dsmhack.org");
         Email to = new Email(emailAddress);
-        Content content = new Content("text/html", "");
+        Content content = new Content("text/html", "hello");
         Mail mail = new Mail(from, "", to, content);
         mail.setTemplateId(TEMPLATE_ID);
         mail.personalization.get(0).addSubstitution(":loginToken:", loginToken);
