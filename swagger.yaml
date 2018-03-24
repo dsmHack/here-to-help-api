@@ -42,6 +42,19 @@ paths:
             type: array
             items:
               $ref: "#/definitions/Organization"
+  /organizations/{organization_id}/reports:
+    get:
+      parameters:
+        - in: path
+          name: organization_id
+          type: string
+          format: uuid
+          required: true
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/Report_Organization"
   /projects:
     get:
       responses:
@@ -94,19 +107,6 @@ paths:
             type: array
             items:
               $ref: "#/definitions/User"
-  /organizations/{organization_id}/reports:
-    get:
-      parameters:
-        - in: path
-          name: organization_id
-          type: string
-          format: uuid
-          required: true
-      responses:
-        200:
-          description: OK
-          schema:
-            $ref: "#/definitions/Report_Organization"
 
 definitions:
   User:
