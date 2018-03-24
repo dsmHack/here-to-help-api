@@ -197,6 +197,23 @@ paths:
             application/json:
               schema:
                 $ref: "#/definitions/User"
+  /users/{user_guid}/projects:
+    get:
+      summary: Get All User Projects
+      parameters:
+        - in: path
+          name: user_guid
+          type: string
+          format: uuid
+          required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/User"
+
   /users:
     post:
       summary: Add a new User
