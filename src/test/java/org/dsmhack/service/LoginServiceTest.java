@@ -36,16 +36,16 @@ public class LoginServiceTest {
     @Test
     public void loginCallsGuidServiceToForCode() throws Exception {
         loginService.login(new User());
-        verify(codeGenerator).generateLoginToken();
+        verify(codeGenerator).generateUUID();
     }
 
     @Test
     public void loginPassesGeneratedCodeToEmailSender() throws Exception {
-        when(codeGenerator.generateLoginToken()).thenReturn("code");
+        when(codeGenerator.generateUUID()).thenReturn("code");
         User user = new User();
         user.setEmail("a@aol.com");
         loginService.login(user);
-        verify(emailSender).sendTo("a@aol.com", "code");
+        verify(emailSender).sendTo("a@aol.com", "localhost:4200/login-confirm/" + "code");
     }
 
     @Test
@@ -56,13 +56,13 @@ public class LoginServiceTest {
 
     @Test
     public void loginSavesTokenToRepositoryWithCorrectFields() throws Exception {
-        when(codeGenerator.generateLoginToken()).thenReturn("123");
+        when(codeGenerator.generateUUID()).thenReturn("123");
         User user = new User();
         user.setUserGuid("userGuid");
         loginService.login(user);
         ArgumentCaptor<LoginToken> captor = ArgumentCaptor.forClass(LoginToken.class);
         verify(loginTokenRepository).save(captor.capture());
-        assertEquals("123", captor.getValue().getToken());
+        assertEquals("localhost:4200/login-confirm/123", captor.getValue().getToken());
         assertEquals("userGuid", captor.getValue().getUserGuid());
     }
 }
