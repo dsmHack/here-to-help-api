@@ -26,10 +26,8 @@ public class LoginService {
     @Autowired
     private LoginTokenRepository loginTokenRepository;
 
-    private String hostUrlToChange = "localhost:4200/login-confirm/";
-
     public void login(User user) {
-        String token = hostUrlToChange + codeGenerator.generateUUID();
+        String token = codeGenerator.generateLoginToken();
         LoginToken loginToken = new LoginToken();
         loginToken.setToken(token);
         loginToken.setUserGuid(user.getUserGuid());

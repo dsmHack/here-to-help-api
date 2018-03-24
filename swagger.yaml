@@ -5,6 +5,34 @@ info:
   title: "Here to Help"
 
 paths:
+  /login/sendCode:
+    post:
+      summary: "sending login code"
+      description: ""
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "user email address"
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+  /login/verifyCode:
+    post:
+      summary: "verifying security token"
+      description: ""
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "secruity token"
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
   /organizations:
     get:
       responses:
