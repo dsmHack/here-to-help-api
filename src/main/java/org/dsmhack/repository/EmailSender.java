@@ -9,7 +9,7 @@ import java.io.IOException;
 public class EmailSender {
 
     private static final String SEND_GRID_API_KEY_PLEASE_CHANGE = "G.3oCPE_fzQ9OKkIREyMsKbg.Hs7bpk88QxnxG9BEG-l2i-1AxHMjnspsspoWYS4j9V8";
-    private String TEMPLATE_ID = "sendGridTemplateIdGoesHere";
+    private String TEMPLATE_ID = "3feb8c0d-3b96-42ef-9036-81bda76316af";
 
     public void sendTo(String emailAddress, String loginToken) {
         Email from = new Email("from@dsmhack.org");
