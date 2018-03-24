@@ -132,6 +132,20 @@ paths:
             type: array
             items:
               $ref: "#/definitions/User"
+  /projects/{project_id}/user:
+    post:
+      parameters:
+        - in: path
+          name: project_id
+          type: string
+          format: uuid
+          required: true
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/User_Project"
+
 
 definitions:
   User:

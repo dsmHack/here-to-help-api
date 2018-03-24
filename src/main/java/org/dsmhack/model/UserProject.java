@@ -38,7 +38,7 @@ public class UserProject {
     }
 
     @Embeddable
-    public class MyKey implements Serializable {
+    public static class MyKey implements Serializable {
 
         @Column(name = "USER_GUID", nullable = false)
         private String userGuid;

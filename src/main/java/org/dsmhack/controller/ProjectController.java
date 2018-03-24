@@ -2,8 +2,12 @@ package org.dsmhack.controller;
 
 import org.dsmhack.model.CheckIn;
 import org.dsmhack.model.Project;
+import org.dsmhack.model.User;
+import org.dsmhack.model.UserProject;
 import org.dsmhack.repository.CheckInRepository;
 import org.dsmhack.repository.ProjectRepository;
+import org.dsmhack.repository.UserProjectRepository;
+import org.dsmhack.repository.UserRepository;
 import org.dsmhack.service.CodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +27,9 @@ public class ProjectController {
 
     @Autowired
     private CodeGenerator codeGenerator;
+
+    @Autowired
+    private UserProjectRepository userProjectRepository;
 
     @GetMapping("/projects")
     public List<Project> getAllProjects() {
@@ -52,6 +59,17 @@ public class ProjectController {
         checkIn.setProjGuid(projectId);
         checkIn.setTimeIn(Timestamp.valueOf(LocalDateTime.now()));
         return checkInRepository.save(checkIn);
+    }
+
+    @PostMapping("/projects/{projectId}/user")
+    public UserProject addUser(@PathVariable String projectId, @RequestBody String userGuid){
+        UserProject userProject = new UserProject();
+        UserProject.MyKey myKey = new UserProject.MyKey();
+        myKey.setProjGuid(projectId);
+        myKey.setUserGuid(userGuid);
+
+        userProject.setMyKey(myKey);
+        return userProjectRepository.save(userProject);
     }
 
     @PutMapping("/projects/{projectId}/check-ins")
