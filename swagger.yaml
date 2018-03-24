@@ -27,6 +27,21 @@ paths:
           description: OK
           schema:
             $ref: "#/definitions/Organization"
+  /organizations/{organization_id}/projects:
+    get:
+      parameters:
+        - in: path
+          name: organization_id
+          type: string
+          format: uuid
+          required: true
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Organization"
   /projects:
     get:
       responses:
