@@ -13,62 +13,50 @@
 
 package org.dsmhack.model;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.sql.Timestamp;
 
-/**
- * LoginToken
- */
 @Entity
 @Table(name = "LOGIN_TOKEN")
 public class LoginToken {
-    @EmbeddedId
-    private MyKey myKey;
 
-    public MyKey getMyKey() {
-        return myKey;
+    @Id
+    @Column(name = "USER_GUID", nullable = false)
+    private String userGuid;
+
+    @Column(name = "TOKEN", nullable = false)
+    private String token;
+
+    @Column(name = "TOKEN_EXP_DATE", nullable = false)
+    private Timestamp tokenExpDate;
+
+    public LoginToken(){}
+
+    public String getUserGuid() {
+        return userGuid;
     }
 
-    public void setMyKey(MyKey myKey) {
-        this.myKey = myKey;
+    public void setUserGuid(String userGuid) {
+        this.userGuid = userGuid;
     }
 
-    @Embeddable
-    public class MyKey implements Serializable {
-
-        @Column(name = "USER_GUID", nullable = false)
-        private String userGuid;
-
-        @Column(name = "TOKEN", nullable = false)
-        private String token;
-
-        @Column(name = "TOKEN_EXP_DATE", nullable = false)
-        private Timestamp tokenExpDate;
-
-        public String getUserGuid() {
-            return userGuid;
-        }
-
-        public void setUserGuid(String userGuid) {
-            this.userGuid = userGuid;
-        }
-
-        public String getToken() {
-            return token;
-        }
-
-        public void setToken(String token) {
-            this.token = token;
-        }
-
-        public Timestamp getTokenExpDate() {
-            return tokenExpDate;
-        }
-
-        public void setTokenExpDate(Timestamp tokenExpDate) {
-            this.tokenExpDate = tokenExpDate;
-        }
+    public String getToken() {
+        return token;
     }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public Timestamp getTokenExpDate() {
+        return tokenExpDate;
+    }
+
+    public void setTokenExpDate(Timestamp tokenExpDate) {
+        this.tokenExpDate = tokenExpDate;
+    }
+
 }
-
