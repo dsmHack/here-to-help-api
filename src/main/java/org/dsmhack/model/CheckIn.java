@@ -13,64 +13,47 @@
 
 package org.dsmhack.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import javax.persistence.*;
-import java.io.Serializable;
 import java.sql.Timestamp;
-import java.time.OffsetDateTime;
-import java.util.Objects;
-import java.util.UUID;
 
 @Entity
 @Table(name = "check_in")
 public class CheckIn {
-    @EmbeddedId
-    private MyKey myKey;
 
-    public MyKey getMyKey() {
-        return myKey;
+    @Id
+    @Column(name = "USER_GUID", nullable = false)
+    private String userGuid;
+
+    @Column(name = "PROJ_GUID", nullable = false)
+    private String projGuid;
+
+    @Column(name = "TIME_IN", nullable = false)
+    private Timestamp timeIn;
+
+    public CheckIn(){}
+
+    public String getUserGuid() {
+        return userGuid;
     }
 
-    public void setMyKey(MyKey myKey) {
-        this.myKey = myKey;
+    public void setUserGuid(String userGuid) {
+        this.userGuid = userGuid;
     }
 
-    @Embeddable
-    public class MyKey implements Serializable {
+    public String getProjGuid() {
+        return projGuid;
+    }
 
-        @Column(name = "USER_GUID", nullable = false)
-        private String userGuid;
+    public void setProjGuid(String projGuid) {
+        this.projGuid = projGuid;
+    }
 
-        @Column(name = "PROJ_GUID", nullable = false)
-        private String projGuid;
+    public Timestamp getTimeIn() {
+        return timeIn;
+    }
 
-        @Column(name = "TIME_IN", nullable = false)
-        private Timestamp timeIn;
-
-        public String getUserGuid() {
-            return userGuid;
-        }
-
-        public void setUserGuid(String userGuid) {
-            this.userGuid = userGuid;
-        }
-
-        public String getProjGuid() {
-            return projGuid;
-        }
-
-        public void setProjGuid(String projGuid) {
-            this.projGuid = projGuid;
-        }
-
-        public Timestamp getTimeIn() {
-            return timeIn;
-        }
-
-        public void setTimeIn(Timestamp timeIn) {
-            this.timeIn = timeIn;
-        }
+    public void setTimeIn(Timestamp timeIn) {
+        this.timeIn = timeIn;
     }
 }
 

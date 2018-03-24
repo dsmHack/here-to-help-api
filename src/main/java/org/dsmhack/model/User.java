@@ -47,6 +47,8 @@ public class User {
     @Column(name = "role")
     private String role;
 
+    public User(){}
+
     public String getUserGuid() {
         return userGuid;
     }

@@ -1,6 +1,8 @@
 package org.dsmhack.controller;
 
+import org.dsmhack.model.CheckIn;
 import org.dsmhack.model.Project;
+import org.dsmhack.repository.CheckInRepository;
 import org.dsmhack.repository.ProjectRepository;
 import org.dsmhack.service.CodeGenerator;
 import org.junit.Test;
@@ -13,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -33,6 +36,8 @@ public class ProjectControllerTest {
     private ProjectRepository projectRepository;
     @Mock
     private CodeGenerator codeGenerator;
+    @Mock
+    private CheckInRepository checkInRepository;
 
     @Test
     public void getAllProjectsReturns200() throws Exception {
@@ -85,5 +90,20 @@ public class ProjectControllerTest {
         Project project = new Project();
         when(projectRepository.findOne(anyString())).thenReturn(project);
         assertEquals(project, projectController.getProjectById(""));
+    }
+
+    @Test
+    public void findAllCheckinsReturns200() throws Exception {
+        mockMvc = MockMvcBuilders.standaloneSetup(projectController).build();
+        mockMvc.perform(get("/projects/1/check-ins"))
+                .andExpect(status().isOk());
+
+    }
+
+    @Test
+    public void findAllCheckinsRetrievesCheckingsFromRepository() throws Exception {
+        List<CheckIn> expectedCheckins = Collections.singletonList(new CheckIn());
+        when(checkInRepository.findByProjGuid("guid")).thenReturn(expectedCheckins);
+        assertEquals(expectedCheckins, projectController.findAllCheckins("guid"));
     }
 }
