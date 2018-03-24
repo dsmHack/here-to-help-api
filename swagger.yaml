@@ -297,7 +297,8 @@ definitions:
         items:
           $ref: "#/definitions/Report_User"
       total_hours:
-        type: "integer"
+        type: "number"
+        format: "double"
   Report_User:
     type: "object"
     properties:
@@ -310,11 +311,13 @@ definitions:
         items:
           $ref: "#/definitions/Report_Project"
       total_hours:
-        type: "integer"
+        type: "number"
+        format: "double"
   Report_Project:
     type: "object"
     properties:
       name:
         type: "string"
       total_hours:
-        type: "integer"
+        type: "number"
+        format: "double"

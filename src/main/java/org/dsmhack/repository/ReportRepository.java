@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface ReportRepository extends JpaRepository<CheckIn, Long> {
-    @Query("select project.name as name, user.first_name as firstName, user.last_name as lastName, check_in.time_in as timeIn, check_in.time_out as timeOut " +
+    @Query("select project.proj_guid as projectGuid, project.name as projectName, user.user_guid as userGuid, user.first_name as firstName, user.last_name as lastName, check_in.time_in as timeIn, check_in.time_out as timeOut " +
             "from organization, project, check_in, user " +
             "where organization.org_guid = project.org_guid " +
             "and project.proj_guid = check_in.proj_guid " +
