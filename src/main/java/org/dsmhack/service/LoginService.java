@@ -28,12 +28,14 @@ public class LoginService {
 
     public void login(User user) {
         String token = codeGenerator.generateLoginToken();
+        String urlToken = codeGenerator.generateUUID();
         LoginToken loginToken = new LoginToken();
         loginToken.setToken(token);
         loginToken.setUserGuid(user.getUserGuid());
+        loginToken.setUrlToken(urlToken);
         loginToken.setTokenExpDate(twentyMinutesFromNow());
         loginTokenRepository.save(loginToken);
-        emailSender.sendTo(user.getEmail(), token);
+        emailSender.sendTo(user.getEmail(), token, "localhost:4200/login-confirm/" + urlToken);
     }
 
     private Timestamp twentyMinutesFromNow() {

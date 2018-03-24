@@ -12,15 +12,16 @@ public class EmailSender {
     @Value("${sendgrid.api.key}")
     private String sendGridApiKey;
 
-    private String TEMPLATE_ID = "b4ca0502-1ba9-450e-be9a-cec75fd0a302";
+    private String TEMPLATE_ID = "b103a74a-2548-4095-9cb7-2c3c7ad0699a";
 
-    public void sendTo(String emailAddress, String loginToken) {
+    public void sendTo(String emailAddress, String loginToken, String loginLink) {
         Email from = new Email("from@dsmhack.org");
         Email to = new Email(emailAddress);
         Content content = new Content("text/html", "hello");
         Mail mail = new Mail(from, "subject", to, content);
         mail.setTemplateId(TEMPLATE_ID);
         mail.personalization.get(0).addSubstitution(":loginToken:", loginToken);
+        mail.personalization.get(0).addSubstitution(":loginLink:", loginLink);
 
         SendGrid sendGrid = new SendGrid(sendGridApiKey);
         Request request = new Request();

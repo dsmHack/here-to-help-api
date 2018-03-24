@@ -30,6 +30,9 @@ public class LoginToken {
     @Column(name = "TOKEN", nullable = false)
     private String token;
 
+    @Column(name = "URL_TOKEN", nullable = false)
+    private String urlToken;
+
     @Column(name = "TOKEN_EXP_DATE", nullable = false)
     private Timestamp tokenExpDate;
 
@@ -59,4 +62,11 @@ public class LoginToken {
         this.tokenExpDate = tokenExpDate;
     }
 
+    public String getUrlToken() {
+        return urlToken;
+    }
+
+    public void setUrlToken(String urlToken) {
+        this.urlToken = urlToken;
+    }
 }
