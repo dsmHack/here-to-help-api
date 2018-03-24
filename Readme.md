@@ -1,6 +1,6 @@
 # Here to Help
 
-## How to run the app:
+### How to run the app:
 *(We're assuming docker is installed...)*
 
 - Run this from the root directory of the project: `mvn clean package && docker-compose up -d`
