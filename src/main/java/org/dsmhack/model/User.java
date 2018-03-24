@@ -13,14 +13,10 @@
 
 package org.dsmhack.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Objects;
-import java.util.UUID;
 
 /**
  * User
@@ -47,7 +43,8 @@ public class User {
     @Column(name = "role")
     private String role;
 
-    public User(){}
+    public User() {
+    }
 
     public String getUserGuid() {
         return userGuid;
@@ -95,6 +92,18 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userGuid='" + userGuid + '\'' +
+                ", userId='" + userId + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", role='" + role + '\'' +
+                '}';
     }
 }
 

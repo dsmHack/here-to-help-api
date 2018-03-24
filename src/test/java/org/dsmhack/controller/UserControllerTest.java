@@ -55,7 +55,7 @@ public class UserControllerTest {
         userController.save(new User());
         ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
         verify(userRepository).save(captor.capture());
-        assertEquals(userId, captor.getValue().getUserId());
+        assertEquals(userId, captor.getValue().getUserGuid());
     }
 
     @Test
