@@ -8,6 +8,8 @@ import org.dsmhack.service.CodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -41,5 +43,21 @@ public class ProjectController {
     @GetMapping("/projects/{projectId}/check-ins")
     public List<CheckIn> findAllCheckins(@PathVariable String projectId) {
         return checkInRepository.findByProjGuid(projectId);
+    }
+
+    @PostMapping("/projects/{projectId}/check-ins")
+    public CheckIn checkUserIn(@PathVariable String projectId, @RequestBody String userGuid){
+        CheckIn checkIn = new CheckIn();
+        checkIn.setUserGuid(userGuid);
+        checkIn.setProjGuid(projectId);
+        checkIn.setTimeIn(Timestamp.valueOf(LocalDateTime.now()));
+        return checkInRepository.save(checkIn);
+    }
+
+    @PutMapping("/projects/{projectId}/check-ins")
+    public CheckIn checkOutUser(@PathVariable String projectId, @RequestBody String userGuid){
+        CheckIn checkIn = checkInRepository.findByProjGuidAndUserGuid(projectId, userGuid);
+        checkIn.setTimeOut(Timestamp.valueOf(LocalDateTime.now()));
+        return checkInRepository.save(checkIn);
     }
 }
