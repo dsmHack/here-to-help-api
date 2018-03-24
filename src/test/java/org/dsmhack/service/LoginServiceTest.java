@@ -13,7 +13,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -41,11 +40,10 @@ public class LoginServiceTest {
     @Test
     public void loginPassesGeneratedCodeToEmailSender() throws Exception {
         when(codeGenerator.generateLoginToken()).thenReturn("code");
-        when(codeGenerator.generateUUID()).thenReturn("uuid");
         User user = new User();
         user.setEmail("a@aol.com");
         loginService.login(user);
-        verify(emailSender).sendTo("a@aol.com", "code", "localhost:4200/login-confirm/uuid");
+        verify(emailSender).sendTo("a@aol.com", "code");
     }
 
     @Test

@@ -54,11 +54,4 @@ public class LoginControllerTest {
         verify(loginService).login(any(User.class));
     }
 
-    @Test
-    public void verifyTokenReturns200() throws Exception {
-        mockMvc.perform(post("/login/verifyCode")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("12345"))
-                .andExpect(status().isOk());
-    }
 }
