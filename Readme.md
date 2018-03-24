@@ -1,6 +1,7 @@
-To run:
+# Here to Help
 
-run 'mvn spring-boot:run' from the command line and the app will startup on localhost:8080
+### How to run the app:
+*(We're assuming docker is installed...)*
 
-In your IDE:
-Navigate to DsmHackapplication.class and run the main method
+- Run this from the root directory of the project: `mvn clean package && docker-compose up -d`
+- To stop the app, Run this from the root directory of the project: `docker-compose down`

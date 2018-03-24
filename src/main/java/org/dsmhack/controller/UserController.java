@@ -4,10 +4,7 @@ import org.dsmhack.model.User;
 import org.dsmhack.repository.UserRepository;
 import org.dsmhack.service.CodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,8 +28,8 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public User save(User user) {
-        user.setUserId(codeGenerator.generateUUID());
+    public User save(@RequestBody User user) {
+        user.setUserGuid(codeGenerator.generateUUID());
         return userRepository.save(user);
     }
 }
