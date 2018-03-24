@@ -5,6 +5,7 @@ import org.dsmhack.model.Project;
 import org.dsmhack.repository.OrganizationRepository;
 import org.dsmhack.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +21,7 @@ public class OrganizationController {
     @Autowired
     private ProjectRepository projectRepository;
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/organizations")
     public List<Organization> getAllOrganizations() {
         return organizationRepository.findAll();
