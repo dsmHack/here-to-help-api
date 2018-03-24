@@ -67,7 +67,7 @@ public class ProjectControllerTest {
         projectController.save(new Project());
         ArgumentCaptor<Project> captor = ArgumentCaptor.forClass(Project.class);
         verify(projectRepository).save(captor.capture());
-        assertEquals(projectId, captor.getValue().getProjId());
+        assertEquals(projectId, captor.getValue().getProjGuid());
     }
 
     @Test
