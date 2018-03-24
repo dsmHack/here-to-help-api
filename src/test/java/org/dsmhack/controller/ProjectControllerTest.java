@@ -2,21 +2,18 @@ package org.dsmhack.controller;
 
 import org.dsmhack.model.Project;
 import org.dsmhack.repository.ProjectRepository;
-import org.dsmhack.service.GuidGenerator;
-import org.junit.Before;
+import org.dsmhack.service.CodeGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -35,7 +32,7 @@ public class ProjectControllerTest {
     @Mock
     private ProjectRepository projectRepository;
     @Mock
-    private GuidGenerator guidGenerator;
+    private CodeGenerator codeGenerator;
 
     @Test
     public void getAllProjectsReturns200() throws Exception {
@@ -61,7 +58,7 @@ public class ProjectControllerTest {
     @Test
     public void postCallsGuidGeneratorToGenerateUUIDBeforeSavingProject() throws Exception {
         String projectId = "randomUUID";
-        when(guidGenerator.generate()).thenReturn(projectId);
+        when(codeGenerator.generateUUID()).thenReturn(projectId);
         projectController.save(new Project());
         ArgumentCaptor<Project> captor = ArgumentCaptor.forClass(Project.class);
         verify(projectRepository).save(captor.capture());

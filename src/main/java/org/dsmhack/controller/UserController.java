@@ -1,19 +1,15 @@
 package org.dsmhack.controller;
 
 import org.dsmhack.model.User;
-import org.dsmhack.model.User;
 import org.dsmhack.repository.UserRepository;
-import org.dsmhack.repository.UserRepository;
-import org.dsmhack.service.GuidGenerator;
+import org.dsmhack.service.CodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 public class UserController {
@@ -22,7 +18,7 @@ public class UserController {
     private UserRepository userRepository;
 
     @Autowired
-    private GuidGenerator guidGenerator;
+    private CodeGenerator codeGenerator;
 
     @GetMapping("/users")
     public List<User> getAllUsers() {
@@ -36,7 +32,7 @@ public class UserController {
 
     @PostMapping("/users")
     public User save(User user) {
-        user.setUserId(guidGenerator.generate());
+        user.setUserId(codeGenerator.generateUUID());
         return userRepository.save(user);
     }
 }
