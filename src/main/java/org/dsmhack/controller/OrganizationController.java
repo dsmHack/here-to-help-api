@@ -21,7 +21,6 @@ public class OrganizationController {
     @Autowired
     private ProjectRepository projectRepository;
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/organizations")
     public List<Organization> getAllOrganizations() {
         return organizationRepository.findAll();

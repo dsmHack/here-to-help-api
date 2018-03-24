@@ -92,6 +92,20 @@ paths:
             type: array
             items:
               $ref: "#/definitions/Project"
+    post:
+      summary: "adding project"
+      requestBody:
+        content:
+          application/json:
+          schema:
+            $ref: "#/definitions/Project"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/Project"
   /projects/{project_id}:
     get:
       parameters:
@@ -173,6 +187,46 @@ paths:
           description: OK
           schema:
             $ref: "#/definitions/User_Project"
+  /users:
+    get:
+      summary: Get All Users
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/User"
+  /users:
+    post:
+      summary: Add a new User
+      requestBody:
+        content:
+          application/json
+            schema:
+              $ref: "#/definitions/User"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/User"
+  /organizations/{organizationId}/reports:
+    get:
+      parameters:
+        - in: path
+          name: organization_id
+          type: string
+          format: uuid
+          required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/Report_Organization"
 
 
 definitions:
@@ -185,9 +239,11 @@ definitions:
     - "email"
     - "role"
     properties:
-      user_id:
+      user_guid:
         type: "string"
         format: "uuid"
+      user_id:
+        type: "string"
       first_name:
         type: "string"
       last_name:
@@ -201,11 +257,11 @@ definitions:
   Login_Token:
     type: "object"
     required:
-    - "user_id"
+    - "user_guid"
     - "login_token"
     - "login_token_expiration"
     properties:
-      user_id:
+      user_guid:
         type: "string"
         format: "uuid"
       login_token:
@@ -216,11 +272,11 @@ definitions:
   Organization:
     type: "object"
     required:
-    - "organization_id"
+    - "organization_guid"
     - "name"
     - "description"
     properties:
-      organization_id:
+      organization_guid:
         type: "string"
         format: "uuid"
       name:
@@ -251,26 +307,29 @@ definitions:
   User_Organization:
     type: "object"
     required:
-    - "user_id"
-    - "organization_id"
+    - "user_guid"
+    - "organization_guid"
     properties:
-      user_id:
+      user_guid:
         type: "string"
         format: "uuid"
-      organization_id:
+      organization_guid:
         type: "string"
         format: "uuid"
   Project:
     type: "object"
     required:
+    - "project_guid"
     - "project_id"
     - "name"
     - "start_date"
     - "end_date"
     properties:
-      project_id:
+      project_guid:
         type: "string"
         format: "uuid"
+      project_id:
+        type: "string"
       name:
         type: "string"
       description:
@@ -284,27 +343,27 @@ definitions:
   User_Project:
     type: "object"
     required:
-    - "user_id"
-    - "project_id"
+    - "user_guid"
+    - "project_guid"
     properties:
-      user_id:
+      user_guid:
         type: "string"
         format: "uuid"
-      project_id:
+      project_guid:
         type: "string"
         format: "uuid"
   Check_In:
     type: "object"
     required:
-    - "user_id"
-    - "project_id"
+    - "user_guid"
+    - "project_guid"
     - "time_in"
     - "time_out"
     properties:
-      user_id:
+      user_guid:
         type: "string"
         format: "uuid"
-      project_id:
+      project_guid:
         type: "string"
         format: "uuid"
       time_in:
