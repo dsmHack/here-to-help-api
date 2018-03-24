@@ -1,6 +1,8 @@
 package org.dsmhack.controller;
 
+import org.dsmhack.model.CheckIn;
 import org.dsmhack.model.User;
+import org.dsmhack.repository.CheckInRepository;
 import org.dsmhack.repository.UserRepository;
 import org.dsmhack.service.CodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,9 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private CheckInRepository checkInRepository;
 
     @Autowired
     private CodeGenerator codeGenerator;
@@ -31,5 +36,15 @@ public class UserController {
     public User save(@RequestBody User user) {
         user.setUserGuid(codeGenerator.generateUUID());
         return userRepository.save(user);
+    }
+
+    @GetMapping("/users/{userGuid}/check-ins")
+    public List<CheckIn> getCheckins(@PathVariable("userGuid") String userGuid) {
+        return checkInRepository.findByUserGuid(userGuid);
+    }
+
+    @GetMapping("/users/{userGuid}/check-ins/active")
+    public List<CheckIn> getActiveCheckins(@PathVariable("userGuid") String userGuid) {
+        return checkInRepository.findActiveByUserGuid(userGuid);
     }
 }
