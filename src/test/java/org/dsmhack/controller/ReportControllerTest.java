@@ -31,7 +31,6 @@ public class ReportControllerTest {
                 .andExpect(status().isOk());
     }
 
-    @Ignore
     @Test
     public void getReportOrganizationReturnsReportOrganization() throws Exception {
         String organizationId = "12341235135";
