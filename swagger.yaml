@@ -92,6 +92,31 @@ paths:
             type: array
             items:
               $ref: "#/definitions/Check_In"
+    post:
+      parameters:
+        - in: path
+          name: project_id
+          type: string
+          format: uuid
+          required: true
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/Check_In"
+    put:
+      description: Updates the check-in with an end time
+      parameters:
+      - in: path
+        name: project_id
+        type: string
+        format: uuid
+        required: true
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/Check_In"
   /projects/{project_id}/users:
     get:
       parameters:

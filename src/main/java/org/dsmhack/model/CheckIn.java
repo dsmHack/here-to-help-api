@@ -30,6 +30,9 @@ public class CheckIn {
     @Column(name = "TIME_IN", nullable = false)
     private Timestamp timeIn;
 
+    @Column(name = "TIME_OUT")
+    private Timestamp timeOut;
+
     public CheckIn(){}
 
     public String getUserGuid() {
@@ -54,6 +57,14 @@ public class CheckIn {
 
     public void setTimeIn(Timestamp timeIn) {
         this.timeIn = timeIn;
+    }
+
+    public Timestamp getTimeOut() {
+        return timeOut;
+    }
+
+    public void setTimeOut(Timestamp timeOut) {
+        this.timeOut = timeOut;
     }
 }
 

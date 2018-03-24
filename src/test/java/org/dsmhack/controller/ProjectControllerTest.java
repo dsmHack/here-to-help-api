@@ -5,15 +5,20 @@ import org.dsmhack.model.Project;
 import org.dsmhack.repository.CheckInRepository;
 import org.dsmhack.repository.ProjectRepository;
 import org.dsmhack.service.CodeGenerator;
+import org.hibernate.annotations.Check;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -24,6 +29,8 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -39,16 +46,19 @@ public class ProjectControllerTest {
     @Mock
     private CheckInRepository checkInRepository;
 
+    @Before
+    public void setup(){
+        mockMvc = MockMvcBuilders.standaloneSetup(projectController).build();
+    }
+
     @Test
     public void getAllProjectsReturns200() throws Exception {
-        mockMvc = MockMvcBuilders.standaloneSetup(projectController).build();
         mockMvc.perform(get("/projects"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void getProjectByIdReturns200() throws Exception {
-        mockMvc = MockMvcBuilders.standaloneSetup(projectController).build();
         mockMvc.perform(get("/projects/1"))
                 .andExpect(status().isOk());
     }
@@ -94,7 +104,6 @@ public class ProjectControllerTest {
 
     @Test
     public void findAllCheckinsReturns200() throws Exception {
-        mockMvc = MockMvcBuilders.standaloneSetup(projectController).build();
         mockMvc.perform(get("/projects/1/check-ins"))
                 .andExpect(status().isOk());
 
@@ -105,5 +114,60 @@ public class ProjectControllerTest {
         List<CheckIn> expectedCheckins = Collections.singletonList(new CheckIn());
         when(checkInRepository.findByProjGuid("guid")).thenReturn(expectedCheckins);
         assertEquals(expectedCheckins, projectController.findAllCheckins("guid"));
+    }
+
+    @Test
+    public void checkinReturns200() throws Exception {
+        mockMvc.perform(post("/projects/12345/check-ins")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("user-uuid"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void postToCheckinCallsRepositoryWithCheckIn() throws Exception {
+        projectController.checkUserIn("12345", "userId");
+        ArgumentCaptor<CheckIn> captor = ArgumentCaptor.forClass(CheckIn.class);
+        verify(checkInRepository).save(captor.capture());
+        assertEquals("userId", captor.getValue().getUserGuid());
+        assertEquals("12345", captor.getValue().getProjGuid());
+    }
+
+    @Test
+    public void checkInReturnsCheckIn() throws Exception {
+        CheckIn expectedCheckin = new CheckIn();
+        when(checkInRepository.save(any(CheckIn.class))).thenReturn(expectedCheckin);
+        assertEquals(expectedCheckin, projectController.checkUserIn("12345", "userId"));
+    }
+
+    @Test
+    public void checkoutReturns200() throws Exception {
+        when(checkInRepository.findByProjGuidAndUserGuid(anyString(), anyString())).thenReturn(new CheckIn());
+        mockMvc.perform(put("/projects/12345/check-ins")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("user-uuid"))
+                .andExpect(status().isOk());    }
+
+    @Test
+    public void checkoutRetrievesCheckinFromRepository() throws Exception {
+        when(checkInRepository.findByProjGuidAndUserGuid(anyString(), anyString())).thenReturn(new CheckIn());
+        projectController.checkOutUser("projectGuid", "userGuid");
+        verify(checkInRepository).findByProjGuidAndUserGuid("projectGuid", "userGuid");
+    }
+
+    @Test
+    public void checkOutSavesCheckIn() throws Exception {
+        CheckIn checkIn = new CheckIn();
+        when(checkInRepository.findByProjGuidAndUserGuid(anyString(), anyString())).thenReturn(checkIn);
+        projectController.checkOutUser("projectGuid", "userGuid");
+        verify(checkInRepository).save(checkIn);
+    }
+
+    @Test
+    public void checkOutReturnsCheckIn() throws Exception {
+        CheckIn expectedCheckin = new CheckIn();
+        when(checkInRepository.save(any(CheckIn.class))).thenReturn(expectedCheckin);
+        when(checkInRepository.findByProjGuidAndUserGuid(anyString(), anyString())).thenReturn(expectedCheckin);
+        assertEquals(expectedCheckin, projectController.checkOutUser("projectGuid", "userGuid") );
     }
 }
