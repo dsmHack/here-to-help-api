@@ -144,6 +144,14 @@ definitions:
         type: "string"
       instagram_url:
         type: "string"
+      address1:
+        type: "string"
+      city:
+        type: "string"
+      state:
+        type: "string"
+      zip:
+        type: "string"
   User_Organization:
     type: "object"
     required:
