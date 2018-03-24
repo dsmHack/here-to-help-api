@@ -1,1 +1,0 @@
-docker run --name here-to-help-mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=heretohelp -d mysql
