@@ -27,6 +27,21 @@ paths:
           description: OK
           schema:
             $ref: "#/definitions/Organization"
+  /organizations/{organization_id}/projects:
+    get:
+      parameters:
+        - in: path
+          name: organization_id
+          type: string
+          format: uuid
+          required: true
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Organization"
   /projects:
     get:
       responses:
@@ -79,6 +94,20 @@ paths:
             type: array
             items:
               $ref: "#/definitions/User"
+  /organizations/{organization_id}/reports:
+    get:
+      parameters:
+        - in: path
+          name: organization_id
+          type: string
+          format: uuid
+          required: true
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/Report_Organization"
+
 definitions:
   User:
     type: "object"
@@ -217,3 +246,36 @@ definitions:
       time_out:
         type: "string"
         format: "date-time"
+  Report_Organization:
+    type: "object"
+    properties:
+      projects:
+        type: array
+        items:
+          $ref: "#/definitions/Report_Project"
+      users:
+        type: array
+        items:
+          $ref: "#/definitions/Report_User"
+      total_hours:
+        type: "integer"
+  Report_User:
+    type: "object"
+    properties:
+      first_name:
+        type: "string"
+      last_name:
+        type: "string"
+      projects:
+        type: array
+        items:
+          $ref: "#/definitions/Report_Project"
+      total_hours:
+        type: "integer"
+  Report_Project:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      total_hours:
+        type: "integer"
