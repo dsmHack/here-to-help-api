@@ -70,4 +70,6 @@ fabric.properties
 .idea/sonarlint
 
 
+api.env
+
 # End of https://www.gitignore.io/api/jetbrains

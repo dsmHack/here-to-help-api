@@ -58,5 +58,4 @@ public class LoginToken {
     public void setTokenExpDate(Timestamp tokenExpDate) {
         this.tokenExpDate = tokenExpDate;
     }
-
 }

@@ -1,10 +1,16 @@
 package org.dsmhack.controller;
 
+<<<<<<< HEAD
 import org.dsmhack.model.Project;
 import org.dsmhack.model.User;
 import org.dsmhack.model.UserProject;
 import org.dsmhack.repository.ProjectRepository;
 import org.dsmhack.repository.UserProjectRepository;
+=======
+import org.dsmhack.model.CheckIn;
+import org.dsmhack.model.User;
+import org.dsmhack.repository.CheckInRepository;
+>>>>>>> 143a8c7d3f6d6bd4d751e2f47aeb6d3e80641388
 import org.dsmhack.repository.UserRepository;
 import org.dsmhack.service.CodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +29,7 @@ public class UserController {
 
     @Autowired
     private ProjectRepository projectRepository;
+    private CheckInRepository checkInRepository;
 
     @Autowired
     private CodeGenerator codeGenerator;
@@ -57,17 +64,13 @@ public class UserController {
         return user;
     }
 
-//    @GetMapping("/users/{userId}/orgs")
-//    public User getUsersAndOrgs(@PathVariable String userGuid) {
-//        User user = userRepository.findOne(userGuid);
-//
-//        List<UserOrganization> userOrganizationList = userOrganizationRepository.findAll();
-//        userOrganizationList.forEach(userOrganization -> {
-//            if(userOrganization.getMyKey().getUserGuid().equals(userGuid)){
-//                Organization organization = organizationRepository.findOne(userOrganization.getMyKey().getOrgGuid());
-//                user.getOrganizationList().add(organization);
-//            }
-//        });
-//        return user;
-//    }
+    @GetMapping("/users/{userGuid}/check-ins")
+    public List<CheckIn> getCheckins(@PathVariable("userGuid") String userGuid) {
+        return checkInRepository.findByUserGuid(userGuid);
+    }
+
+    @GetMapping("/users/{userGuid}/check-ins/active")
+    public List<CheckIn> getActiveCheckins(@PathVariable("userGuid") String userGuid) {
+        return checkInRepository.findActiveByUserGuid(userGuid);
+    }
 }

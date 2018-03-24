@@ -1,6 +1,8 @@
 package org.dsmhack.controller;
 
+import org.dsmhack.model.LoginToken;
 import org.dsmhack.model.User;
+import org.dsmhack.repository.LoginTokenRepository;
 import org.dsmhack.repository.UserRepository;
 import org.dsmhack.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ public class LoginController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private LoginTokenRepository loginTokenRepository;
+
     @PostMapping("/login/sendCode")
     public ResponseEntity login(@RequestBody String emailAddress) {
         User user = userRepository.findByEmail(emailAddress);
@@ -27,7 +32,8 @@ public class LoginController {
     }
     
     @PostMapping("/login/verifyCode")
-    public ResponseEntity verifyCode(@RequestBody String securityToken) throws Exception {
-        return new ResponseEntity(HttpStatus.OK);
+    public User verifyCode(@RequestBody String securityToken) throws Exception {
+        LoginToken loginToken = loginTokenRepository.findByToken(securityToken);
+        return userRepository.findOne(loginToken.getUserGuid());
     }
 }
