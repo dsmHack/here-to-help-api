@@ -2,7 +2,7 @@ package org.dsmhack.controller;
 
 import org.dsmhack.model.User;
 import org.dsmhack.repository.UserRepository;
-import org.dsmhack.service.GuidGenerator;
+import org.dsmhack.service.CodeGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -14,7 +14,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -33,7 +32,7 @@ public class UserControllerTest {
     @Mock
     private UserRepository userRepository;
     @Mock
-    private GuidGenerator guidGenerator;
+    private CodeGenerator codeGenerator;
 
     @Test
     public void getUserByIdReturns200() throws Exception {
@@ -52,7 +51,7 @@ public class UserControllerTest {
     @Test
     public void postCallsGuidGeneratorToGenerateUUIDBeforeSavingUser() throws Exception {
         String userId = "uuid";
-        when(guidGenerator.generate()).thenReturn(userId);
+        when(codeGenerator.generateUUID()).thenReturn(userId);
         userController.save(new User());
         ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
         verify(userRepository).save(captor.capture());
