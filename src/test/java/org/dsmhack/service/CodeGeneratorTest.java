@@ -13,11 +13,4 @@ public class CodeGeneratorTest {
         String secondUUID = codeGenerator.generateUUID();
         assertNotEquals(firstUUID, secondUUID);
     }
-
-    @Test
-    public void generateLoginTokenGeneratesUnique6DigitLoginToken() throws Exception {
-        CodeGenerator codeGenerator = new CodeGenerator();
-        assertEquals(6, codeGenerator.generateLoginToken().length());
-        assertNotEquals(codeGenerator.generateLoginToken(), codeGenerator.generateLoginToken());
-    }
 }
