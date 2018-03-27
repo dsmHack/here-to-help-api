@@ -1,15 +1,15 @@
 # Here to Help
 
-### How to build *(with Maven inside Docker)*:
-*(Probably unnecessary, but why install dependencies if you don't have to?)*
+### How to build:
 
-- `docker run -it --rm --name my-maven-project -v "$(pwd)":/project maven:3.3-jdk-8 mvn -f project/ clean package`
+- Simply: `mvn clean package`
+- Even more simply: `docker run -it --rm --name my-maven-project -v "$(pwd)":/project maven:3.3-jdk-8 mvn -f project/ clean package`
 
 ### How to run the app:
 *(We're assuming docker is installed...)*
 
-- Run from the same directory as **docker-compose.yml**: `docker-compose up`
-- To stop the app, run this from the root directory of the project: `docker-compose down`
+- Start: `docker-compose up`
+- Stop: `docker-compose down`
 
 ### Gotchas and Tips:
 - In my case, `"$(pwd)"` was `///c/Users/[Your Windows username here]/workspace/2018_team_1_api`. Full command looks like this: `docker run -it --rm --name my-maven-project -v ///c/Users/[Your Windows username here]/workspace/2018_team_1_api:/project maven:3.3-jdk-8 mvn -f project/ clean package`
