@@ -27,29 +27,26 @@ public class ReportService {
         List<ReportUser> projectUsers = new ArrayList<ReportUser>();
         double organizationTotalHours = 0;
         for (ReportData reportData : reportDatas) {
-            ReportProject organizationProject = new ReportProject();
 
-            organizationProject.setName(reportData.getProjectName());
-            organizationProject.setTotalHours(calculateHours(reportData.getTimeIn(), reportData.getTimeOut()));
-
-            if (!userGuidExists(reportData.getUserGuid(), projectUsers)) {
+            double totalHours = calculateHours(reportData.getTimeIn(), reportData.getTimeOut());
+            if (addUser(reportData.getUserGuid(), projectUsers)) {
                 ReportUser reportUser = new ReportUser();
                 reportUser.setUserGuid(reportData.getUserGuid());
                 reportUser.setFirstName(reportData.getFirstName());
                 reportUser.setLastName(reportData.getLastName());
-                reportUser.setTotalHours(calculateHours(reportData.getTimeIn(), reportData.getTimeOut()));
+                reportUser.setTotalHours(totalHours);
 
                 ReportProject userProject = new ReportProject();
                 userProject.setProjectGuid(reportData.getProjectGuid());
                 userProject.setName(reportData.getProjectName());
-                userProject.setTotalHours(calculateHours(reportData.getTimeIn(), reportData.getTimeOut()));
+                userProject.setTotalHours(totalHours);
                 reportUser.setProjects(Arrays.asList(userProject));
 
                 projectUsers.add(reportUser);
             } else {
                 ReportUser reportUser = findUser(reportData.getUserGuid(), projectUsers);
-                double totalHours = calculateHours(reportData.getTimeIn(), reportData.getTimeOut());
-                if (!projectGuidExists(reportData.getProjectGuid(), reportUser.getProjects())) {
+
+                if (addProject(reportData.getProjectGuid(), reportUser.getProjects())) {
                     ReportProject userProject = new ReportProject();
                     userProject.setProjectGuid(reportData.getProjectGuid());
                     userProject.setName(reportData.getProjectName());
@@ -66,13 +63,30 @@ public class ReportService {
                 reportUser.setTotalHours(reportUser.getTotalHours() + totalHours);
             }
 
-            organizationProjects.add(organizationProject);
-            organizationTotalHours += calculateHours(reportData.getTimeIn(), reportData.getTimeOut());
+            if (addProject(reportData.getProjectGuid(), organizationProjects)) {
+                ReportProject organizationProject = new ReportProject();
+                organizationProject.setProjectGuid(reportData.getProjectGuid());
+                organizationProject.setName(reportData.getProjectName());
+                organizationProject.setTotalHours(totalHours);
+                organizationProjects.add(organizationProject);
+            } else {
+                ReportProject reportProject = findReportProject(reportData.getProjectGuid(), organizationProjects);
+                reportProject.setTotalHours(reportProject.getTotalHours() + totalHours);
+            }
+            organizationTotalHours += totalHours;
         }
         reportOrganization.setProjects(organizationProjects);
         reportOrganization.setUsers(projectUsers);
         reportOrganization.setTotalHours(organizationTotalHours);
         return reportOrganization;
+    }
+
+    private boolean addUser(String userGuid, List<ReportUser> projectUsers) {
+        return !userGuidExists(userGuid, projectUsers);
+    }
+
+    private boolean addProject(String projectGuid, List<ReportProject> projects) {
+        return !projectGuidExists(projectGuid, projects);
     }
 
     ReportUser findUser(String guid, List<ReportUser> users) {
@@ -112,6 +126,9 @@ public class ReportService {
     }
 
     double calculateHours(Timestamp checkIn, Timestamp checkOut) {
+        if (checkOut == null) {
+            return 0;
+        }
         return (double) checkIn.toLocalDateTime().until(checkOut.toLocalDateTime(), ChronoUnit.MINUTES) / 60;
     }
 }

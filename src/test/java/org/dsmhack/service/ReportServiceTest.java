@@ -63,6 +63,7 @@ public class ReportServiceTest {
     public void callsReportRepoAndMapsToApiObject_multipleUsersOneProject() throws Exception {
         String organizationId = "12341235135";
         ReportData reportData1 = new ReportData();
+        reportData1.setProjectGuid("projectGuid1");
         reportData1.setProjectName("Project #1");
         reportData1.setUserGuid("someGuid1");
         reportData1.setFirstName("John");
@@ -70,6 +71,7 @@ public class ReportServiceTest {
         reportData1.setTimeIn(Timestamp.valueOf("2018-01-01 09:00:00"));
         reportData1.setTimeOut(Timestamp.valueOf("2018-01-01 17:00:00"));
         ReportData reportData2 = new ReportData();
+        reportData2.setProjectGuid("projectGuid1");
         reportData2.setProjectName("Project #1");
         reportData2.setUserGuid("someGuid2");
         reportData2.setFirstName("Tim");
@@ -80,6 +82,11 @@ public class ReportServiceTest {
         when(reportRepository.findAllReportingInformation(organizationId)).thenReturn(reportDatas);
 
         ReportOrganization reportOrganization = reportService.getReportOrganization(organizationId);
+
+        assertEquals(1, reportOrganization.getProjects().size());
+        ReportProject organizationProject = reportOrganization.getProjects().get(0);
+        assertEquals("Project #1", organizationProject.getName());
+        assertEquals(14, organizationProject.getTotalHours(), 0.0001);
 
         ReportUser reportUser1 = reportOrganization.getUsers().get(0);
         assertEquals("someGuid1", reportUser1.getUserGuid());
@@ -138,8 +145,6 @@ public class ReportServiceTest {
         assertEquals(6, userProject2.getTotalHours(), 0.0001);
         assertEquals(14, reportUser.getTotalHours(), 0.0001);
     }
-
-    //todo: need to consider when someone is checked in, but not checked out, do we ignore these?
 
     @Test
     public void callsReportRepoAndMapsToApiObject_oneUserOneProjectMultipleDays() throws Exception {
@@ -267,13 +272,24 @@ public class ReportServiceTest {
     }
 
     @Test
-    public void hoursBasedOnCheckInCheckOut() throws Exception {
+    public void hoursBasedOnCheckInCheckOut_happyPath() throws Exception {
         Timestamp checkIn = Timestamp.valueOf("2018-01-01 09:00:00");
         Timestamp checkOut = Timestamp.valueOf("2018-01-01 16:30:00");
 
         double diffInHours = reportService.calculateHours(checkIn, checkOut);
 
         assertEquals(7.5, diffInHours, 0.0001);
+    }
+
+    //todo: need to consider when someone is checked in, but not checked out, do we ignore these? or we use enddate as now? I'm going to ignore for now.
+    @Test
+    public void hoursBasedOnCheckInCheckOut_checkOutNull() throws Exception {
+        Timestamp checkIn = Timestamp.valueOf("2018-01-01 09:00:00");
+        Timestamp checkOut = null;
+
+        double diffInHours = reportService.calculateHours(checkIn, checkOut);
+
+        assertEquals(0, diffInHours, 0.0001);
     }
 
 }
