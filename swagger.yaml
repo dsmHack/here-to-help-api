@@ -94,11 +94,12 @@ paths:
               $ref: "#/definitions/Project"
     post:
       summary: "adding project"
-      requestBody:
-        content:
-          application/json:
-          schema:
-            $ref: "#/definitions/Project"
+      parameters:
+      - in: body
+        name: "Project"
+        required: true
+        schema:
+          $ref: "#/definitions/Project"
       responses:
         200:
           description: OK
@@ -195,11 +196,12 @@ paths:
             $ref: "#/definitions/User"
     post:
       summary: Add a new User
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/definitions/User"
+      parameters:
+      - in: body
+        name: "User"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
       responses:
         200:
           description: OK
