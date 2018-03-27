@@ -104,6 +104,8 @@ public class ReportServiceTest {
         assertEquals("Project #1", userProject2.getName());
         assertEquals(6, userProject2.getTotalHours(), 0.0001);
         assertEquals(6, reportUser2.getTotalHours(), 0.0001);
+
+        assertEquals(14, reportOrganization.getTotalHours(), 0.0001);
     }
 
     @Test
@@ -130,6 +132,14 @@ public class ReportServiceTest {
 
         ReportOrganization reportOrganization = reportService.getReportOrganization(organizationId);
 
+        assertEquals(2, reportOrganization.getProjects().size());
+        ReportProject organizationProject1 = reportOrganization.getProjects().get(0);
+        assertEquals("Project #1", organizationProject1.getName());
+        assertEquals(8, organizationProject1.getTotalHours(), 0.0001);
+        ReportProject organizationProject2 = reportOrganization.getProjects().get(1);
+        assertEquals("Project #2", organizationProject2.getName());
+        assertEquals(6, organizationProject2.getTotalHours(), 0.0001);
+
         assertEquals(1, reportOrganization.getUsers().size());
         ReportUser reportUser = reportOrganization.getUsers().get(0);
         assertEquals("userGuid", reportUser.getUserGuid());
@@ -144,6 +154,8 @@ public class ReportServiceTest {
         assertEquals("Project #2", userProject2.getName());
         assertEquals(6, userProject2.getTotalHours(), 0.0001);
         assertEquals(14, reportUser.getTotalHours(), 0.0001);
+
+        assertEquals(14, reportOrganization.getTotalHours(), 0.0001);
     }
 
     @Test
@@ -170,6 +182,11 @@ public class ReportServiceTest {
 
         ReportOrganization reportOrganization = reportService.getReportOrganization(organizationId);
 
+        assertEquals(1, reportOrganization.getProjects().size());
+        ReportProject organizationProject = reportOrganization.getProjects().get(0);
+        assertEquals("Project #1", organizationProject.getName());
+        assertEquals(14, organizationProject.getTotalHours(), 0.0001);
+
         assertEquals(1, reportOrganization.getUsers().size());
         assertEquals(1, reportOrganization.getUsers().get(0).getProjects().size());
         ReportUser reportUser1 = reportOrganization.getUsers().get(0);
@@ -181,6 +198,8 @@ public class ReportServiceTest {
         assertEquals("Project #1", userProject1.getName());
         assertEquals(14, userProject1.getTotalHours(), 0.0001);
         assertEquals(14, reportUser1.getTotalHours(), 0.0001);
+
+        assertEquals(14, reportOrganization.getTotalHours(), 0.0001);
     }
 
     @Test
