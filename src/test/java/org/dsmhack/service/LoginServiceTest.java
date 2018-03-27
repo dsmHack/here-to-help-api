@@ -11,8 +11,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.sql.Timestamp;
-
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -36,16 +34,16 @@ public class LoginServiceTest {
     @Test
     public void loginCallsGuidServiceToForCode() throws Exception {
         loginService.login(new User());
-        verify(codeGenerator).generateUUID();
+        verify(codeGenerator).generateLoginToken();
     }
 
     @Test
     public void loginPassesGeneratedCodeToEmailSender() throws Exception {
-        when(codeGenerator.generateUUID()).thenReturn("code");
+        when(codeGenerator.generateLoginToken()).thenReturn("code");
         User user = new User();
         user.setEmail("a@aol.com");
         loginService.login(user);
-        verify(emailSender).sendTo("a@aol.com", "localhost:4200/login-confirm/" + "code");
+        verify(emailSender).sendTo("a@aol.com", "code");
     }
 
     @Test
@@ -56,13 +54,13 @@ public class LoginServiceTest {
 
     @Test
     public void loginSavesTokenToRepositoryWithCorrectFields() throws Exception {
-        when(codeGenerator.generateUUID()).thenReturn("123");
+        when(codeGenerator.generateLoginToken()).thenReturn("123");
         User user = new User();
         user.setUserGuid("userGuid");
         loginService.login(user);
         ArgumentCaptor<LoginToken> captor = ArgumentCaptor.forClass(LoginToken.class);
         verify(loginTokenRepository).save(captor.capture());
-        assertEquals("localhost:4200/login-confirm/123", captor.getValue().getToken());
+        assertEquals("123", captor.getValue().getToken());
         assertEquals("userGuid", captor.getValue().getUserGuid());
     }
 }

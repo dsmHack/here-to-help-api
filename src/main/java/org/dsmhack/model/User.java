@@ -13,10 +13,9 @@
 
 package org.dsmhack.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * User
@@ -42,6 +41,9 @@ public class User {
 
     @Column(name = "role")
     private String role;
+
+    @Transient
+    private List<Project> projectList = new ArrayList<>();
 
     public User() {
     }
@@ -92,6 +94,14 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public List<Project> getProjectList() {
+        return projectList;
+    }
+
+    public void setProjectList(List<Project> projectList) {
+        this.projectList = projectList;
     }
 
     @Override

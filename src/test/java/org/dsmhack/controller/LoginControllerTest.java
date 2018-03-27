@@ -42,7 +42,7 @@ public class LoginControllerTest {
 
     @Test
     public void loginReturns200() throws Exception {
-        mockMvc.perform(post("/login")
+        mockMvc.perform(post("/login/sendCode")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("email address"))
                 .andExpect(status().isOk());
@@ -53,4 +53,5 @@ public class LoginControllerTest {
         loginController.login("test@aol.com");
         verify(loginService).login(any(User.class));
     }
+
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class OrganizationController {
 
@@ -21,7 +22,6 @@ public class OrganizationController {
     @Autowired
     private ProjectRepository projectRepository;
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/organizations")
     public List<Organization> getAllOrganizations() {
         return organizationRepository.findAll();
