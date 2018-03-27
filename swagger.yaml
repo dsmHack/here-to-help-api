@@ -102,10 +102,8 @@ paths:
       responses:
         200:
           description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/definitions/Project"
+          schema:
+            $ref: "#/definitions/Project"
   /projects/{project_id}:
     get:
       parameters:
@@ -193,10 +191,20 @@ paths:
       responses:
         200:
           description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/definitions/User"
+          schema:
+            $ref: "#/definitions/User"
+    post:
+      summary: Add a new User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/User"
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/User"
   /users/{user_guid}/projects:
     get:
       summary: Get All User Projects
@@ -209,42 +217,8 @@ paths:
       responses:
         200:
           description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/definitions/User"
-
-  /users:
-    post:
-      summary: Add a new User
-      requestBody:
-        content:
-          application/json
-            schema:
-              $ref: "#/definitions/User"
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/definitions/User"
-  /organizations/{organizationId}/reports:
-    get:
-      parameters:
-        - in: path
-          name: organization_id
-          type: string
-          format: uuid
-          required: true
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/definitions/Report_Organization"
-
+          schema:
+            $ref: "#/definitions/User"
 
 definitions:
   User:
