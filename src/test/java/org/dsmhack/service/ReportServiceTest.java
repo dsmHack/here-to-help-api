@@ -300,7 +300,7 @@ public class ReportServiceTest {
         assertEquals(7.5, diffInHours, 0.0001);
     }
 
-    //todo: need to consider when someone is checked in, but not checked out, do we ignore these? or we use enddate as now? I'm going to ignore for now.
+    //todo: If checkOut is null, we cannot calculate hours, so return 0. We could potientially assume they're in the middle of volunteering and use now as the end. Need to ask the business.
     @Test
     public void hoursBasedOnCheckInCheckOut_checkOutNull() throws Exception {
         Timestamp checkIn = Timestamp.valueOf("2018-01-01 09:00:00");
