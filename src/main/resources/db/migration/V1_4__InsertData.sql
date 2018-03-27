@@ -19,3 +19,4 @@ insert into user (user_guid,user_id,first_name,last_name,email,role) values ('c8
 
 insert into user_org (user_guid,org_guid) values ('c84940da-2f0f-11e8-b467-0ed5f89f718b','c849343c-2f0f-11e8-b467-0ed5f89f718b');
 
+insert into check_in (user_guid,proj_guid,time_in,time_out) values ('c84940da-2f0f-11e8-b467-0ed5f89f718b', 'c8493824-2f0f-11e8-b467-0ed5f89f718b','2017-01-01 09:00:00', '2017-01-01 17:00:00');
