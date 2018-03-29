@@ -252,7 +252,6 @@ public class ReportServiceTest {
         assertEquals(14, reportOrganization.getTotalHours(), 0.0001);
     }
 
-    @Ignore
     @Test
     public void callsReportRepoAndMapsToApiObject_twoUsersHaveHoursForOneProjectButOnlyOneUserHasHoursForAnotherProject() throws Exception {
         String organizationId = "12341235135";
@@ -316,7 +315,7 @@ public class ReportServiceTest {
         assertEquals(0, userProject4.getTotalHours(), 0.0001);
         assertEquals(6, reportUser2.getTotalHours(), 0.0001);
 
-        assertEquals(14, reportOrganization.getTotalHours(), 0.0001);
+        assertEquals(22, reportOrganization.getTotalHours(), 0.0001);
     }
 
     @Test

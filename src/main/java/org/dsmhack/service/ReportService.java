@@ -24,7 +24,7 @@ public class ReportService {
 
         ReportOrganization reportOrganization = new ReportOrganization();
         List<ReportProject> organizationProjects = new ArrayList<ReportProject>();
-        List<ReportUser> projectUsers = new ArrayList<ReportUser>();
+        List<ReportUser> projectUsers = buildReportOrganizationSkeleton(reportDatas).getUsers();
 
         double organizationTotalHours = 0;
         for (ReportData reportData : reportDatas) {
@@ -86,7 +86,12 @@ public class ReportService {
         List<ReportUser> uniqueUsers = buildUniqueUsers(reportDatas);
         for (ReportUser uniqueUser : uniqueUsers) {
             List<ReportProject> projects = new ArrayList<ReportProject>();
-            projects.addAll(uniqueProjects);
+            for (ReportProject uniqueProject : uniqueProjects) {
+                ReportProject project = new ReportProject();
+                project.setProjectGuid(uniqueProject.getProjectGuid());
+                project.setName(uniqueProject.getName());
+                projects.add(project);
+            }
             uniqueUser.setProjects(projects);
         }
         ReportOrganization reportOrganization = new ReportOrganization();
@@ -112,10 +117,11 @@ public class ReportService {
         List<ReportUser> uniqueUsers = new ArrayList<ReportUser>();
         for (ReportData reportData : reportDatas) {
             if (!userGuidExists(reportData.getUserGuid(), uniqueUsers)) {
-                ReportUser reportUser = new ReportUser();
-                reportUser.setUserGuid(reportData.getUserGuid());
-                reportUser.setFirstName(reportData.getFirstName());
-                reportUser.setLastName(reportData.getLastName());
+                ReportUser user = new ReportUser();
+                user.setUserGuid(reportData.getUserGuid());
+                user.setFirstName(reportData.getFirstName());
+                user.setLastName(reportData.getLastName());
+                uniqueUsers.add(user);
             }
         }
         return uniqueUsers;
