@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -21,68 +20,29 @@ public class ReportService {
 
     public ReportOrganization getReportOrganization(String organizationId) {
         List<ReportData> reportDatas = reportRepository.findAllReportingInformation(organizationId);
-
         ReportOrganization reportOrganization = buildReportOrganizationSkeleton(reportDatas);
-        List<ReportProject> organizationProjects = reportOrganization.getProjects();
-        List<ReportUser> projectUsers = reportOrganization.getUsers();
-
-        double organizationTotalHours = 0;
         for (ReportData reportData : reportDatas) {
             double totalHours = calculateHours(reportData.getTimeIn(), reportData.getTimeOut());
-            if (addUser(reportData.getUserGuid(), projectUsers)) {
-                ReportUser reportUser = new ReportUser();
-                reportUser.setUserGuid(reportData.getUserGuid());
-                reportUser.setFirstName(reportData.getFirstName());
-                reportUser.setLastName(reportData.getLastName());
-                reportUser.setTotalHours(totalHours);
 
-                ReportProject userProject = new ReportProject();
-                userProject.setProjectGuid(reportData.getProjectGuid());
-                userProject.setName(reportData.getProjectName());
-                userProject.setTotalHours(totalHours);
-                reportUser.setProjects(Arrays.asList(userProject));
+            ReportProject organizationProject = findReportProject(reportData.getProjectGuid(), reportOrganization.getProjects());
+            organizationProject.setTotalHours(organizationProject.getTotalHours() + totalHours);
 
-                projectUsers.add(reportUser);
-            } else {
-                ReportUser reportUser = findUser(reportData.getUserGuid(), projectUsers);
+            ReportUser reportUser = findUser(reportData.getUserGuid(), reportOrganization.getUsers());
+            ReportProject userProject = findReportProject(reportData.getProjectGuid(), reportUser.getProjects());
+            userProject.setTotalHours(userProject.getTotalHours() + totalHours);
+            reportUser.setTotalHours(reportUser.getTotalHours() + totalHours);
 
-                if (addProject(reportData.getProjectGuid(), reportUser.getProjects())) {
-                    ReportProject userProject = new ReportProject();
-                    userProject.setProjectGuid(reportData.getProjectGuid());
-                    userProject.setName(reportData.getProjectName());
-
-                    userProject.setTotalHours(totalHours);
-                    List<ReportProject> reportProjects = new ArrayList<ReportProject>();
-                    reportProjects.addAll(reportUser.getProjects());
-                    reportProjects.add(userProject);
-                    reportUser.setProjects(reportProjects);
-                } else {
-                    ReportProject reportProject = findReportProject(reportData.getProjectGuid(), reportUser.getProjects());
-                    reportProject.setTotalHours(reportProject.getTotalHours() + totalHours);
-                }
-                reportUser.setTotalHours(reportUser.getTotalHours() + totalHours);
-            }
-
-            if (addProject(reportData.getProjectGuid(), organizationProjects)) {
-                ReportProject organizationProject = new ReportProject();
-                organizationProject.setProjectGuid(reportData.getProjectGuid());
-                organizationProject.setName(reportData.getProjectName());
-                organizationProject.setTotalHours(totalHours);
-                organizationProjects.add(organizationProject);
-            } else {
-                ReportProject reportProject = findReportProject(reportData.getProjectGuid(), organizationProjects);
-                reportProject.setTotalHours(reportProject.getTotalHours() + totalHours);
-            }
-            organizationTotalHours += totalHours;
+            reportOrganization.setTotalHours(reportOrganization.getTotalHours() + totalHours);
         }
-        reportOrganization.setProjects(organizationProjects);
-        reportOrganization.setUsers(projectUsers);
-        reportOrganization.setTotalHours(organizationTotalHours);
         return reportOrganization;
     }
 
     public ReportOrganization buildReportOrganizationSkeleton(List<ReportData> reportDatas) {
+        ReportOrganization reportOrganization = new ReportOrganization();
+
         List<ReportProject> uniqueProjects = buildUniqueProjects(reportDatas);
+        reportOrganization.setProjects(uniqueProjects);
+
         List<ReportUser> uniqueUsers = buildUniqueUsers(reportDatas);
         for (ReportUser uniqueUser : uniqueUsers) {
             List<ReportProject> projects = new ArrayList<ReportProject>();
@@ -94,9 +54,8 @@ public class ReportService {
             }
             uniqueUser.setProjects(projects);
         }
-        ReportOrganization reportOrganization = new ReportOrganization();
-        reportOrganization.setProjects(uniqueProjects);
         reportOrganization.setUsers(uniqueUsers);
+
         return reportOrganization;
     }
 
@@ -125,14 +84,6 @@ public class ReportService {
             }
         }
         return uniqueUsers;
-    }
-
-    private boolean addUser(String userGuid, List<ReportUser> projectUsers) {
-        return !userGuidExists(userGuid, projectUsers);
-    }
-
-    private boolean addProject(String projectGuid, List<ReportProject> projects) {
-        return !projectGuidExists(projectGuid, projects);
     }
 
     ReportUser findUser(String guid, List<ReportUser> users) {
