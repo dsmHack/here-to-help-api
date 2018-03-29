@@ -25,6 +25,7 @@ public class ReportService {
         ReportOrganization reportOrganization = new ReportOrganization();
         List<ReportProject> organizationProjects = new ArrayList<ReportProject>();
         List<ReportUser> projectUsers = new ArrayList<ReportUser>();
+
         double organizationTotalHours = 0;
         for (ReportData reportData : reportDatas) {
             double totalHours = calculateHours(reportData.getTimeIn(), reportData.getTimeOut());
@@ -78,6 +79,46 @@ public class ReportService {
         reportOrganization.setUsers(projectUsers);
         reportOrganization.setTotalHours(organizationTotalHours);
         return reportOrganization;
+    }
+
+    public ReportOrganization buildReportOrganizationSkeleton(List<ReportData> reportDatas) {
+        List<ReportProject> uniqueProjects = buildUniqueProjects(reportDatas);
+        List<ReportUser> uniqueUsers = buildUniqueUsers(reportDatas);
+        for (ReportUser uniqueUser : uniqueUsers) {
+            List<ReportProject> projects = new ArrayList<ReportProject>();
+            projects.addAll(uniqueProjects);
+            uniqueUser.setProjects(projects);
+        }
+        ReportOrganization reportOrganization = new ReportOrganization();
+        reportOrganization.setProjects(uniqueProjects);
+        reportOrganization.setUsers(uniqueUsers);
+        return reportOrganization;
+    }
+
+    private List<ReportProject> buildUniqueProjects(List<ReportData> reportDatas) {
+        List<ReportProject> uniqueProjects = new ArrayList<ReportProject>();
+        for (ReportData reportData : reportDatas) {
+            if (!projectGuidExists(reportData.getProjectGuid(), uniqueProjects)) {
+                ReportProject project = new ReportProject();
+                project.setProjectGuid(reportData.getProjectGuid());
+                project.setName(reportData.getProjectName());
+                uniqueProjects.add(project);
+            }
+        }
+        return uniqueProjects;
+    }
+
+    private List<ReportUser> buildUniqueUsers(List<ReportData> reportDatas) {
+        List<ReportUser> uniqueUsers = new ArrayList<ReportUser>();
+        for (ReportData reportData : reportDatas) {
+            if (!userGuidExists(reportData.getUserGuid(), uniqueUsers)) {
+                ReportUser reportUser = new ReportUser();
+                reportUser.setUserGuid(reportData.getUserGuid());
+                reportUser.setFirstName(reportData.getFirstName());
+                reportUser.setLastName(reportData.getLastName());
+            }
+        }
+        return uniqueUsers;
     }
 
     private boolean addUser(String userGuid, List<ReportUser> projectUsers) {
