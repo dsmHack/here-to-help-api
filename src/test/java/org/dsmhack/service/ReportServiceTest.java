@@ -32,6 +32,7 @@ public class ReportServiceTest {
     public void callsReportRepoAndMapsToApiObject_happyPath() throws Exception {
         String organizationId = "12341235135";
         ReportData reportData = new ReportData();
+        reportData.setProjectGuid("projectGuid1");
         reportData.setProjectName("Project #1");
         reportData.setUserGuid("someGuid");
         reportData.setFirstName("John");
@@ -57,6 +58,54 @@ public class ReportServiceTest {
         assertEquals(8, reportUser.getTotalHours(), 0.0001);
 
         assertEquals(8, reportOrganization.getTotalHours(), 0.0001);
+    }
+
+    @Test
+    public void callsReportRepoAndMapsToApiObject_fractionsOfAnHourShouldStillAddUpToAnHour() throws Exception {
+        String organizationId = "12341235135";
+        ReportData reportData1 = new ReportData();
+        reportData1.setProjectGuid("projectGuid1");
+        reportData1.setProjectName("Project #1");
+        reportData1.setUserGuid("someGuid");
+        reportData1.setFirstName("John");
+        reportData1.setLastName("Doe");
+        reportData1.setTimeIn(Timestamp.valueOf("2018-01-01 09:00:00"));
+        reportData1.setTimeOut(Timestamp.valueOf("2018-01-01 09:20:00"));
+        ReportData reportData2 = new ReportData();
+        reportData2.setProjectGuid("projectGuid1");
+        reportData2.setProjectName("Project #1");
+        reportData2.setUserGuid("someGuid");
+        reportData2.setFirstName("John");
+        reportData2.setLastName("Doe");
+        reportData2.setTimeIn(Timestamp.valueOf("2018-01-01 10:00:00"));
+        reportData2.setTimeOut(Timestamp.valueOf("2018-01-01 10:20:00"));
+        ReportData reportData3 = new ReportData();
+        reportData3.setProjectGuid("projectGuid1");
+        reportData3.setProjectName("Project #1");
+        reportData3.setUserGuid("someGuid");
+        reportData3.setFirstName("John");
+        reportData3.setLastName("Doe");
+        reportData3.setTimeIn(Timestamp.valueOf("2018-01-01 11:00:00"));
+        reportData3.setTimeOut(Timestamp.valueOf("2018-01-01 11:20:00"));
+        List<ReportData> reportDatas = Arrays.asList(reportData1, reportData2, reportData3);
+        when(reportRepository.findAllReportingInformation(organizationId)).thenReturn(reportDatas);
+
+        ReportOrganization reportOrganization = reportService.getReportOrganization(organizationId);
+
+        ReportProject organizationProject = reportOrganization.getProjects().get(0);
+        assertEquals("Project #1", organizationProject.getName());
+        assertEquals(1, organizationProject.getTotalHours(), 0.0001);
+
+        ReportUser reportUser = reportOrganization.getUsers().get(0);
+        assertEquals("someGuid", reportUser.getUserGuid());
+        assertEquals("John", reportUser.getFirstName());
+        assertEquals("Doe", reportUser.getLastName());
+        ReportProject userProject = reportUser.getProjects().get(0);
+        assertEquals("Project #1", userProject.getName());
+        assertEquals(1, userProject.getTotalHours(), 0.0001);
+        assertEquals(1, reportUser.getTotalHours(), 0.0001);
+
+        assertEquals(1, reportOrganization.getTotalHours(), 0.0001);
     }
 
     @Test
