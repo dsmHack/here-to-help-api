@@ -22,9 +22,9 @@ public class ReportService {
     public ReportOrganization getReportOrganization(String organizationId) {
         List<ReportData> reportDatas = reportRepository.findAllReportingInformation(organizationId);
 
-        ReportOrganization reportOrganization = new ReportOrganization();
-        List<ReportProject> organizationProjects = new ArrayList<ReportProject>();
-        List<ReportUser> projectUsers = buildReportOrganizationSkeleton(reportDatas).getUsers();
+        ReportOrganization reportOrganization = buildReportOrganizationSkeleton(reportDatas);
+        List<ReportProject> organizationProjects = reportOrganization.getProjects();
+        List<ReportUser> projectUsers = reportOrganization.getUsers();
 
         double organizationTotalHours = 0;
         for (ReportData reportData : reportDatas) {
