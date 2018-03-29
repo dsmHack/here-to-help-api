@@ -27,7 +27,6 @@ public class ReportService {
         List<ReportUser> projectUsers = new ArrayList<ReportUser>();
         double organizationTotalHours = 0;
         for (ReportData reportData : reportDatas) {
-
             double totalHours = calculateHours(reportData.getTimeIn(), reportData.getTimeOut());
             if (addUser(reportData.getUserGuid(), projectUsers)) {
                 ReportUser reportUser = new ReportUser();

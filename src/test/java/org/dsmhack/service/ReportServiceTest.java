@@ -252,6 +252,72 @@ public class ReportServiceTest {
     }
 
     @Test
+    public void callsReportRepoAndMapsToApiObject_twoUsersHaveHoursForOneProjectButOnlyOneUserHasHoursForAnotherProject() throws Exception {
+        String organizationId = "12341235135";
+        ReportData reportData1 = new ReportData();
+        reportData1.setProjectGuid("projectGuid1");
+        reportData1.setProjectName("Project #1");
+        reportData1.setUserGuid("someGuid1");
+        reportData1.setFirstName("John");
+        reportData1.setLastName("Doe");
+        reportData1.setTimeIn(Timestamp.valueOf("2018-01-01 09:00:00"));
+        reportData1.setTimeOut(Timestamp.valueOf("2018-01-01 17:00:00"));
+        ReportData reportData2 = new ReportData();
+        reportData2.setProjectGuid("projectGuid1");
+        reportData2.setProjectName("Project #1");
+        reportData2.setUserGuid("someGuid2");
+        reportData2.setFirstName("Tim");
+        reportData2.setLastName("Smith");
+        reportData2.setTimeIn(Timestamp.valueOf("2018-02-02 09:00:00"));
+        reportData2.setTimeOut(Timestamp.valueOf("2018-02-02 15:00:00"));
+        ReportData reportData3 = new ReportData();
+        reportData3.setProjectGuid("projectGuid2");
+        reportData3.setProjectName("Project #2");
+        reportData3.setUserGuid("someGuid1");
+        reportData3.setFirstName("John");
+        reportData3.setLastName("Doe");
+        reportData3.setTimeIn(Timestamp.valueOf("2018-01-01 09:00:00"));
+        reportData3.setTimeOut(Timestamp.valueOf("2018-01-01 17:00:00"));
+        List<ReportData> reportDatas = Arrays.asList(reportData1, reportData2, reportData3);
+        when(reportRepository.findAllReportingInformation(organizationId)).thenReturn(reportDatas);
+
+        ReportOrganization reportOrganization = reportService.getReportOrganization(organizationId);
+
+        assertEquals(2, reportOrganization.getProjects().size());
+        ReportProject organizationProject1 = reportOrganization.getProjects().get(0);
+        assertEquals("Project #1", organizationProject1.getName());
+        assertEquals(14, organizationProject1.getTotalHours(), 0.0001);
+        ReportProject organizationProject2 = reportOrganization.getProjects().get(1);
+        assertEquals("Project #2", organizationProject2.getName());
+        assertEquals(8, organizationProject2.getTotalHours(), 0.0001);
+
+        ReportUser reportUser1 = reportOrganization.getUsers().get(0);
+        assertEquals("someGuid1", reportUser1.getUserGuid());
+        assertEquals("John", reportUser1.getFirstName());
+        assertEquals("Doe", reportUser1.getLastName());
+        ReportProject userProject1 = reportUser1.getProjects().get(0);
+        assertEquals("Project #1", userProject1.getName());
+        assertEquals(8, userProject1.getTotalHours(), 0.0001);
+        ReportProject userProject2 = reportUser1.getProjects().get(1);
+        assertEquals("Project #2", userProject2.getName());
+        assertEquals(8, userProject2.getTotalHours(), 0.0001);
+        assertEquals(16, reportUser1.getTotalHours(), 0.0001);
+        ReportUser reportUser2 = reportOrganization.getUsers().get(1);
+        assertEquals("someGuid2", reportUser2.getUserGuid());
+        assertEquals("Tim", reportUser2.getFirstName());
+        assertEquals("Smith", reportUser2.getLastName());
+        ReportProject userProject3 = reportUser2.getProjects().get(0);
+        assertEquals("Project #1", userProject3.getName());
+        assertEquals(6, userProject3.getTotalHours(), 0.0001);
+        ReportProject userProject4 = reportUser2.getProjects().get(1);
+        assertEquals("Project #2", userProject4.getName());
+        assertEquals(0, userProject4.getTotalHours(), 0.0001);
+        assertEquals(6, reportUser2.getTotalHours(), 0.0001);
+
+        assertEquals(14, reportOrganization.getTotalHours(), 0.0001);
+    }
+
+    @Test
     public void findTheProjectGivenTheGuid_exists() {
         ReportProject reportProject = new ReportProject();
         String guid = "someGuid";
