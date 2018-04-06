@@ -486,4 +486,33 @@ public class ReportServiceTest {
         assertEquals(0, diffInHours, 0.0001);
     }
 
+    @Test
+    public void reportDataAsCsv() {
+        String organizationId = "12341235135";
+        ReportData reportData1 = new ReportData();
+        reportData1.setProjectGuid("projectGuid1");
+        reportData1.setProjectName("Project #1");
+        reportData1.setUserGuid("someGuid");
+        reportData1.setFirstName("John");
+        reportData1.setLastName("Doe");
+        reportData1.setTimeIn(Timestamp.valueOf("2018-01-01 09:00:00"));
+        reportData1.setTimeOut(Timestamp.valueOf("2018-01-01 17:00:00"));
+        ReportData reportData2 = new ReportData();
+        reportData2.setProjectGuid("projectGuid2");
+        reportData2.setProjectName("Project #2");
+        reportData2.setUserGuid("someGuid");
+        reportData2.setFirstName("Jane");
+        reportData2.setLastName("Smith");
+        reportData2.setTimeIn(Timestamp.valueOf("2018-01-01 10:00:00"));
+        reportData2.setTimeOut(Timestamp.valueOf("2018-01-01 10:20:00"));
+        List<ReportData> reportDatas = Arrays.asList(reportData1, reportData2);
+        when(reportRepository.findAllReportingInformation(organizationId)).thenReturn(reportDatas);
+
+        String reportDataAsCsv = reportService.getReportDataAsCsv(organizationId);
+
+        assertEquals("ProjectName,FirstName,LastName,TimeIn,TimeOut\r\n" +
+                "Project #1,John,Doe,2018-01-01 09:00:00.0,2018-01-01 17:00:00.0\r\n" +
+                "Project #2,Jane,Smith,2018-01-01 10:00:00.0,2018-01-01 10:20:00.0", reportDataAsCsv);
+    }
+
 }

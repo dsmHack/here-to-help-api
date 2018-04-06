@@ -37,6 +37,22 @@ public class ReportService {
         return reportOrganization;
     }
 
+    public String getReportDataAsCsv(String organizationId) {
+        List<ReportData> reportDatas = reportRepository.findAllReportingInformation(organizationId);
+        String reportDataAsCsv = "ProjectName,FirstName,LastName,TimeIn,TimeOut\r\n";
+        for (ReportData reportData : reportDatas) {
+            reportDataAsCsv += reportData.getProjectName() + ","
+                    + reportData.getFirstName() + ","
+                    + reportData.getLastName() + ","
+                    + reportData.getTimeIn() + ","
+                    + reportData.getTimeOut();
+            if (reportDatas.indexOf(reportData) != reportDatas.size() - 1) {
+                reportDataAsCsv += "\r\n";
+            }
+        }
+        return reportDataAsCsv;
+    }
+
     public ReportOrganization buildReportOrganizationSkeleton(List<ReportData> reportDatas) {
         ReportOrganization reportOrganization = new ReportOrganization();
 
