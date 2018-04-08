@@ -17,18 +17,12 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * User
- */
 @Entity
 @Table(name = "user")
 public class User {
     @Id
     @Column(name = "user_guid")
     private String userGuid;
-
-    @Column(name = "user_id")
-    private String userId;
 
     @Column(name = "first_name")
     private String firstName;
@@ -54,14 +48,6 @@ public class User {
 
     public void setUserGuid(String userGuid) {
         this.userGuid = userGuid;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public String getFirstName() {
@@ -102,18 +88,6 @@ public class User {
 
     public void setProjectList(List<Project> projectList) {
         this.projectList = projectList;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "userGuid='" + userGuid + '\'' +
-                ", userId='" + userId + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", role='" + role + '\'' +
-                '}';
     }
 }
 

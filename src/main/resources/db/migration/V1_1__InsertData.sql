@@ -22,3 +22,4 @@ insert into check_in (user_guid,proj_guid,time_in,time_out) values ('c8493c34-2f
 insert into check_in (user_guid,proj_guid,time_in,time_out) values ('c84940da-2f0f-11e8-b467-0ed5f89f718b', 'c8493824-2f0f-11e8-b467-0ed5f89f718b','2017-01-01 09:00:00', '2017-01-01 17:00:00');
 insert into check_in (user_guid,proj_guid,time_in,time_out) values ('c84940da-2f0f-11e8-b467-0ed5f89f718b', 'c8493824-2f0f-11e8-b467-0ed5f89f718b','2017-01-02 09:00:00', '2017-01-02 15:00:00');
 insert into check_in (user_guid,proj_guid,time_in,time_out) values ('c84940da-2f0f-11e8-b467-0ed5f89f718b', 'c8493824-2f0f-11e8-b467-0ed5f89f718b','2017-01-03 12:00:00', '2017-01-03 17:00:00');
+
