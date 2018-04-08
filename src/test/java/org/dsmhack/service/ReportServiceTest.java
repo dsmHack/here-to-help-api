@@ -5,7 +5,6 @@ import org.dsmhack.model.ReportOrganization;
 import org.dsmhack.model.ReportProject;
 import org.dsmhack.model.ReportUser;
 import org.dsmhack.repository.ReportRepository;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -43,7 +42,7 @@ public class ReportServiceTest {
         List<ReportData> reportDatas = Arrays.asList(reportData);
         when(reportRepository.findAllReportingInformation(organizationId)).thenReturn(reportDatas);
 
-        ReportOrganization reportOrganization = reportService.getReportOrganization(organizationId);
+        ReportOrganization reportOrganization = reportService.getReportDataAsJson(organizationId);
 
         ReportProject organizationProject = reportOrganization.getProjects().get(0);
         assertEquals("Project #1", organizationProject.getName());
@@ -91,7 +90,7 @@ public class ReportServiceTest {
         List<ReportData> reportDatas = Arrays.asList(reportData1, reportData2, reportData3);
         when(reportRepository.findAllReportingInformation(organizationId)).thenReturn(reportDatas);
 
-        ReportOrganization reportOrganization = reportService.getReportOrganization(organizationId);
+        ReportOrganization reportOrganization = reportService.getReportDataAsJson(organizationId);
 
         ReportProject organizationProject = reportOrganization.getProjects().get(0);
         assertEquals("Project #1", organizationProject.getName());
@@ -131,7 +130,7 @@ public class ReportServiceTest {
         List<ReportData> reportDatas = Arrays.asList(reportData1, reportData2);
         when(reportRepository.findAllReportingInformation(organizationId)).thenReturn(reportDatas);
 
-        ReportOrganization reportOrganization = reportService.getReportOrganization(organizationId);
+        ReportOrganization reportOrganization = reportService.getReportDataAsJson(organizationId);
 
         assertEquals(1, reportOrganization.getProjects().size());
         ReportProject organizationProject = reportOrganization.getProjects().get(0);
@@ -180,7 +179,7 @@ public class ReportServiceTest {
         List<ReportData> reportDatas = Arrays.asList(reportData1, reportData2);
         when(reportRepository.findAllReportingInformation(organizationId)).thenReturn(reportDatas);
 
-        ReportOrganization reportOrganization = reportService.getReportOrganization(organizationId);
+        ReportOrganization reportOrganization = reportService.getReportDataAsJson(organizationId);
 
         assertEquals(2, reportOrganization.getProjects().size());
         ReportProject organizationProject1 = reportOrganization.getProjects().get(0);
@@ -230,7 +229,7 @@ public class ReportServiceTest {
         List<ReportData> reportDatas = Arrays.asList(reportData1, reportData2);
         when(reportRepository.findAllReportingInformation(organizationId)).thenReturn(reportDatas);
 
-        ReportOrganization reportOrganization = reportService.getReportOrganization(organizationId);
+        ReportOrganization reportOrganization = reportService.getReportDataAsJson(organizationId);
 
         assertEquals(1, reportOrganization.getProjects().size());
         ReportProject organizationProject = reportOrganization.getProjects().get(0);
@@ -282,7 +281,7 @@ public class ReportServiceTest {
         List<ReportData> reportDatas = Arrays.asList(reportData1, reportData2, reportData3);
         when(reportRepository.findAllReportingInformation(organizationId)).thenReturn(reportDatas);
 
-        ReportOrganization reportOrganization = reportService.getReportOrganization(organizationId);
+        ReportOrganization reportOrganization = reportService.getReportDataAsJson(organizationId);
 
         assertEquals(2, reportOrganization.getProjects().size());
         ReportProject organizationProject1 = reportOrganization.getProjects().get(0);

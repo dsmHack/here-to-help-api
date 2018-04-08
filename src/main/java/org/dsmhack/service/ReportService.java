@@ -18,7 +18,7 @@ public class ReportService {
     @Autowired
     private ReportRepository reportRepository;
 
-    public ReportOrganization getReportOrganization(String organizationId) {
+    public ReportOrganization getReportDataAsJson(String organizationId) {
         List<ReportData> reportDatas = reportRepository.findAllReportingInformation(organizationId);
         ReportOrganization reportOrganization = buildReportOrganizationSkeleton(reportDatas);
         for (ReportData reportData : reportDatas) {
