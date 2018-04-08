@@ -20,9 +20,6 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
-/**
- * UserProject
- */
 @Entity
 @Table(name = "user_project")
 public class UserProject {

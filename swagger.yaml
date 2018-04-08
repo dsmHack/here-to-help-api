@@ -226,7 +226,6 @@ definitions:
   User:
     type: "object"
     required:
-    - "user_id"
     - "first_name"
     - "last_name"
     - "email"
@@ -235,8 +234,6 @@ definitions:
       user_guid:
         type: "string"
         format: "uuid"
-      user_id:
-        type: "string"
       first_name:
         type: "string"
       last_name:
@@ -313,7 +310,6 @@ definitions:
     type: "object"
     required:
     - "project_guid"
-    - "project_id"
     - "name"
     - "start_date"
     - "end_date"
@@ -321,8 +317,6 @@ definitions:
       project_guid:
         type: "string"
         format: "uuid"
-      project_id:
-        type: "string"
       name:
         type: "string"
       description:

@@ -21,9 +21,6 @@ import java.sql.Timestamp;
 import java.util.Objects;
 import java.util.UUID;
 
-/**
- * UserOrganization
- */
 @Entity
 @Table(name = "user_org")
 public class UserOrganization {
