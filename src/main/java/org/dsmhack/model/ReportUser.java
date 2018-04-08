@@ -1,14 +1,25 @@
 package org.dsmhack.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ReportUser   {
-  private String firstName = null;
-  private String lastName = null;
-  private List<ReportProject> projects = null;
-  private Integer totalHours = null;
+public class ReportUser {
+  private String userGuid;
+  private String firstName;
+  private String lastName;
+  private List<ReportProject> projects = new ArrayList<ReportProject>();
+  private double totalHours = 0;
 
   public ReportUser() {
+  }
+
+  public String getUserGuid() {
+    return userGuid;
+  }
+
+  public ReportUser setUserGuid(String userGuid) {
+    this.userGuid = userGuid;
+    return this;
   }
 
   public String getFirstName() {
@@ -38,11 +49,11 @@ public class ReportUser   {
     return this;
   }
 
-  public Integer getTotalHours() {
+  public double getTotalHours() {
     return totalHours;
   }
 
-  public ReportUser setTotalHours(Integer totalHours) {
+  public ReportUser setTotalHours(double totalHours) {
     this.totalHours = totalHours;
     return this;
   }

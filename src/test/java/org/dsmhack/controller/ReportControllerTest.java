@@ -1,8 +1,8 @@
 package org.dsmhack.controller;
 
+import org.dsmhack.model.ReportData;
 import org.dsmhack.model.ReportOrganization;
 import org.dsmhack.service.ReportService;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -25,21 +25,38 @@ public class ReportControllerTest {
     private ReportService reportService;
 
     @Test
-    public void getReportByOrgIdReturns200() throws Exception {
+    public void getReportDataAsJsonByOrgIdReturns200() throws Exception {
         mockMvc = MockMvcBuilders.standaloneSetup(reportController).build();
-        mockMvc.perform(get("/organizations/1/reports"))
+        mockMvc.perform(get("/organizations/1/reports/json"))
                 .andExpect(status().isOk());
     }
 
-    @Ignore
     @Test
-    public void getReportOrganizationReturnsReportOrganization() throws Exception {
+    public void getReportDataAsJsonReturnsReportOrganization() throws Exception {
         String organizationId = "12341235135";
         ReportOrganization expectedReportOrganization = new ReportOrganization();
-        when(reportService.getReportOrganization(organizationId)).thenReturn(expectedReportOrganization);
+        when(reportService.getReportDataAsJson(organizationId)).thenReturn(expectedReportOrganization);
 
-        ReportOrganization actualReportOrganization = reportController.getReportOrganization(organizationId);
+        ReportOrganization actualReportOrganization = reportController.getReportDataAsJson(organizationId);
 
         assertEquals(expectedReportOrganization, actualReportOrganization);
+    }
+
+    @Test
+    public void getReportDataAsCsvByOrgIdReturns200() throws Exception {
+        mockMvc = MockMvcBuilders.standaloneSetup(reportController).build();
+        mockMvc.perform(get("/organizations/1/reports/csv"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void getReportDataAsCsvReturnsReportOrganization() throws Exception {
+        String organizationId = "12341235135";
+        String expectedReportDataAsCsv = "reportDataAsCsv";
+        when(reportService.getReportDataAsCsv(organizationId)).thenReturn(expectedReportDataAsCsv);
+
+        String actualReportDataAsCsv = reportController.getReportDataAsCsv(organizationId);
+
+        assertEquals(expectedReportDataAsCsv, actualReportDataAsCsv);
     }
 }

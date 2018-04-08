@@ -1,11 +1,12 @@
 package org.dsmhack.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReportOrganization   {
-  private List<ReportProject> projects = null;
-  private List<ReportUser> users = null;
-  private Integer totalHours = null;
+  private List<ReportProject> projects = new ArrayList<ReportProject>();
+  private List<ReportUser> users = new ArrayList<ReportUser>();
+  private double totalHours = 0;
 
   public ReportOrganization() {
   }
@@ -28,11 +29,11 @@ public class ReportOrganization   {
     return this;
   }
 
-  public Integer getTotalHours() {
+  public double getTotalHours() {
     return totalHours;
   }
 
-  public ReportOrganization setTotalHours(Integer totalHours) {
+  public ReportOrganization setTotalHours(double totalHours) {
     this.totalHours = totalHours;
     return this;
   }
