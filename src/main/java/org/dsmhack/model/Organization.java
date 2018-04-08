@@ -22,9 +22,6 @@ import javax.persistence.Table;
 import java.util.Objects;
 import java.util.UUID;
 
-/**
- * Organization
- */
 @Entity
 @Table(name = "organization")
 public class Organization {

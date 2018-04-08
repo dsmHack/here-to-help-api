@@ -25,9 +25,6 @@ import java.time.OffsetDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
-/**
- * Project
- */
 @Entity
 @Table(name = "project")
 public class Project {
@@ -37,9 +34,6 @@ public class Project {
 
     @Column(name = "org_guid")
     private String orgGuid;
-
-    @Column(name = "proj_id")
-    private String projId;
 
     @Column(name = "name")
     private String name;
@@ -67,14 +61,6 @@ public class Project {
 
     public void setOrgGuid(String orgGuid) {
         this.orgGuid = orgGuid;
-    }
-
-    public String getProjId() {
-        return projId;
-    }
-
-    public void setProjId(String projId) {
-        this.projId = projId;
     }
 
     public String getName() {

@@ -18,4 +18,3 @@ insert into user (user_guid,user_id,first_name,last_name,email,role) values ('c8
 insert into user (user_guid,user_id,first_name,last_name,email,role) values ('c84940da-2f0f-11e8-b467-0ed5f89f718b','mikep','Mike','Panda','mpanda@gmail.com','volunteer');
 
 insert into user_org (user_guid,org_guid) values ('c84940da-2f0f-11e8-b467-0ed5f89f718b','c849343c-2f0f-11e8-b467-0ed5f89f718b');
-
