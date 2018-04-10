@@ -93,5 +93,6 @@ public class User {
     public void setProjectList(List<Project> projectList) {
         this.projectList = projectList;
     }
+
 }
 

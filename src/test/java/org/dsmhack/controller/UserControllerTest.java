@@ -56,14 +56,20 @@ public class UserControllerTest {
     public void postUserByIdReturns200() throws Exception {
         mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
 
-        MvcResult mvcResult = mockMvc.perform(post("/users")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"firstName\":\"John\"}"))
-                .andExpect(status().isOk())
-                .andReturn();
+        MvcResult mvcResult = mockMvc.perform(
+            post("/users")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content("{\"firstName\":\"John\"}")
+        ).andExpect(
+            status().isOk()
+        ).andReturn();
 
         assertEquals(null, mvcResult.getResolvedException());
     }
+
+    //todo: need to add tests specifically asserting "First Name is required.", "First Name cannot be larger than x and less than y", etc. This will require figuring out how to get better text output.
+
+    //todo: need to pull in the gson library to create a toJson method in User something like new Gson().toJson(this); Might consider working into a factory concept to keep these test files small
 
     @Test
     public void postCallsGuidGeneratorToGenerateUUIDBeforeSavingUser() throws Exception {
