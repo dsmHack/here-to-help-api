@@ -8,8 +8,10 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
@@ -21,6 +23,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -46,6 +49,20 @@ public class UserControllerTest {
         User user = new User();
         userController.save(user);
         verify(userRepository).save(user);
+    }
+
+    //todo: modify this to return a 201 rather than a 200
+    @Test
+    public void postUserByIdReturns200() throws Exception {
+        mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
+
+        MvcResult mvcResult = mockMvc.perform(post("/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"firstName\":\"John\"}"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        assertEquals(null, mvcResult.getResolvedException());
     }
 
     @Test

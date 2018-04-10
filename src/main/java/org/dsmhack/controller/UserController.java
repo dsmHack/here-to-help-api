@@ -12,6 +12,7 @@ import org.dsmhack.service.CodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -43,7 +44,7 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public User save(@RequestBody User user) {
+    public User save(@Valid @RequestBody User user) {
         user.setUserGuid(codeGenerator.generateUUID());
         return userRepository.save(user);
     }
