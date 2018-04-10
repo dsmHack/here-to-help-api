@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
@@ -58,13 +59,31 @@ public class UserControllerTest {
 
         MvcResult mvcResult = mockMvc.perform(
             post("/users")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content("{\"firstName\":\"John\"}")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"firstName\":\"John\",\"lastName\":\"Doe\",\"email\":\"jdoe@example.com\",\"role\":\"admin\"}")
         ).andExpect(
             status().isOk()
         ).andReturn();
 
         assertEquals(null, mvcResult.getResolvedException());
+    }
+
+    @Test
+    public void postUserByIdReturns400() throws Exception {
+        mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
+
+        MvcResult mvcResult = mockMvc.perform(
+            post("/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{}")
+        ).andExpect(
+            status().isBadRequest()
+        ).andReturn();
+
+        assertTrue(mvcResult.getResolvedException().getMessage().contains("NotNull.user.firstName"));
+        assertTrue(mvcResult.getResolvedException().getMessage().contains("NotNull.user.lastName"));
+        assertTrue(mvcResult.getResolvedException().getMessage().contains("NotNull.user.email"));
+        assertTrue(mvcResult.getResolvedException().getMessage().contains("NotNull.user.role"));
     }
 
     //todo: need to add tests specifically asserting "First Name is required.", "First Name cannot be larger than x and less than y", etc. This will require figuring out how to get better text output.

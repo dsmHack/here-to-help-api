@@ -27,16 +27,19 @@ public class User {
     private String userGuid;
 
     @NotNull
-    @Size(min=1, max=50)
+//    @Size(min=1, max=50)
     @Column(name = "first_name")
     private String firstName;
 
+    @NotNull
     @Column(name = "last_name")
     private String lastName;
 
+    @NotNull
     @Column(name = "email")
     private String email;
 
+    @NotNull
     @Column(name = "role")
     private String role;
 
