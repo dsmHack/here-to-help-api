@@ -1,5 +1,6 @@
 package org.dsmhack.controller;
 
+import com.google.gson.Gson;
 import org.dsmhack.model.User;
 import org.dsmhack.repository.UserRepository;
 import org.dsmhack.service.CodeGenerator;
@@ -60,7 +61,12 @@ public class UserControllerTest {
         MvcResult mvcResult = mockMvc.perform(
             post("/users")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"firstName\":\"John\",\"lastName\":\"Doe\",\"email\":\"jdoe@example.com\",\"role\":\"admin\"}")
+                .content(new User()
+                    .setFirstName("John")
+                    .setLastName("Doe")
+                    .setEmail("jdoe@example.com")
+                    .setRole("admin")
+                    .toJson())
         ).andExpect(
             status().isOk()
         ).andReturn();
@@ -69,7 +75,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void postUserByIdReturns400() throws Exception {
+    public void postUserByIdReturns400_notNull() throws Exception {
         mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
 
         MvcResult mvcResult = mockMvc.perform(
@@ -80,16 +86,56 @@ public class UserControllerTest {
             status().isBadRequest()
         ).andReturn();
 
-        assertTrue(mvcResult.getResolvedException().getMessage().contains("NotNull.user.firstName"));
-        assertTrue(mvcResult.getResolvedException().getMessage().contains("NotNull.user.lastName"));
-        assertTrue(mvcResult.getResolvedException().getMessage().contains("NotNull.user.email"));
-        assertTrue(mvcResult.getResolvedException().getMessage().contains("NotNull.user.role"));
+        String message = mvcResult.getResolvedException().getMessage();
+        assertTrue(message.contains("First name is required."));
+        assertTrue(message.contains("Last name is required."));
+        assertTrue(message.contains("Email is required."));
+        assertTrue(message.contains("Role is required."));
     }
 
-    //todo: need to add tests specifically asserting "First Name is required.", "First Name cannot be larger than x and less than y", etc. This will require figuring out how to get better text output.
-    //http://www.springboottutorial.com/spring-boot-validation-for-rest-services
-    
-    //todo: need to pull in the gson library to create a toJson method in User something like new Gson().toJson(this); Might consider working into a factory concept to keep these test files small
+    @Test
+    public void postUserByIdReturns400_size() throws Exception {
+        mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
+
+        MvcResult mvcResult = mockMvc.perform(
+            post("/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new User()
+                        .setFirstName("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+                        .setLastName("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+                        .setEmail("cccccccccccccccccccccccccccccccccccccccc@example.com")
+                        .setRole("ddddddddddddddddddddddddddddddddddddddddddddddddddd")
+                        .toJson())
+        ).andExpect(
+            status().isBadRequest()
+        ).andReturn();
+
+        String message = mvcResult.getResolvedException().getMessage();
+        assertTrue(message.contains("First name must be between 1 and 50 characters."));
+        assertTrue(message.contains("Last name must be between 1 and 50 characters."));
+        assertTrue(message.contains("Email must be between 1 and 50 characters."));
+        assertTrue(message.contains("Role must be between 1 and 50 characters."));
+    }
+
+    @Test
+    public void postUserByIdReturns400_email() throws Exception {
+        mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
+
+        MvcResult mvcResult = mockMvc.perform(
+            post("/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new User()
+                    .setFirstName("John")
+                    .setLastName("Doe")
+                    .setEmail("BadEmail")
+                    .setRole("admin")
+                    .toJson())
+        ).andExpect(
+            status().isBadRequest()
+        ).andReturn();
+
+        assertTrue(mvcResult.getResolvedException().getMessage().contains("Email is not valid."));
+    }
 
     @Test
     public void postCallsGuidGeneratorToGenerateUUIDBeforeSavingUser() throws Exception {

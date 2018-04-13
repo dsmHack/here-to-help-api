@@ -13,6 +13,9 @@
 
 package org.dsmhack.model;
 
+import com.google.gson.Gson;
+import org.hibernate.validator.constraints.Email;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -26,20 +29,24 @@ public class User {
     @Column(name = "user_guid")
     private String userGuid;
 
-    @NotNull
-//    @Size(min=1, max=50)
+    @NotNull(message = "First name is required.")
+    @Size(min = 1, max = 50, message = "First name must be between 1 and 50 characters.")
     @Column(name = "first_name")
     private String firstName;
 
-    @NotNull
+    @NotNull(message = "Last name is required.")
+    @Size(min = 1, max = 50, message = "Last name must be between 1 and 50 characters.")
     @Column(name = "last_name")
     private String lastName;
 
-    @NotNull
+    @NotNull(message = "Email is required.")
+    @Size(min = 1, max = 50, message = "Email must be between 1 and 50 characters.")
+    @Email(message = "Email is not valid.")
     @Column(name = "email")
     private String email;
 
-    @NotNull
+    @NotNull(message = "Role is required.")
+    @Size(min = 1, max = 50, message = "Role must be between 1 and 50 characters.")
     @Column(name = "role")
     private String role;
 
@@ -53,49 +60,58 @@ public class User {
         return userGuid;
     }
 
-    public void setUserGuid(String userGuid) {
+    public User setUserGuid(String userGuid) {
         this.userGuid = userGuid;
+        return this;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public User setFirstName(String firstName) {
         this.firstName = firstName;
+        return this;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public User setLastName(String lastName) {
         this.lastName = lastName;
+        return this;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public User setEmail(String email) {
         this.email = email;
+        return this;
     }
 
     public String getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public User setRole(String role) {
         this.role = role;
+        return this;
     }
 
     public List<Project> getProjectList() {
         return projectList;
     }
 
-    public void setProjectList(List<Project> projectList) {
+    public User setProjectList(List<Project> projectList) {
         this.projectList = projectList;
+        return this;
     }
 
+    public String toJson() {
+        return new Gson().toJson(this);
+    }
 }
 
