@@ -7,11 +7,11 @@ VALUES ('c84936e4-2f0f-11e8-b467-0ed5f89f718b','Community Foundation Of Des Moin
         '5152234847','erica@amandathepanda.org','https://www.desmoinesfoundation.org/','https://www.facebook.com/AmandaThePandaCares','https://twitter.com/AmandaPandaDSM','https://www.youtube.com/channel/UCLoZRRCIWIV7fEvGIeYH1yA',
         '1915 Gra Ave','Des Moines','IA','50309');
 
-insert into project (proj_guid,proj_id,org_guid,name,description,start_dt,end_dt) values ('c8493824-2f0f-11e8-b467-0ed5f89f718b','1234567', 'c849343c-2f0f-11e8-b467-0ed5f89f718b','Planting Bamboo','We are planting lots of Bamboo',current_timestamp, null);
-insert into project (proj_guid,proj_id,org_guid,name,description,start_dt,end_dt) values ('c8493950-2f0f-11e8-b467-0ed5f89f718b','1234568', 'c849343c-2f0f-11e8-b467-0ed5f89f718b','Big Hug','We are giving lots of Hugs',current_timestamp, null);
+insert into project (proj_guid,org_guid,name,description,start_dt,end_dt) values ('c8493824-2f0f-11e8-b467-0ed5f89f718b','c849343c-2f0f-11e8-b467-0ed5f89f718b','Planting Bamboo','We are planting lots of Bamboo',current_timestamp, null);
+insert into project (proj_guid,org_guid,name,description,start_dt,end_dt) values ('c8493950-2f0f-11e8-b467-0ed5f89f718b','c849343c-2f0f-11e8-b467-0ed5f89f718b','Big Hug','We are giving lots of Hugs',current_timestamp, null);
 
-insert into user (user_guid,user_id,first_name,last_name,email,role) values ('c8493c34-2f0f-11e8-b467-0ed5f89f718b','amandap','Amanda','Panda','apanda@gmail.com','manager');
-insert into user (user_guid,user_id,first_name,last_name,email,role) values ('c84940da-2f0f-11e8-b467-0ed5f89f718b','mikep','Mike','Panda','mpanda@gmail.com','volunteer');
+insert into user (user_guid,first_name,last_name,email,role) values ('c8493c34-2f0f-11e8-b467-0ed5f89f718b','Amanda','Panda','apanda@gmail.com','manager');
+insert into user (user_guid,first_name,last_name,email,role) values ('c84940da-2f0f-11e8-b467-0ed5f89f718b','Mike','Panda','mpanda@gmail.com','volunteer');
 
 insert into user_org (user_guid,org_guid) values ('c8493c34-2f0f-11e8-b467-0ed5f89f718b','c849343c-2f0f-11e8-b467-0ed5f89f718b');
 insert into user_org (user_guid,org_guid) values ('c84940da-2f0f-11e8-b467-0ed5f89f718b','c849343c-2f0f-11e8-b467-0ed5f89f718b');
