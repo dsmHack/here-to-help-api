@@ -14,6 +14,7 @@
 package org.dsmhack.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.Gson;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -55,10 +56,13 @@ public class Organization {
 
     @Column(name = "address1")
     private String address1;
+
     @Column(name = "city")
     private String city;
+
     @Column(name = "state")
     private String state;
+
     @Column(name = "zip")
     private String zip;
 
@@ -66,104 +70,121 @@ public class Organization {
         return organizationId;
     }
 
-    public void setOrganizationId(String orgGuid) {
+    public Organization setOrganizationId(String organizationId) {
         this.organizationId = organizationId;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public Organization setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public Organization setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public Organization setEmail(String email) {
         this.email = email;
+        return this;
     }
 
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public Organization setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+        return this;
     }
 
     public String getWebsiteUrl() {
         return websiteUrl;
     }
 
-    public void setWebsiteUrl(String websiteUrl) {
+    public Organization setWebsiteUrl(String websiteUrl) {
         this.websiteUrl = websiteUrl;
+        return this;
     }
 
     public String getFacebookUrl() {
         return facebookUrl;
     }
 
-    public void setFacebookUrl(String facebookUrl) {
+    public Organization setFacebookUrl(String facebookUrl) {
         this.facebookUrl = facebookUrl;
+        return this;
     }
 
     public String getTwitterUrl() {
         return twitterUrl;
     }
 
-    public void setTwitterUrl(String twitterUrl) {
+    public Organization setTwitterUrl(String twitterUrl) {
         this.twitterUrl = twitterUrl;
+        return this;
     }
 
     public String getInstagramUrl() {
         return instagramUrl;
     }
 
-    public void setInstagramUrl(String instagramUrl) {
+    public Organization setInstagramUrl(String instagramUrl) {
         this.instagramUrl = instagramUrl;
+        return this;
     }
 
     public String getAddress1() {
         return address1;
     }
 
-    public void setAddress1(String address1) {
+    public Organization setAddress1(String address1) {
         this.address1 = address1;
+        return this;
     }
 
     public String getCity() {
         return city;
     }
 
-    public void setCity(String city) {
+    public Organization setCity(String city) {
         this.city = city;
+        return this;
     }
 
     public String getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public Organization setState(String state) {
         this.state = state;
+        return this;
     }
 
     public String getZip() {
         return zip;
     }
 
-    public void setZip(String zip) {
+    public Organization setZip(String zip) {
         this.zip = zip;
+        return this;
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 }
 

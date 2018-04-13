@@ -14,6 +14,7 @@
 package org.dsmhack.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.Gson;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -59,6 +60,10 @@ public class UserOrganization {
         public void setOrgGuid(String orgGuid) {
             this.orgGuid = orgGuid;
         }
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 }
 

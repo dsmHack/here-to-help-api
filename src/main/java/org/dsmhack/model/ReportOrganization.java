@@ -1,5 +1,7 @@
 package org.dsmhack.model;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +38,10 @@ public class ReportOrganization   {
   public ReportOrganization setTotalHours(double totalHours) {
     this.totalHours = totalHours;
     return this;
+  }
+
+  public String toJson() {
+    return new Gson().toJson(this);
   }
 }
 

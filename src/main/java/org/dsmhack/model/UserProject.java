@@ -14,6 +14,7 @@
 package org.dsmhack.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.Gson;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -58,6 +59,10 @@ public class UserProject {
         public void setProjGuid(String projGuid) {
             this.projGuid = projGuid;
         }
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 }
 
