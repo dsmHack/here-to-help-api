@@ -13,65 +13,62 @@
 
 package org.dsmhack.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.Gson;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Objects;
-import java.util.UUID;
 
 @Entity
 @Table(name = "organization")
 public class Organization {
     @Id
-    @Column(name = "org_guid")
-    private String organizationId;
+    @Column
+    private String orgGuid;
 
-    @Column(name = "name")
+    @Column
     private String name;
 
-    @Column(name = "description")
-    private String description = null;
+    @Column
+    private String description;
 
-    @Column(name = "email")
-    private String email = null;
+    @Column
+    private String email;
 
-    @Column(name = "phone")
+    @Column
     private String phoneNumber;
 
-    @Column(name = "web_url")
+    @Column
     private String websiteUrl;
 
-    @Column(name = "facebook")
+    @Column
     private String facebookUrl;
 
-    @Column(name = "twitter")
+    @Column
     private String twitterUrl;
 
-    @Column(name = "instagram")
+    @Column
     private String instagramUrl;
 
-    @Column(name = "address1")
+    @Column
     private String address1;
 
-    @Column(name = "city")
+    @Column
     private String city;
 
-    @Column(name = "state")
+    @Column
     private String state;
 
-    @Column(name = "zip")
+    @Column
     private String zip;
 
-    public String getOrganizationId() {
-        return organizationId;
+    public String getOrgGuid() {
+        return orgGuid;
     }
 
-    public Organization setOrganizationId(String organizationId) {
-        this.organizationId = organizationId;
+    public Organization setOrgGuid(String orgGuid) {
+        this.orgGuid = orgGuid;
         return this;
     }
 

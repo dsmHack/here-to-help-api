@@ -23,32 +23,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "user")
+@Table
 public class User {
     @Id
-    @Column(name = "user_guid")
+    @Column
     //todo: eventually move move to UUID
     private String userGuid;
 
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "first_name")
+    @Column
     private String firstName;
 
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "last_name")
+    @Column
     private String lastName;
 
     @NotNull
     @Size(min = 1, max = 50)
     @Email
-    @Column(name = "email")
+    @Column
     private String email;
 
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "role")
+    @Column
     private String role;
 
     @Transient

@@ -26,13 +26,13 @@ import java.sql.Timestamp;
 public class LoginToken {
 
     @Id
-    @Column(name = "USER_GUID", nullable = false)
+    @Column
     private String userGuid;
 
-    @Column(name = "TOKEN", nullable = false)
+    @Column
     private String token;
 
-    @Column(name = "TOKEN_EXP_DATE", nullable = false)
+    @Column
     private Timestamp tokenExpDate;
 
     public String getUserGuid() {

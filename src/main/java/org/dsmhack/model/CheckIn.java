@@ -23,16 +23,16 @@ import java.sql.Timestamp;
 public class CheckIn {
 
     @Id
-    @Column(name = "USER_GUID", nullable = false)
+    @Column
     private String userGuid;
 
-    @Column(name = "PROJ_GUID", nullable = false)
+    @Column
     private String projGuid;
 
-    @Column(name = "TIME_IN", nullable = false)
+    @Column
     private Timestamp timeIn;
 
-    @Column(name = "TIME_OUT")
+    @Column
     private Timestamp timeOut;
 
     public CheckIn(){}

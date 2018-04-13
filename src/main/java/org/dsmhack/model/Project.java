@@ -31,31 +31,31 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name = "project")
+@Table
 public class Project {
     @Id
-    @Column(name = "proj_guid")
+    @Column
     private String projGuid;
 
     @NotNull
     @Size(min = 1, max = 36)
-    @Column(name = "org_guid")
+    @Column
     private String orgGuid;
 
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "name")
+    @Column
     private String name;
 
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "description")
+    @Column
     private String description;
 
-    @Column(name = "start_dt")
+    @Column
     private Timestamp startDate;
 
-    @Column(name = "end_dt")
+    @Column
     private Timestamp endDate;
 
     public Project() {
