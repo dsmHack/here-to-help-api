@@ -66,10 +66,10 @@ public class UserControllerTest {
         ).andReturn();
 
         String message = mvcResult.getResolvedException().getMessage();
-        assertTrue(message.contains("First name is required."));
-        assertTrue(message.contains("Last name is required."));
-        assertTrue(message.contains("Email is required."));
-        assertTrue(message.contains("Role is required."));
+        assertTrue(message.contains("NotNull.user.firstName"));
+        assertTrue(message.contains("NotNull.user.lastName"));
+        assertTrue(message.contains("NotNull.user.email"));
+        assertTrue(message.contains("NotNull.user.role"));
     }
 
     //todo: modify this to return a 201 rather than a 200
@@ -111,10 +111,10 @@ public class UserControllerTest {
         ).andReturn();
 
         String message = mvcResult.getResolvedException().getMessage();
-        assertTrue(message.contains("First name must be between 1 and 50 characters."));
-        assertTrue(message.contains("Last name must be between 1 and 50 characters."));
-        assertTrue(message.contains("Email must be between 1 and 50 characters."));
-        assertTrue(message.contains("Role must be between 1 and 50 characters."));
+        assertTrue(message.contains("Size.user.firstName"));
+        assertTrue(message.contains("Size.user.lastName"));
+        assertTrue(message.contains("Size.user.email"));
+        assertTrue(message.contains("Size.user.role"));
     }
 
     @Test
@@ -134,7 +134,7 @@ public class UserControllerTest {
             status().isBadRequest()
         ).andReturn();
 
-        assertTrue(mvcResult.getResolvedException().getMessage().contains("Email is not valid."));
+        assertTrue(mvcResult.getResolvedException().getMessage().contains("Email.user.email"));
     }
 
     @Test

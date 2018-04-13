@@ -27,26 +27,27 @@ import java.util.List;
 public class User {
     @Id
     @Column(name = "user_guid")
+    //todo: eventually move move to UUID
     private String userGuid;
 
-    @NotNull(message = "First name is required.")
-    @Size(min = 1, max = 50, message = "First name must be between 1 and 50 characters.")
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "first_name")
     private String firstName;
 
-    @NotNull(message = "Last name is required.")
-    @Size(min = 1, max = 50, message = "Last name must be between 1 and 50 characters.")
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "last_name")
     private String lastName;
 
-    @NotNull(message = "Email is required.")
-    @Size(min = 1, max = 50, message = "Email must be between 1 and 50 characters.")
-    @Email(message = "Email is not valid.")
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Email
     @Column(name = "email")
     private String email;
 
-    @NotNull(message = "Role is required.")
-    @Size(min = 1, max = 50, message = "Role must be between 1 and 50 characters.")
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "role")
     private String role;
 

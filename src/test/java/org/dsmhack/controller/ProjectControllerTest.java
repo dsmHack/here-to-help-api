@@ -146,9 +146,9 @@ public class ProjectControllerTest {
         ).andReturn();
 
         String message = mvcResult.getResolvedException().getMessage();
-        assertTrue(message.contains("Organization guid is required."));
-        assertTrue(message.contains("Name is required."));
-        assertTrue(message.contains("Description is required."));
+        assertTrue(message.contains("NotNull.project.orgGuid"));
+        assertTrue(message.contains("NotNull.project.name"));
+        assertTrue(message.contains("NotNull.project.description"));
     }
 
     @Test
@@ -166,9 +166,9 @@ public class ProjectControllerTest {
         ).andReturn();
 
         String message = mvcResult.getResolvedException().getMessage();
-        assertTrue(message.contains("Organization guid must be between 1 and 36 characters."));
-        assertTrue(message.contains("Name must be between 1 and 50 characters."));
-        assertTrue(message.contains("Description must be between 1 and 50 characters."));
+        assertTrue(message.contains("Size.project.orgGuid"));
+        assertTrue(message.contains("Size.project.name"));
+        assertTrue(message.contains("Size.project.description"));
     }
 
     @Test

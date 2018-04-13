@@ -37,20 +37,18 @@ public class Project {
     @Column(name = "proj_guid")
     private String projGuid;
 
-    @NotNull(message = "Organization guid is required.")
-    @Size(min = 1, max = 36, message = "Organization guid must be between 1 and 36 characters.")
+    @NotNull
+    @Size(min = 1, max = 36)
     @Column(name = "org_guid")
     private String orgGuid;
 
-    @NotNull(message = "Name is required.")
-
-    @Size(min = 1, max = 50, message = "Name must be between 1 and 50 characters.")
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "name")
     private String name;
 
-    @NotNull(message = "Description is required.")
-
-    @Size(min = 1, max = 50, message = "Description must be between 1 and 50 characters.")
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "description")
     private String description;
 
