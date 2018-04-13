@@ -22,7 +22,7 @@ import javax.persistence.Table;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "LOGIN_TOKEN")
+@Table
 public class LoginToken {
 
     @Id

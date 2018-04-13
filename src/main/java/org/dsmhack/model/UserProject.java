@@ -22,7 +22,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name = "user_project")
+@Table
 public class UserProject {
     @EmbeddedId
     private MyKey myKey;
@@ -37,11 +37,10 @@ public class UserProject {
 
     @Embeddable
     public static class MyKey implements Serializable {
-
-        @Column(name = "USER_GUID", nullable = false)
+        @Column
         private String userGuid;
 
-        @Column(name = "PROJ_GUID", nullable = false)
+        @Column
         private String projGuid;
 
         public String getUserGuid() {

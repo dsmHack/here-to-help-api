@@ -21,7 +21,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "organization")
+@Table
 public class Organization {
     @Id
     @Column

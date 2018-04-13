@@ -19,7 +19,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "check_in")
+@Table
 public class CheckIn {
 
     @Id

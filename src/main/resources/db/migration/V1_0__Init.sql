@@ -33,7 +33,7 @@ create table project (
   CONSTRAINT PRJ_ORG_FK FOREIGN KEY (ORG_GUID) REFERENCES organization (ORG_GUID),
   PRIMARY KEY (PROJ_GUID));
 
-create table user_org (
+create table user_organization (
   ORG_GUID CHAR(36) NOT NULL,
   USER_GUID CHAR(36) NOT NULL,
   CONSTRAINT USR_ORG_U_FK FOREIGN KEY (USER_GUID) REFERENCES user (USER_GUID),
