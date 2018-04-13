@@ -10,6 +10,7 @@ import org.dsmhack.repository.UserProjectRepository;
 import org.dsmhack.repository.UserRepository;
 import org.dsmhack.service.CodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
@@ -43,7 +44,7 @@ public class ProjectController {
     }
 
     @PostMapping("/projects")
-    public Project save(@RequestBody Project project) {
+    public Project save(@Validated @RequestBody Project project) {
         project.setProjGuid(codeGenerator.generateUUID());
         return projectRepository.save(project);
     }

@@ -53,27 +53,6 @@ public class UserControllerTest {
         verify(userRepository).save(user);
     }
 
-    //todo: modify this to return a 201 rather than a 200
-    @Test
-    public void postUserByIdReturns200() throws Exception {
-        mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
-
-        MvcResult mvcResult = mockMvc.perform(
-            post("/users")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(new User()
-                    .setFirstName("John")
-                    .setLastName("Doe")
-                    .setEmail("jdoe@example.com")
-                    .setRole("admin")
-                    .toJson())
-        ).andExpect(
-            status().isOk()
-        ).andReturn();
-
-        assertEquals(null, mvcResult.getResolvedException());
-    }
-
     @Test
     public void postUserByIdReturns400_notNull() throws Exception {
         mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
@@ -91,6 +70,27 @@ public class UserControllerTest {
         assertTrue(message.contains("Last name is required."));
         assertTrue(message.contains("Email is required."));
         assertTrue(message.contains("Role is required."));
+    }
+
+    //todo: modify this to return a 201 rather than a 200
+    @Test
+    public void postUserByIdReturns200() throws Exception {
+        mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
+
+        MvcResult mvcResult = mockMvc.perform(
+                post("/users")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new User()
+                                .setFirstName("John")
+                                .setLastName("Doe")
+                                .setEmail("jdoe@example.com")
+                                .setRole("admin")
+                                .toJson())
+        ).andExpect(
+                status().isOk()
+        ).andReturn();
+
+        assertEquals(null, mvcResult.getResolvedException());
     }
 
     @Test
