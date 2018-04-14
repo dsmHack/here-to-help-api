@@ -1,5 +1,7 @@
 package org.dsmhack.model;
 
+import com.google.gson.Gson;
+
 import java.sql.Timestamp;
 
 public class ReportData {
@@ -75,5 +77,9 @@ public class ReportData {
     public ReportData setTimeOut(Timestamp timeOut) {
         this.timeOut = timeOut;
         return this;
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 }

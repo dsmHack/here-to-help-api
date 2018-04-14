@@ -13,6 +13,8 @@
 
 package org.dsmhack.model;
 
+import com.google.gson.Gson;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -20,42 +22,47 @@ import javax.persistence.Table;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "LOGIN_TOKEN")
+@Table
 public class LoginToken {
 
     @Id
-    @Column(name = "USER_GUID", nullable = false)
+    @Column
     private String userGuid;
 
-    @Column(name = "TOKEN", nullable = false)
+    @Column
     private String token;
 
-    @Column(name = "TOKEN_EXP_DATE", nullable = false)
+    @Column
     private Timestamp tokenExpDate;
-
-    public LoginToken(){}
 
     public String getUserGuid() {
         return userGuid;
     }
 
-    public void setUserGuid(String userGuid) {
+    public LoginToken setUserGuid(String userGuid) {
         this.userGuid = userGuid;
+        return this;
     }
 
     public String getToken() {
         return token;
     }
 
-    public void setToken(String token) {
+    public LoginToken setToken(String token) {
         this.token = token;
+        return this;
     }
 
     public Timestamp getTokenExpDate() {
         return tokenExpDate;
     }
 
-    public void setTokenExpDate(Timestamp tokenExpDate) {
+    public LoginToken setTokenExpDate(Timestamp tokenExpDate) {
         this.tokenExpDate = tokenExpDate;
+        return this;
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 }

@@ -13,12 +13,17 @@
 
 package org.dsmhack.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.OffsetDateTime;
@@ -26,49 +31,61 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name = "project")
+@Table
 public class Project {
     @Id
-    @Column(name = "proj_guid")
+    @Column
     private String projGuid;
 
-    @Column(name = "org_guid")
+    @NotNull
+    @Size(min = 1, max = 36)
+    @Column
     private String orgGuid;
 
-    @Column(name = "name")
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column
     private String name;
 
-    @Column(name = "description")
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column
     private String description;
 
-    @Column(name = "start_dt")
+    @Column
     private Timestamp startDate;
 
-    @Column(name = "end_dt")
+    @Column
     private Timestamp endDate;
+
+    public Project() {
+    }
 
     public String getProjGuid() {
         return projGuid;
     }
 
-    public void setProjGuid(String projGuid) {
+    public Project setProjGuid(String projGuid) {
         this.projGuid = projGuid;
+        return this;
     }
 
     public String getOrgGuid() {
         return orgGuid;
     }
 
-    public void setOrgGuid(String orgGuid) {
+    public Project setOrgGuid(String orgGuid) {
         this.orgGuid = orgGuid;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public Project setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getDescription() {
@@ -84,8 +101,9 @@ public class Project {
         return startDate;
     }
 
-    public void setStartDate(Timestamp startDate) {
+    public Project setStartDate(Timestamp startDate) {
         this.startDate = startDate;
+        return this;
     }
 
     public Timestamp getEndDate() {
@@ -95,6 +113,10 @@ public class Project {
     public Project setEndDate(Timestamp endDate) {
         this.endDate = endDate;
         return this;
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 }
 

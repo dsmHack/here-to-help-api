@@ -14,6 +14,7 @@
 package org.dsmhack.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.Gson;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -22,7 +23,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name = "user_org")
+@Table
 public class UserOrganization {
     @EmbeddedId
     private MyKey myKey;
@@ -37,11 +38,10 @@ public class UserOrganization {
 
     @Embeddable
     public class MyKey implements Serializable {
-
-        @Column(name = "USER_GUID", nullable = false)
+        @Column
         private String userGuid;
 
-        @Column(name = "ORG_GUID", nullable = false)
+        @Column
         private String orgGuid;
 
         public String getUserGuid() {
@@ -59,6 +59,10 @@ public class UserOrganization {
         public void setOrgGuid(String orgGuid) {
             this.orgGuid = orgGuid;
         }
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 }
 

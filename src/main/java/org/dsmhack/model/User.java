@@ -13,27 +13,42 @@
 
 package org.dsmhack.model;
 
+import com.google.gson.Gson;
+import org.hibernate.validator.constraints.Email;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "user")
+@Table
 public class User {
     @Id
-    @Column(name = "user_guid")
+    @Column
+    //todo: eventually move move to UUID
     private String userGuid;
 
-    @Column(name = "first_name")
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column
     private String firstName;
 
-    @Column(name = "last_name")
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column
     private String lastName;
 
-    @Column(name = "email")
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Email
+    @Column
     private String email;
 
-    @Column(name = "role")
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column
     private String role;
 
     @Transient
@@ -46,48 +61,58 @@ public class User {
         return userGuid;
     }
 
-    public void setUserGuid(String userGuid) {
+    public User setUserGuid(String userGuid) {
         this.userGuid = userGuid;
+        return this;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public User setFirstName(String firstName) {
         this.firstName = firstName;
+        return this;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public User setLastName(String lastName) {
         this.lastName = lastName;
+        return this;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public User setEmail(String email) {
         this.email = email;
+        return this;
     }
 
     public String getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public User setRole(String role) {
         this.role = role;
+        return this;
     }
 
     public List<Project> getProjectList() {
         return projectList;
     }
 
-    public void setProjectList(List<Project> projectList) {
+    public User setProjectList(List<Project> projectList) {
         this.projectList = projectList;
+        return this;
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 }
 

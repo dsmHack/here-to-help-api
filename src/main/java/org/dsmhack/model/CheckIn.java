@@ -13,24 +13,26 @@
 
 package org.dsmhack.model;
 
+import com.google.gson.Gson;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "check_in")
+@Table
 public class CheckIn {
 
     @Id
-    @Column(name = "USER_GUID", nullable = false)
+    @Column
     private String userGuid;
 
-    @Column(name = "PROJ_GUID", nullable = false)
+    @Column
     private String projGuid;
 
-    @Column(name = "TIME_IN", nullable = false)
+    @Column
     private Timestamp timeIn;
 
-    @Column(name = "TIME_OUT")
+    @Column
     private Timestamp timeOut;
 
     public CheckIn(){}
@@ -39,32 +41,40 @@ public class CheckIn {
         return userGuid;
     }
 
-    public void setUserGuid(String userGuid) {
+    public CheckIn setUserGuid(String userGuid) {
         this.userGuid = userGuid;
+        return this;
     }
 
     public String getProjGuid() {
         return projGuid;
     }
 
-    public void setProjGuid(String projGuid) {
+    public CheckIn setProjGuid(String projGuid) {
         this.projGuid = projGuid;
+        return this;
     }
 
     public Timestamp getTimeIn() {
         return timeIn;
     }
 
-    public void setTimeIn(Timestamp timeIn) {
+    public CheckIn setTimeIn(Timestamp timeIn) {
         this.timeIn = timeIn;
+        return this;
     }
 
     public Timestamp getTimeOut() {
         return timeOut;
     }
 
-    public void setTimeOut(Timestamp timeOut) {
+    public CheckIn setTimeOut(Timestamp timeOut) {
         this.timeOut = timeOut;
+        return this;
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 }
 

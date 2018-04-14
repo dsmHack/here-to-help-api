@@ -5,7 +5,6 @@ import org.dsmhack.model.Project;
 import org.dsmhack.repository.CheckInRepository;
 import org.dsmhack.repository.ProjectRepository;
 import org.dsmhack.service.CodeGenerator;
-import org.hibernate.annotations.Check;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +14,7 @@ import org.mockito.Mock;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.sql.Timestamp;
@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -114,6 +115,60 @@ public class ProjectControllerTest {
         List<CheckIn> expectedCheckins = Collections.singletonList(new CheckIn());
         when(checkInRepository.findByProjGuid("guid")).thenReturn(expectedCheckins);
         assertEquals(expectedCheckins, projectController.findAllCheckins("guid"));
+    }
+
+    //todo: modify this to return a 201 rather than a 200
+    @Test
+    public void postProjectByIdReturns200() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(
+            post("/projects")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new Project()
+                    .setOrgGuid("orgGuid")
+                    .setName("name")
+                    .setDescription("description")
+                    .toJson())
+        ).andExpect(
+            status().isOk()
+        ).andReturn();
+
+        assertEquals(null, mvcResult.getResolvedException());
+    }
+
+    @Test
+    public void postUserByIdReturns400_notNull() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(
+            post("/projects")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{}")
+        ).andExpect(
+            status().isBadRequest()
+        ).andReturn();
+
+        String message = mvcResult.getResolvedException().getMessage();
+        assertTrue(message.contains("NotNull.project.orgGuid"));
+        assertTrue(message.contains("NotNull.project.name"));
+        assertTrue(message.contains("NotNull.project.description"));
+    }
+
+    @Test
+    public void postUserByIdReturns400_size() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(
+            post("/projects")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new Project()
+                    .setOrgGuid("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+                    .setName("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+                    .setDescription("ccccccccccccccccccccccccccccccccccccccccccccccccccc")
+                    .toJson())
+        ).andExpect(
+            status().isBadRequest()
+        ).andReturn();
+
+        String message = mvcResult.getResolvedException().getMessage();
+        assertTrue(message.contains("Size.project.orgGuid"));
+        assertTrue(message.contains("Size.project.name"));
+        assertTrue(message.contains("Size.project.description"));
     }
 
     @Test
