@@ -10,6 +10,8 @@ import org.dsmhack.repository.UserProjectRepository;
 import org.dsmhack.repository.UserRepository;
 import org.dsmhack.service.CodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,9 +46,9 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public User save(@Validated @RequestBody User user) {
+    public ResponseEntity<User> save(@Validated @RequestBody User user) {
         user.setUserGuid(codeGenerator.generateUUID());
-        return userRepository.save(user);
+        return new ResponseEntity<>(userRepository.save(user), HttpStatus.CREATED);
     }
 
     @GetMapping("/users/{userGuid}/projects")

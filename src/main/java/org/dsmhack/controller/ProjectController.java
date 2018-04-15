@@ -46,7 +46,7 @@ public class ProjectController {
     }
 
     @PostMapping("/projects")
-    public ResponseEntity save(@Validated @RequestBody Project project) {
+    public ResponseEntity<Project> save(@Validated @RequestBody Project project) {
         project.setProjGuid(codeGenerator.generateUUID());
         return new ResponseEntity<>(projectRepository.save(project), HttpStatus.CREATED);
     }

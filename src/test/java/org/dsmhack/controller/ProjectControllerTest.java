@@ -86,7 +86,7 @@ public class ProjectControllerTest {
     public void postReturnsSavedProject() throws Exception {
         Project expectedProject = new Project();
         when(projectRepository.save(any(Project.class))).thenReturn(expectedProject);
-        Object actualProject = projectController.save(new Project()).getBody();
+        Project actualProject = projectController.save(new Project()).getBody();
         assertEquals(expectedProject, actualProject);
     }
 
@@ -118,7 +118,7 @@ public class ProjectControllerTest {
     }
 
     @Test
-    public void postProjectByIdReturns200() throws Exception {
+    public void postProjectByIdReturns201() throws Exception {
         MvcResult mvcResult = mockMvc.perform(
             post("/projects")
                 .contentType(MediaType.APPLICATION_JSON)

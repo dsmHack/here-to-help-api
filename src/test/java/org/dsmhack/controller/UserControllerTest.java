@@ -72,22 +72,21 @@ public class UserControllerTest {
         assertTrue(message.contains("NotNull.user.role"));
     }
 
-    //todo: modify this to return a 201 rather than a 200
     @Test
-    public void postUserByIdReturns200() throws Exception {
+    public void postUserByIdReturns201() throws Exception {
         mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
 
         MvcResult mvcResult = mockMvc.perform(
-                post("/users")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(new User()
-                                .setFirstName("John")
-                                .setLastName("Doe")
-                                .setEmail("jdoe@example.com")
-                                .setRole("admin")
-                                .toJson())
+            post("/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new User()
+                    .setFirstName("John")
+                    .setLastName("Doe")
+                    .setEmail("jdoe@example.com")
+                    .setRole("admin")
+                    .toJson())
         ).andExpect(
-                status().isOk()
+            status().isCreated()
         ).andReturn();
 
         assertEquals(null, mvcResult.getResolvedException());
@@ -151,7 +150,7 @@ public class UserControllerTest {
     public void postReturnsSavedUser() throws Exception {
         User expectedUser = new User();
         when(userRepository.save(any(User.class))).thenReturn(expectedUser);
-        User actualUser = userController.save(new User());
+        User actualUser = userController.save(new User()).getBody();
         assertEquals(expectedUser, actualUser);
     }
 
