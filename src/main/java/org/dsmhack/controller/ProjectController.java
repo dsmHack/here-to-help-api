@@ -57,12 +57,12 @@ public class ProjectController {
     }
 
     @PostMapping("/projects/{projectId}/check-ins")
-    public CheckIn checkUserIn(@PathVariable String projectId, @RequestBody String userGuid){
+    public ResponseEntity<CheckIn> checkUserIn(@PathVariable String projectId, @RequestBody String userGuid){
         CheckIn checkIn = new CheckIn();
         checkIn.setUserGuid(userGuid);
         checkIn.setProjGuid(projectId);
         checkIn.setTimeIn(Timestamp.valueOf(LocalDateTime.now()));
-        return checkInRepository.save(checkIn);
+        return new ResponseEntity<>(checkInRepository.save(checkIn), HttpStatus.CREATED);
     }
 
     @PostMapping("/projects/{projectId}/user")

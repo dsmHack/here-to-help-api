@@ -171,11 +171,11 @@ public class ProjectControllerTest {
     }
 
     @Test
-    public void checkinReturns200() throws Exception {
+    public void checkinReturns201() throws Exception {
         mockMvc.perform(post("/projects/12345/check-ins")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("user-uuid"))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
     @Test
@@ -191,7 +191,7 @@ public class ProjectControllerTest {
     public void checkInReturnsCheckIn() throws Exception {
         CheckIn expectedCheckin = new CheckIn();
         when(checkInRepository.save(any(CheckIn.class))).thenReturn(expectedCheckin);
-        assertEquals(expectedCheckin, projectController.checkUserIn("12345", "userId"));
+        assertEquals(expectedCheckin, projectController.checkUserIn("12345", "userId").getBody());
     }
 
     @Test
