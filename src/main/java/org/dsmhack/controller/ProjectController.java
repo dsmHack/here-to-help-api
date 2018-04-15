@@ -10,6 +10,8 @@ import org.dsmhack.repository.UserProjectRepository;
 import org.dsmhack.repository.UserRepository;
 import org.dsmhack.service.CodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,9 +46,9 @@ public class ProjectController {
     }
 
     @PostMapping("/projects")
-    public Project save(@Validated @RequestBody Project project) {
+    public ResponseEntity save(@Validated @RequestBody Project project) {
         project.setProjGuid(codeGenerator.generateUUID());
-        return projectRepository.save(project);
+        return new ResponseEntity<>(projectRepository.save(project), HttpStatus.CREATED);
     }
 
     @GetMapping("/projects/{projectId}/check-ins")

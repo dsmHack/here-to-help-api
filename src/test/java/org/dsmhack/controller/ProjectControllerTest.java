@@ -12,6 +12,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -85,7 +86,7 @@ public class ProjectControllerTest {
     public void postReturnsSavedProject() throws Exception {
         Project expectedProject = new Project();
         when(projectRepository.save(any(Project.class))).thenReturn(expectedProject);
-        Project actualProject = projectController.save(new Project());
+        Object actualProject = projectController.save(new Project()).getBody();
         assertEquals(expectedProject, actualProject);
     }
 
@@ -107,7 +108,6 @@ public class ProjectControllerTest {
     public void findAllCheckinsReturns200() throws Exception {
         mockMvc.perform(get("/projects/1/check-ins"))
                 .andExpect(status().isOk());
-
     }
 
     @Test
@@ -117,7 +117,6 @@ public class ProjectControllerTest {
         assertEquals(expectedCheckins, projectController.findAllCheckins("guid"));
     }
 
-    //todo: modify this to return a 201 rather than a 200
     @Test
     public void postProjectByIdReturns200() throws Exception {
         MvcResult mvcResult = mockMvc.perform(
@@ -129,7 +128,7 @@ public class ProjectControllerTest {
                     .setDescription("description")
                     .toJson())
         ).andExpect(
-            status().isOk()
+            status().isCreated()
         ).andReturn();
 
         assertEquals(null, mvcResult.getResolvedException());
