@@ -41,11 +41,11 @@ public class LoginControllerTest {
     }
 
     @Test
-    public void loginReturns200() throws Exception {
+    public void loginReturns201() throws Exception {
         mockMvc.perform(post("/login/sendCode")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("email address"))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
     @Test

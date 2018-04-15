@@ -30,7 +30,7 @@ public class LoginController {
     public ResponseEntity login(@RequestBody String emailAddress) {
         User user = userRepository.findByEmail(emailAddress);
         loginService.login(user);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
     
     @PostMapping("/login/verifyCode")

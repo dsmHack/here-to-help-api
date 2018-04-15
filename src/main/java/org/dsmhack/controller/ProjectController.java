@@ -10,6 +10,8 @@ import org.dsmhack.repository.UserProjectRepository;
 import org.dsmhack.repository.UserRepository;
 import org.dsmhack.service.CodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,9 +46,9 @@ public class ProjectController {
     }
 
     @PostMapping("/projects")
-    public Project save(@Validated @RequestBody Project project) {
+    public ResponseEntity<Project> save(@Validated @RequestBody Project project) {
         project.setProjGuid(codeGenerator.generateUUID());
-        return projectRepository.save(project);
+        return new ResponseEntity<>(projectRepository.save(project), HttpStatus.CREATED);
     }
 
     @GetMapping("/projects/{projectId}/check-ins")
@@ -55,12 +57,12 @@ public class ProjectController {
     }
 
     @PostMapping("/projects/{projectId}/check-ins")
-    public CheckIn checkUserIn(@PathVariable String projectId, @RequestBody String userGuid){
+    public ResponseEntity<CheckIn> checkUserIn(@PathVariable String projectId, @RequestBody String userGuid){
         CheckIn checkIn = new CheckIn();
         checkIn.setUserGuid(userGuid);
         checkIn.setProjGuid(projectId);
         checkIn.setTimeIn(Timestamp.valueOf(LocalDateTime.now()));
-        return checkInRepository.save(checkIn);
+        return new ResponseEntity<>(checkInRepository.save(checkIn), HttpStatus.CREATED);
     }
 
     @PostMapping("/projects/{projectId}/user")
