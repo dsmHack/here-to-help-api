@@ -2,6 +2,8 @@ package org.dsmhack.service;
 
 import org.junit.Test;
 
+import java.util.UUID;
+
 import static org.junit.Assert.*;
 
 public class CodeGeneratorTest {
@@ -9,8 +11,8 @@ public class CodeGeneratorTest {
     @Test
     public void generateGuidReturnsUniqueUUID() throws Exception {
         CodeGenerator codeGenerator = new CodeGenerator();
-        String firstUUID = codeGenerator.generateUUID();
-        String secondUUID = codeGenerator.generateUUID();
+        UUID firstUUID = codeGenerator.generateUUID();
+        UUID secondUUID = codeGenerator.generateUUID();
         assertNotEquals(firstUUID, secondUUID);
     }
 

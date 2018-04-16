@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 @Entity
 @Table
@@ -24,10 +25,10 @@ public class CheckIn {
 
     @Id
     @Column
-    private String userGuid;
+    private UUID userGuid;
 
     @Column
-    private String projGuid;
+    private UUID projGuid;
 
     @Column
     private Timestamp timeIn;
@@ -37,20 +38,20 @@ public class CheckIn {
 
     public CheckIn(){}
 
-    public String getUserGuid() {
+    public UUID getUserGuid() {
         return userGuid;
     }
 
-    public CheckIn setUserGuid(String userGuid) {
+    public CheckIn setUserGuid(UUID userGuid) {
         this.userGuid = userGuid;
         return this;
     }
 
-    public String getProjGuid() {
+    public UUID getProjGuid() {
         return projGuid;
     }
 
-    public CheckIn setProjGuid(String projGuid) {
+    public CheckIn setProjGuid(UUID projGuid) {
         this.projGuid = projGuid;
         return this;
     }

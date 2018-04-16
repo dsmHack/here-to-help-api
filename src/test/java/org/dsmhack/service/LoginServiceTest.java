@@ -11,6 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.UUID;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -56,11 +58,12 @@ public class LoginServiceTest {
     public void loginSavesTokenToRepositoryWithCorrectFields() throws Exception {
         when(codeGenerator.generateLoginToken()).thenReturn("123");
         User user = new User();
-        user.setUserGuid("userGuid");
+        UUID userGuid = UUID.randomUUID();
+        user.setUserGuid(userGuid);
         loginService.login(user);
         ArgumentCaptor<LoginToken> captor = ArgumentCaptor.forClass(LoginToken.class);
         verify(loginTokenRepository).save(captor.capture());
         assertEquals("123", captor.getValue().getToken());
-        assertEquals("userGuid", captor.getValue().getUserGuid());
+        assertEquals(userGuid, captor.getValue().getUserGuid());
     }
 }
