@@ -19,7 +19,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Table
@@ -33,7 +33,7 @@ public class LoginToken {
     private String token;
 
     @Column
-    private Timestamp tokenExpDate;
+    private LocalDateTime tokenExpDate;
 
     public String getUserGuid() {
         return userGuid;
@@ -53,11 +53,11 @@ public class LoginToken {
         return this;
     }
 
-    public Timestamp getTokenExpDate() {
+    public LocalDateTime getTokenExpDate() {
         return tokenExpDate;
     }
 
-    public LoginToken setTokenExpDate(Timestamp tokenExpDate) {
+    public LoginToken setTokenExpDate(LocalDateTime tokenExpDate) {
         this.tokenExpDate = tokenExpDate;
         return this;
     }

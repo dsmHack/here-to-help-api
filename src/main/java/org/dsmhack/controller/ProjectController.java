@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -61,7 +60,7 @@ public class ProjectController {
         CheckIn checkIn = new CheckIn();
         checkIn.setUserGuid(userGuid);
         checkIn.setProjGuid(projectId);
-        checkIn.setTimeIn(Timestamp.valueOf(LocalDateTime.now()));
+        checkIn.setTimeIn(LocalDateTime.now());
         return new ResponseEntity<>(checkInRepository.save(checkIn), HttpStatus.CREATED);
     }
 
@@ -79,7 +78,7 @@ public class ProjectController {
     @PutMapping("/projects/{projectId}/check-ins")
     public CheckIn checkOutUser(@PathVariable String projectId, @RequestBody String userGuid){
         CheckIn checkIn = checkInRepository.findByProjGuidAndUserGuid(projectId, userGuid);
-        checkIn.setTimeOut(Timestamp.valueOf(LocalDateTime.now()));
+        checkIn.setTimeOut(LocalDateTime.now());
         return checkInRepository.save(checkIn);
     }
 }

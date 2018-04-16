@@ -8,7 +8,7 @@ import org.dsmhack.repository.ReportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -138,10 +138,10 @@ public class ReportService {
         return false;
     }
 
-    double calculateHours(Timestamp checkIn, Timestamp checkOut) {
+    double calculateHours(LocalDateTime checkIn, LocalDateTime checkOut) {
         if (checkOut == null) {
             return 0;
         }
-        return (double) checkIn.toLocalDateTime().until(checkOut.toLocalDateTime(), ChronoUnit.MINUTES) / 60;
+        return (double) checkIn.until(checkOut, ChronoUnit.MINUTES) / 60;
     }
 }
