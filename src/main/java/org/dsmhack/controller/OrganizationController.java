@@ -1,6 +1,5 @@
 package org.dsmhack.controller;
 
-import com.sun.xml.internal.ws.api.FeatureListValidatorAnnotation;
 import org.dsmhack.model.Organization;
 import org.dsmhack.model.Project;
 import org.dsmhack.repository.OrganizationRepository;

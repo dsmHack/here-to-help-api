@@ -5,7 +5,6 @@ import org.dsmhack.model.Project;
 import org.dsmhack.repository.OrganizationRepository;
 import org.dsmhack.repository.ProjectRepository;
 import org.dsmhack.service.CodeGenerator;
-import org.hibernate.dialect.Oracle8iDialect;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,8 +20,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static junit.framework.TestCase.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
