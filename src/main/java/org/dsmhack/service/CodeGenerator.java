@@ -8,8 +8,8 @@ import java.util.UUID;
 @Service
 public class CodeGenerator {
 
-    public String generateUUID(){
-        return UUID.randomUUID().toString();
+    public UUID generateUUID(){
+        return UUID.randomUUID();
     }
 
     public String generateLoginToken(){

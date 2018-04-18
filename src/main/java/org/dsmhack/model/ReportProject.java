@@ -2,19 +2,21 @@ package org.dsmhack.model;
 
 import com.google.gson.Gson;
 
+import java.util.UUID;
+
 public class ReportProject   {
-  private String projectGuid;
+  private UUID projectGuid;
   private String name;
   private double totalHours = 0;
 
   public ReportProject() {
   }
 
-  public String getProjectGuid() {
+  public UUID getProjectGuid() {
     return projectGuid;
   }
 
-  public ReportProject setProjectGuid(String projectGuid) {
+  public ReportProject setProjectGuid(UUID projectGuid) {
     this.projectGuid = projectGuid;
     return this;
   }

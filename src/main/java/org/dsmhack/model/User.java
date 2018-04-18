@@ -21,14 +21,14 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table
 public class User {
     @Id
     @Column
-    //todo: eventually move move to UUID
-    private String userGuid;
+    private UUID userGuid;
 
     @NotNull
     @Size(min = 1, max = 50)
@@ -57,11 +57,11 @@ public class User {
     public User() {
     }
 
-    public String getUserGuid() {
+    public UUID getUserGuid() {
         return userGuid;
     }
 
-    public User setUserGuid(String userGuid) {
+    public User setUserGuid(UUID userGuid) {
         this.userGuid = userGuid;
         return this;
     }

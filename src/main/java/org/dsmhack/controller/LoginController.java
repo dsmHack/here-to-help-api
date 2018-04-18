@@ -36,6 +36,6 @@ public class LoginController {
     @PostMapping("/login/verifyCode")
     public User verifyCode(@RequestBody String securityToken) throws Exception {
         LoginToken loginToken = loginTokenRepository.findByToken(securityToken);
-        return userRepository.findOne(loginToken.getUserGuid());
+        return userRepository.findOne(loginToken.getUserGuid().toString());
     }
 }

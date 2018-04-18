@@ -19,13 +19,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.UUID;
 
 @Entity
 @Table
 public class Organization {
     @Id
     @Column
-    private String orgGuid;
+    private UUID orgGuid;
 
     @Column
     private String name;
@@ -63,11 +64,11 @@ public class Organization {
     @Column
     private String zip;
 
-    public String getOrgGuid() {
+    public UUID getOrgGuid() {
         return orgGuid;
     }
 
-    public Organization setOrgGuid(String orgGuid) {
+    public Organization setOrgGuid(UUID orgGuid) {
         this.orgGuid = orgGuid;
         return this;
     }
