@@ -22,13 +22,14 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table
 public class Project {
     @Id
     @Column
-    private String projGuid;
+    private UUID projGuid;
 
     @NotNull
     @Size(min = 1, max = 36)
@@ -54,11 +55,11 @@ public class Project {
     public Project() {
     }
 
-    public String getProjGuid() {
+    public UUID getProjGuid() {
         return projGuid;
     }
 
-    public Project setProjGuid(String projGuid) {
+    public Project setProjGuid(UUID projGuid) {
         this.projGuid = projGuid;
         return this;
     }

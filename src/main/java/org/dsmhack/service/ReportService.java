@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ReportService {
@@ -102,7 +103,7 @@ public class ReportService {
         return uniqueUsers;
     }
 
-    ReportUser findUser(String guid, List<ReportUser> users) {
+    ReportUser findUser(UUID guid, List<ReportUser> users) {
         for (ReportUser user : users) {
             if (user.getUserGuid().equals(guid)) {
                 return user;
@@ -111,7 +112,7 @@ public class ReportService {
         return new ReportUser();
     }
 
-    boolean projectGuidExists(String guid, List<ReportProject> projects) {
+    boolean projectGuidExists(UUID guid, List<ReportProject> projects) {
         for (ReportProject project : projects) {
             if (project.getProjectGuid().equals(guid)) {
                 return true;
@@ -120,7 +121,7 @@ public class ReportService {
         return false;
     }
 
-    ReportProject findReportProject(String guid, List<ReportProject> projects) {
+    ReportProject findReportProject(UUID guid, List<ReportProject> projects) {
         for (ReportProject project: projects) {
             if (project.getProjectGuid().equals(guid)) {
                 return project;
@@ -129,7 +130,7 @@ public class ReportService {
         return new ReportProject();
     }
 
-    boolean userGuidExists(String guid, List<ReportUser> users) {
+    boolean userGuidExists(UUID guid, List<ReportUser> users) {
         for (ReportUser user : users) {
             if (user.getUserGuid().equals(guid)) {
                 return true;

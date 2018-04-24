@@ -20,6 +20,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table
@@ -27,7 +28,7 @@ public class LoginToken {
 
     @Id
     @Column
-    private String userGuid;
+    private UUID userGuid;
 
     @Column
     private String token;
@@ -35,11 +36,11 @@ public class LoginToken {
     @Column
     private LocalDateTime tokenExpDate;
 
-    public String getUserGuid() {
+    public UUID getUserGuid() {
         return userGuid;
     }
 
-    public LoginToken setUserGuid(String userGuid) {
+    public LoginToken setUserGuid(UUID userGuid) {
         this.userGuid = userGuid;
         return this;
     }

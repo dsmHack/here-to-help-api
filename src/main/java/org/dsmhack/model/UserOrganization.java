@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.UUID;
 
 @Entity
 @Table
@@ -35,24 +36,24 @@ public class UserOrganization {
     @Embeddable
     public class MyKey implements Serializable {
         @Column
-        private String userGuid;
+        private UUID userGuid;
 
         @Column
-        private String orgGuid;
+        private UUID orgGuid;
 
-        public String getUserGuid() {
+        public UUID getUserGuid() {
             return userGuid;
         }
 
-        public void setUserGuid(String userGuid) {
+        public void setUserGuid(UUID userGuid) {
             this.userGuid = userGuid;
         }
 
-        public String getOrgGuid() {
+        public UUID getOrgGuid() {
             return orgGuid;
         }
 
-        public void setOrgGuid(String orgGuid) {
+        public void setOrgGuid(UUID orgGuid) {
             this.orgGuid = orgGuid;
         }
     }

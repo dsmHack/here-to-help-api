@@ -3,12 +3,13 @@ package org.dsmhack.model;
 import com.google.gson.Gson;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 
 public class ReportData {
-    private String projectGuid;
+    private UUID projectGuid;
     private String projectName;
-    private String userGuid;
+    private UUID userGuid;
     private String firstName;
     private String lastName;
     private LocalDateTime timeIn;
@@ -17,11 +18,11 @@ public class ReportData {
     public ReportData() {
     }
 
-    public String getProjectGuid() {
+    public UUID getProjectGuid() {
         return projectGuid;
     }
 
-    public ReportData setProjectGuid(String projectGuid) {
+    public ReportData setProjectGuid(UUID projectGuid) {
         this.projectGuid = projectGuid;
         return this;
     }
@@ -35,11 +36,11 @@ public class ReportData {
         return this;
     }
 
-    public String getUserGuid() {
+    public UUID getUserGuid() {
         return userGuid;
     }
 
-    public ReportData setUserGuid(String userGuid) {
+    public ReportData setUserGuid(UUID userGuid) {
         this.userGuid = userGuid;
         return this;
     }
