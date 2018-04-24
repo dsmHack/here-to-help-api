@@ -34,7 +34,7 @@ public class LoginToken {
     private String token;
 
     @Column
-    private Timestamp tokenExpDate;
+    private Timestamp tokenExpirationDate;
 
     public UUID getUserGuid() {
         return userGuid;
@@ -54,12 +54,12 @@ public class LoginToken {
         return this;
     }
 
-    public Timestamp getTokenExpDate() {
-        return tokenExpDate;
+    public Timestamp getTokenExpirationDate() {
+        return tokenExpirationDate;
     }
 
-    public LoginToken setTokenExpDate(Timestamp tokenExpDate) {
-        this.tokenExpDate = tokenExpDate;
+    public LoginToken setTokenExpirationDate(Timestamp tokenExpirationDate) {
+        this.tokenExpirationDate = tokenExpirationDate;
         return this;
     }
 

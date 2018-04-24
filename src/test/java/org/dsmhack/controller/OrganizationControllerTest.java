@@ -81,7 +81,7 @@ public class OrganizationControllerTest {
     @Test
     public void findProjectsReturnsProjectsFromRepository() throws Exception {
         List<Project> expectedProjects = Arrays.asList(new Project(), new Project());
-        when(projectRepository.findByOrgGuid("orgUUID")).thenReturn(expectedProjects);
+        when(projectRepository.findByOrganizationGuid("orgUUID")).thenReturn(expectedProjects);
         assertEquals(expectedProjects, organizationController.findProjectsForOrganization("orgUUID"));
     }
 }

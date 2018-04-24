@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, String> {
 
-    List<Project> findByOrgGuid(String organizationGuid);
+    List<Project> findByOrganizationGuid(String organizationGuid);
 }

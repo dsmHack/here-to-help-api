@@ -58,7 +58,7 @@ public class UserController {
         List<UserProject> userProjectList = userProjectRepository.findAll();
         userProjectList.forEach(userProject -> {
             if(userProject.getMyKey().getUserGuid().equals(userGuid)){
-                Project project = projectRepository.findOne(userProject.getMyKey().getProjGuid().toString());
+                Project project = projectRepository.findOne(userProject.getMyKey().getProjectGuid().toString());
                 user.getProjectList().add(project);
             }
         });

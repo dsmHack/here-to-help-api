@@ -8,11 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class LoginService {
@@ -31,7 +28,7 @@ public class LoginService {
         LoginToken loginToken = new LoginToken();
         loginToken.setToken(token);
         loginToken.setUserGuid(user.getUserGuid());
-        loginToken.setTokenExpDate(twentyMinutesFromNow());
+        loginToken.setTokenExpirationDate(twentyMinutesFromNow());
         loginTokenRepository.save(loginToken);
         emailSender.sendTo(user.getEmail(), token);
     }

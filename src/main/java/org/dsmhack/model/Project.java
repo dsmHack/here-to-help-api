@@ -13,10 +13,7 @@
 
 package org.dsmhack.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,10 +21,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.sql.Time;
 import java.sql.Timestamp;
-import java.time.OffsetDateTime;
-import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -35,12 +29,12 @@ import java.util.UUID;
 public class Project {
     @Id
     @Column
-    private UUID projGuid;
+    private UUID projectGuid;
 
     @NotNull
     @Size(min = 1, max = 36)
     @Column
-    private String orgGuid;
+    private String organizationGuid;
 
     @NotNull
     @Size(min = 1, max = 50)
@@ -61,21 +55,21 @@ public class Project {
     public Project() {
     }
 
-    public UUID getProjGuid() {
-        return projGuid;
+    public UUID getProjectGuid() {
+        return projectGuid;
     }
 
-    public Project setProjGuid(UUID projGuid) {
-        this.projGuid = projGuid;
+    public Project setProjectGuid(UUID projectGuid) {
+        this.projectGuid = projectGuid;
         return this;
     }
 
-    public String getOrgGuid() {
-        return orgGuid;
+    public String getOrganizationGuid() {
+        return organizationGuid;
     }
 
-    public Project setOrgGuid(String orgGuid) {
-        this.orgGuid = orgGuid;
+    public Project setOrganizationGuid(String organizationGuid) {
+        this.organizationGuid = organizationGuid;
         return this;
     }
 

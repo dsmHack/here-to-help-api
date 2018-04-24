@@ -26,7 +26,7 @@ import java.util.UUID;
 public class Organization {
     @Id
     @Column
-    private UUID orgGuid;
+    private UUID organizationGuid;
 
     @Column
     private String name;
@@ -64,12 +64,12 @@ public class Organization {
     @Column
     private String zip;
 
-    public UUID getOrgGuid() {
-        return orgGuid;
+    public UUID getOrganizationGuid() {
+        return organizationGuid;
     }
 
-    public Organization setOrgGuid(UUID orgGuid) {
-        this.orgGuid = orgGuid;
+    public Organization setOrganizationGuid(UUID organizationGuid) {
+        this.organizationGuid = organizationGuid;
         return this;
     }
 

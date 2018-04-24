@@ -34,6 +34,6 @@ public class OrganizationController {
 
     @GetMapping("/organizations/{organizationId}/projects")
     public List<Project> findProjectsForOrganization(@PathVariable String organizationId) {
-        return projectRepository.findByOrgGuid(organizationId);
+        return projectRepository.findByOrganizationGuid(organizationId);
     }
 }

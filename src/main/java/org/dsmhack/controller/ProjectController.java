@@ -2,12 +2,10 @@ package org.dsmhack.controller;
 
 import org.dsmhack.model.CheckIn;
 import org.dsmhack.model.Project;
-import org.dsmhack.model.User;
 import org.dsmhack.model.UserProject;
 import org.dsmhack.repository.CheckInRepository;
 import org.dsmhack.repository.ProjectRepository;
 import org.dsmhack.repository.UserProjectRepository;
-import org.dsmhack.repository.UserRepository;
 import org.dsmhack.service.CodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,20 +46,20 @@ public class ProjectController {
 
     @PostMapping("/projects")
     public ResponseEntity<Project> save(@Validated @RequestBody Project project) {
-        project.setProjGuid(codeGenerator.generateUUID());
+        project.setProjectGuid(codeGenerator.generateUUID());
         return new ResponseEntity<>(projectRepository.save(project), HttpStatus.CREATED);
     }
 
     @GetMapping("/projects/{projectGuid}/check-ins")
     public List<CheckIn> findAllCheckins(@PathVariable String projectGuid) {
-        return checkInRepository.findByProjGuid(projectGuid);
+        return checkInRepository.findByProjectGuid(projectGuid);
     }
 
     @PostMapping("/projects/{projectGuid}/check-ins")
     public ResponseEntity<CheckIn> checkUserIn(@PathVariable UUID projectGuid, @RequestBody UUID userGuid){
         CheckIn checkIn = new CheckIn();
         checkIn.setUserGuid(userGuid);
-        checkIn.setProjGuid(projectGuid);
+        checkIn.setProjectGuid(projectGuid);
         checkIn.setTimeIn(Timestamp.valueOf(LocalDateTime.now()));
         return new ResponseEntity<>(checkInRepository.save(checkIn), HttpStatus.CREATED);
     }
@@ -70,7 +68,7 @@ public class ProjectController {
     public UserProject addUser(@PathVariable UUID projectGuid, @RequestBody UUID userGuid){
         UserProject userProject = new UserProject();
         UserProject.MyKey myKey = new UserProject.MyKey();
-        myKey.setProjGuid(projectGuid);
+        myKey.setProjectGuid(projectGuid);
         myKey.setUserGuid(userGuid);
 
         userProject.setMyKey(myKey);
@@ -79,7 +77,7 @@ public class ProjectController {
 
     @PutMapping("/projects/{projectGuid}/check-ins")
     public CheckIn checkOutUser(@PathVariable String projectGuid, @RequestBody String userGuid){
-        CheckIn checkIn = checkInRepository.findByProjGuidAndUserGuid(projectGuid, userGuid);
+        CheckIn checkIn = checkInRepository.findByProjectGuidAndUserGuid(projectGuid, userGuid);
         checkIn.setTimeOut(Timestamp.valueOf(LocalDateTime.now()));
         return checkInRepository.save(checkIn);
     }

@@ -13,9 +13,9 @@ import java.util.List;
 @Repository
 public interface CheckInRepository extends JpaRepository<CheckIn, Long> {
 
-    List<CheckIn> findByProjGuid(String projectGuid);
+    List<CheckIn> findByProjectGuid(String projectGuid);
 
-    CheckIn findByProjGuidAndUserGuid(String projectGuid, String userGuid);
+    CheckIn findByProjectGuidAndUserGuid(String projectGuid, String userGuid);
 
     List<CheckIn> findByUserGuid(String userGuid);
 

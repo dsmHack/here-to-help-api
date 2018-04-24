@@ -12,14 +12,11 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -80,7 +77,7 @@ public class ProjectControllerTest {
         projectController.save(new Project());
         ArgumentCaptor<Project> captor = ArgumentCaptor.forClass(Project.class);
         verify(projectRepository).save(captor.capture());
-        assertEquals(projectId, captor.getValue().getProjGuid());
+        assertEquals(projectId, captor.getValue().getProjectGuid());
     }
 
     @Test
@@ -114,7 +111,7 @@ public class ProjectControllerTest {
     @Test
     public void findAllCheckinsRetrievesCheckingsFromRepository() throws Exception {
         List<CheckIn> expectedCheckins = Collections.singletonList(new CheckIn());
-        when(checkInRepository.findByProjGuid("guid")).thenReturn(expectedCheckins);
+        when(checkInRepository.findByProjectGuid("guid")).thenReturn(expectedCheckins);
         assertEquals(expectedCheckins, projectController.findAllCheckins("guid"));
     }
 
@@ -124,7 +121,7 @@ public class ProjectControllerTest {
             post("/projects")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new Project()
-                    .setOrgGuid("orgGuid")
+                    .setOrganizationGuid("organizationGuid")
                     .setName("name")
                     .setDescription("description")
                     .toJson())
@@ -146,7 +143,7 @@ public class ProjectControllerTest {
         ).andReturn();
 
         String message = mvcResult.getResolvedException().getMessage();
-        assertTrue(message.contains("NotNull.project.orgGuid"));
+        assertTrue(message.contains("NotNull.project.organizationGuid"));
         assertTrue(message.contains("NotNull.project.name"));
         assertTrue(message.contains("NotNull.project.description"));
     }
@@ -157,7 +154,7 @@ public class ProjectControllerTest {
             post("/projects")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new Project()
-                    .setOrgGuid("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+                    .setOrganizationGuid("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
                     .setName("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
                     .setDescription("ccccccccccccccccccccccccccccccccccccccccccccccccccc")
                     .toJson())
@@ -166,7 +163,7 @@ public class ProjectControllerTest {
         ).andReturn();
 
         String message = mvcResult.getResolvedException().getMessage();
-        assertTrue(message.contains("Size.project.orgGuid"));
+        assertTrue(message.contains("Size.project.organizationGuid"));
         assertTrue(message.contains("Size.project.name"));
         assertTrue(message.contains("Size.project.description"));
     }
@@ -189,7 +186,7 @@ public class ProjectControllerTest {
         ArgumentCaptor<CheckIn> captor = ArgumentCaptor.forClass(CheckIn.class);
         verify(checkInRepository).save(captor.capture());
         assertEquals(userGuid, captor.getValue().getUserGuid());
-        assertEquals(projectGuid, captor.getValue().getProjGuid());
+        assertEquals(projectGuid, captor.getValue().getProjectGuid());
     }
 
     @Test
@@ -201,7 +198,7 @@ public class ProjectControllerTest {
 
     @Test
     public void checkoutReturns200() throws Exception {
-        when(checkInRepository.findByProjGuidAndUserGuid(anyString(), anyString())).thenReturn(new CheckIn());
+        when(checkInRepository.findByProjectGuidAndUserGuid(anyString(), anyString())).thenReturn(new CheckIn());
         mockMvc.perform(put("/projects/12345/check-ins")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("user-uuid"))
@@ -209,15 +206,15 @@ public class ProjectControllerTest {
 
     @Test
     public void checkoutRetrievesCheckinFromRepository() throws Exception {
-        when(checkInRepository.findByProjGuidAndUserGuid(anyString(), anyString())).thenReturn(new CheckIn());
+        when(checkInRepository.findByProjectGuidAndUserGuid(anyString(), anyString())).thenReturn(new CheckIn());
         projectController.checkOutUser("projectGuid", "userGuid");
-        verify(checkInRepository).findByProjGuidAndUserGuid("projectGuid", "userGuid");
+        verify(checkInRepository).findByProjectGuidAndUserGuid("projectGuid", "userGuid");
     }
 
     @Test
     public void checkOutSavesCheckIn() throws Exception {
         CheckIn checkIn = new CheckIn();
-        when(checkInRepository.findByProjGuidAndUserGuid(anyString(), anyString())).thenReturn(checkIn);
+        when(checkInRepository.findByProjectGuidAndUserGuid(anyString(), anyString())).thenReturn(checkIn);
         projectController.checkOutUser("projectGuid", "userGuid");
         verify(checkInRepository).save(checkIn);
     }
@@ -226,7 +223,7 @@ public class ProjectControllerTest {
     public void checkOutReturnsCheckIn() throws Exception {
         CheckIn expectedCheckin = new CheckIn();
         when(checkInRepository.save(any(CheckIn.class))).thenReturn(expectedCheckin);
-        when(checkInRepository.findByProjGuidAndUserGuid(anyString(), anyString())).thenReturn(expectedCheckin);
+        when(checkInRepository.findByProjectGuidAndUserGuid(anyString(), anyString())).thenReturn(expectedCheckin);
         assertEquals(expectedCheckin, projectController.checkOutUser("projectGuid", "userGuid") );
     }
 }

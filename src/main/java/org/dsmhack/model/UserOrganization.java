@@ -13,13 +13,10 @@
 
 package org.dsmhack.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.Gson;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -42,7 +39,7 @@ public class UserOrganization {
         private UUID userGuid;
 
         @Column
-        private UUID orgGuid;
+        private UUID organizationGuid;
 
         public UUID getUserGuid() {
             return userGuid;
@@ -52,12 +49,12 @@ public class UserOrganization {
             this.userGuid = userGuid;
         }
 
-        public UUID getOrgGuid() {
-            return orgGuid;
+        public UUID getOrganizationGuid() {
+            return organizationGuid;
         }
 
-        public void setOrgGuid(UUID orgGuid) {
-            this.orgGuid = orgGuid;
+        public void setOrganizationGuid(UUID organizationGuid) {
+            this.organizationGuid = organizationGuid;
         }
     }
 

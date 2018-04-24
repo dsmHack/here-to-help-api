@@ -28,7 +28,7 @@ public class CheckIn {
     private UUID userGuid;
 
     @Column
-    private UUID projGuid;
+    private UUID projectGuid;
 
     @Column
     private Timestamp timeIn;
@@ -47,12 +47,12 @@ public class CheckIn {
         return this;
     }
 
-    public UUID getProjGuid() {
-        return projGuid;
+    public UUID getProjectGuid() {
+        return projectGuid;
     }
 
-    public CheckIn setProjGuid(UUID projGuid) {
-        this.projGuid = projGuid;
+    public CheckIn setProjectGuid(UUID projectGuid) {
+        this.projectGuid = projectGuid;
         return this;
     }
 
