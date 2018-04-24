@@ -62,7 +62,7 @@ public class Organization {
     private String state;
 
     @Column
-    private String zip;
+    private String zipCode;
 
     public UUID getOrganizationGuid() {
         return organizationGuid;
@@ -172,12 +172,12 @@ public class Organization {
         return this;
     }
 
-    public String getZip() {
-        return zip;
+    public String getZipCode() {
+        return zipCode;
     }
 
-    public Organization setZip(String zip) {
-        this.zip = zip;
+    public Organization setZipCode(String zipCode) {
+        this.zipCode = zipCode;
         return this;
     }
 
