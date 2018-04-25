@@ -35,7 +35,7 @@ import java.util.UUID;
 public class Project {
     @Id
     @Column
-    private UUID projGuid;
+    private String projGuid;
 
     @NotNull
     @Size(min = 1, max = 36)
@@ -61,11 +61,11 @@ public class Project {
     public Project() {
     }
 
-    public UUID getProjGuid() {
+    public String getProjGuid() {
         return projGuid;
     }
 
-    public Project setProjGuid(UUID projGuid) {
+    public Project setProjGuid(String projGuid) {
         this.projGuid = projGuid;
         return this;
     }

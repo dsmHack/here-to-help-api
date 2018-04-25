@@ -20,7 +20,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.sql.Timestamp;
-import java.util.UUID;
 
 @Entity
 @Table
@@ -28,7 +27,7 @@ public class LoginToken {
 
     @Id
     @Column
-    private UUID userGuid;
+    private String userGuid;
 
     @Column
     private String token;
@@ -36,11 +35,11 @@ public class LoginToken {
     @Column
     private Timestamp tokenExpDate;
 
-    public UUID getUserGuid() {
+    public String getUserGuid() {
         return userGuid;
     }
 
-    public LoginToken setUserGuid(UUID userGuid) {
+    public LoginToken setUserGuid(String userGuid) {
         this.userGuid = userGuid;
         return this;
     }
