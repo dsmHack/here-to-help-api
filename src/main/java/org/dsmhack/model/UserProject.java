@@ -38,24 +38,24 @@ public class UserProject {
     @Embeddable
     public static class MyKey implements Serializable {
         @Column
-        private UUID userGuid;
+        private String userGuid;
 
         @Column
-        private UUID projGuid;
+        private String projGuid;
 
-        public UUID getUserGuid() {
+        public String getUserGuid() {
             return userGuid;
         }
 
-        public void setUserGuid(UUID userGuid) {
+        public void setUserGuid(String userGuid) {
             this.userGuid = userGuid;
         }
 
-        public UUID getProjGuid() {
+        public String getProjGuid() {
             return projGuid;
         }
 
-        public void setProjGuid(UUID projGuid) {
+        public void setProjGuid(String projGuid) {
             this.projGuid = projGuid;
         }
     }

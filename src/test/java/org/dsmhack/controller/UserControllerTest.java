@@ -17,7 +17,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -139,7 +138,7 @@ public class UserControllerTest {
 
     @Test
     public void postCallsGuidGeneratorToGenerateUUIDBeforeSavingUser() throws Exception {
-        UUID userId = UUID.randomUUID();
+        String userId = "uuid";
         when(codeGenerator.generateUUID()).thenReturn(userId);
         userController.save(new User());
         ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);

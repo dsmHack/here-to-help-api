@@ -4,10 +4,9 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class ReportUser {
-  private UUID userGuid;
+  private String userGuid;
   private String firstName;
   private String lastName;
   private List<ReportProject> projects = new ArrayList<ReportProject>();
@@ -16,11 +15,11 @@ public class ReportUser {
   public ReportUser() {
   }
 
-  public UUID getUserGuid() {
+  public String getUserGuid() {
     return userGuid;
   }
 
-  public ReportUser setUserGuid(UUID userGuid) {
+  public ReportUser setUserGuid(String userGuid) {
     this.userGuid = userGuid;
     return this;
   }
