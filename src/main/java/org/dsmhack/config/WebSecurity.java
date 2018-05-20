@@ -19,7 +19,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
-    @Value("${jwt.secret}")
+    @Value("${jwtSecret}")
     private String jwtEncryptionKey;
 
     @Autowired
