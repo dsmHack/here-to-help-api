@@ -73,7 +73,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void postUserByIdReturns201() throws Exception {
+    public void postUserByIdReturns201_volunteer() throws Exception {
         mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
 
         MvcResult mvcResult = mockMvc.perform(
@@ -83,7 +83,47 @@ public class UserControllerTest {
                     .setFirstName("John")
                     .setLastName("Doe")
                     .setEmail("jdoe@example.com")
-                    .setRole("admin")
+                    .setRole("Volunteer")
+                    .toJson())
+        ).andExpect(
+            status().isCreated()
+        ).andReturn();
+
+        assertEquals(null, mvcResult.getResolvedException());
+    }
+
+    @Test
+    public void postUserByIdReturns201_organizationAdministrator() throws Exception {
+        mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
+
+        MvcResult mvcResult = mockMvc.perform(
+            post("/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new User()
+                    .setFirstName("John")
+                    .setLastName("Doe")
+                    .setEmail("jdoe@example.com")
+                    .setRole("Organization Administrator")
+                    .toJson())
+        ).andExpect(
+            status().isCreated()
+        ).andReturn();
+
+        assertEquals(null, mvcResult.getResolvedException());
+    }
+
+    @Test
+    public void postUserByIdReturns201_dsmHackAdministrator() throws Exception {
+        mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
+
+        MvcResult mvcResult = mockMvc.perform(
+            post("/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new User()
+                    .setFirstName("John")
+                    .setLastName("Doe")
+                    .setEmail("jdoe@example.com")
+                    .setRole("dsmHack Administrator")
                     .toJson())
         ).andExpect(
             status().isCreated()
@@ -134,6 +174,26 @@ public class UserControllerTest {
         ).andReturn();
 
         assertTrue(mvcResult.getResolvedException().getMessage().contains("Email.user.email"));
+    }
+
+    @Test
+    public void postUserByIdReturns400_roleVolunteer() throws Exception {
+        mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
+
+        MvcResult mvcResult = mockMvc.perform(
+            post("/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new User()
+                    .setFirstName("firstName")
+                    .setLastName("lastName")
+                    .setEmail("email@example.com")
+                    .setRole("someInvalidRole")
+                    .toJson())
+        ).andExpect(
+                status().isBadRequest()
+        ).andReturn();
+
+        assertTrue(mvcResult.getResolvedException().getMessage().contains("Pattern.user.role"));
     }
 
     @Test

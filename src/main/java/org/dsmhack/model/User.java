@@ -18,6 +18,7 @@ import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +49,7 @@ public class User {
 
     @NotNull
     @Size(min = 1, max = 50)
+    @Pattern(regexp = "dsmHack Administrator|Organization Administrator|Volunteer")
     @Column
     private String role;
 
