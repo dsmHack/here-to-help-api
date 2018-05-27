@@ -11,7 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -37,8 +37,8 @@ public class ReportServiceTest {
         reportData.setUserGuid("someGuid");
         reportData.setFirstName("John");
         reportData.setLastName("Doe");
-        reportData.setTimeIn(Timestamp.valueOf("2018-01-01 09:00:00"));
-        reportData.setTimeOut(Timestamp.valueOf("2018-01-01 17:00:00"));
+        reportData.setTimeIn(LocalDateTime.of(2018, 1, 1, 9, 0, 0));
+        reportData.setTimeOut(LocalDateTime.of(2018, 1, 1, 17, 0, 0));
         List<ReportData> reportDatas = Arrays.asList(reportData);
         when(reportRepository.findAllReportingInformation(organizationId)).thenReturn(reportDatas);
 
@@ -69,24 +69,24 @@ public class ReportServiceTest {
         reportData1.setUserGuid("someGuid");
         reportData1.setFirstName("John");
         reportData1.setLastName("Doe");
-        reportData1.setTimeIn(Timestamp.valueOf("2018-01-01 09:00:00"));
-        reportData1.setTimeOut(Timestamp.valueOf("2018-01-01 09:20:00"));
+        reportData1.setTimeIn(LocalDateTime.of(2018, 1, 1, 9, 0, 0));
+        reportData1.setTimeOut(LocalDateTime.of(2018, 1, 1, 9, 20, 0));
         ReportData reportData2 = new ReportData();
         reportData2.setProjectGuid("projectGuid1");
         reportData2.setProjectName("Project #1");
         reportData2.setUserGuid("someGuid");
         reportData2.setFirstName("John");
         reportData2.setLastName("Doe");
-        reportData2.setTimeIn(Timestamp.valueOf("2018-01-01 10:00:00"));
-        reportData2.setTimeOut(Timestamp.valueOf("2018-01-01 10:20:00"));
+        reportData2.setTimeIn(LocalDateTime.of(2018, 1, 1, 10, 0, 0));
+        reportData2.setTimeOut(LocalDateTime.of(2018, 1, 1, 10, 20, 0));
         ReportData reportData3 = new ReportData();
         reportData3.setProjectGuid("projectGuid1");
         reportData3.setProjectName("Project #1");
         reportData3.setUserGuid("someGuid");
         reportData3.setFirstName("John");
         reportData3.setLastName("Doe");
-        reportData3.setTimeIn(Timestamp.valueOf("2018-01-01 11:00:00"));
-        reportData3.setTimeOut(Timestamp.valueOf("2018-01-01 11:20:00"));
+        reportData3.setTimeIn(LocalDateTime.of(2018, 1, 1, 11, 0, 0));
+        reportData3.setTimeOut(LocalDateTime.of(2018, 1, 1, 11, 20, 0));
         List<ReportData> reportDatas = Arrays.asList(reportData1, reportData2, reportData3);
         when(reportRepository.findAllReportingInformation(organizationId)).thenReturn(reportDatas);
 
@@ -117,16 +117,16 @@ public class ReportServiceTest {
         reportData1.setUserGuid("someGuid1");
         reportData1.setFirstName("John");
         reportData1.setLastName("Doe");
-        reportData1.setTimeIn(Timestamp.valueOf("2018-01-01 09:00:00"));
-        reportData1.setTimeOut(Timestamp.valueOf("2018-01-01 17:00:00"));
+        reportData1.setTimeIn(LocalDateTime.of(2018, 1, 1, 9, 0, 0));
+        reportData1.setTimeOut(LocalDateTime.of(2018, 1, 1, 17, 0, 0));
         ReportData reportData2 = new ReportData();
         reportData2.setProjectGuid("projectGuid1");
         reportData2.setProjectName("Project #1");
         reportData2.setUserGuid("someGuid2");
         reportData2.setFirstName("Tim");
         reportData2.setLastName("Smith");
-        reportData2.setTimeIn(Timestamp.valueOf("2018-02-02 09:00:00"));
-        reportData2.setTimeOut(Timestamp.valueOf("2018-02-02 15:00:00"));
+        reportData2.setTimeIn(LocalDateTime.of(2018, 2, 2, 9, 0, 0));
+        reportData2.setTimeOut(LocalDateTime.of(2018, 2, 2, 15, 0, 0));
         List<ReportData> reportDatas = Arrays.asList(reportData1, reportData2);
         when(reportRepository.findAllReportingInformation(organizationId)).thenReturn(reportDatas);
 
@@ -166,16 +166,16 @@ public class ReportServiceTest {
         reportData1.setUserGuid("userGuid");
         reportData1.setFirstName("John");
         reportData1.setLastName("Doe");
-        reportData1.setTimeIn(Timestamp.valueOf("2018-01-01 09:00:00"));
-        reportData1.setTimeOut(Timestamp.valueOf("2018-01-01 17:00:00"));
+        reportData1.setTimeIn(LocalDateTime.of(2018, 1, 1, 9, 0, 0));
+        reportData1.setTimeOut(LocalDateTime.of(2018, 1, 1, 17, 0, 0));
         ReportData reportData2 = new ReportData();
         reportData2.setProjectGuid("projectGuid2");
         reportData2.setProjectName("Project #2");
         reportData2.setUserGuid("userGuid");
         reportData2.setFirstName("John");
         reportData2.setLastName("Doe");
-        reportData2.setTimeIn(Timestamp.valueOf("2018-01-02 09:00:00"));
-        reportData2.setTimeOut(Timestamp.valueOf("2018-01-02 15:00:00"));
+        reportData2.setTimeIn(LocalDateTime.of(2018, 1, 2, 9, 0, 0));
+        reportData2.setTimeOut(LocalDateTime.of(2018, 1, 2, 15, 0, 0));
         List<ReportData> reportDatas = Arrays.asList(reportData1, reportData2);
         when(reportRepository.findAllReportingInformation(organizationId)).thenReturn(reportDatas);
 
@@ -216,16 +216,16 @@ public class ReportServiceTest {
         reportData1.setUserGuid("userGuid");
         reportData1.setFirstName("John");
         reportData1.setLastName("Doe");
-        reportData1.setTimeIn(Timestamp.valueOf("2018-01-01 09:00:00"));
-        reportData1.setTimeOut(Timestamp.valueOf("2018-01-01 17:00:00"));
+        reportData1.setTimeIn(LocalDateTime.of(2018, 1, 1, 9, 0, 0));
+        reportData1.setTimeOut(LocalDateTime.of(2018, 1, 1, 17, 0, 0));
         ReportData reportData2 = new ReportData();
         reportData2.setProjectGuid("projectGuid");
         reportData2.setProjectName("Project #1");
         reportData2.setUserGuid("userGuid");
         reportData2.setFirstName("John");
         reportData2.setLastName("Smith");
-        reportData2.setTimeIn(Timestamp.valueOf("2018-02-02 09:00:00"));
-        reportData2.setTimeOut(Timestamp.valueOf("2018-02-02 15:00:00"));
+        reportData2.setTimeIn(LocalDateTime.of(2018, 2, 2, 9, 0, 0));
+        reportData2.setTimeOut(LocalDateTime.of(2018, 2, 2, 15, 0, 0));
         List<ReportData> reportDatas = Arrays.asList(reportData1, reportData2);
         when(reportRepository.findAllReportingInformation(organizationId)).thenReturn(reportDatas);
 
@@ -260,24 +260,24 @@ public class ReportServiceTest {
         reportData1.setUserGuid("someGuid1");
         reportData1.setFirstName("John");
         reportData1.setLastName("Doe");
-        reportData1.setTimeIn(Timestamp.valueOf("2018-01-01 09:00:00"));
-        reportData1.setTimeOut(Timestamp.valueOf("2018-01-01 17:00:00"));
+        reportData1.setTimeIn(LocalDateTime.of(2018, 1, 1, 9, 0, 0));
+        reportData1.setTimeOut(LocalDateTime.of(2018, 1, 1, 17, 0, 0));
         ReportData reportData2 = new ReportData();
         reportData2.setProjectGuid("projectGuid1");
         reportData2.setProjectName("Project #1");
         reportData2.setUserGuid("someGuid2");
         reportData2.setFirstName("Tim");
         reportData2.setLastName("Smith");
-        reportData2.setTimeIn(Timestamp.valueOf("2018-02-02 09:00:00"));
-        reportData2.setTimeOut(Timestamp.valueOf("2018-02-02 15:00:00"));
+        reportData2.setTimeIn(LocalDateTime.of(2018, 2, 2, 9, 0, 0));
+        reportData2.setTimeOut(LocalDateTime.of(2018, 2, 2, 15, 0 ,0));
         ReportData reportData3 = new ReportData();
         reportData3.setProjectGuid("projectGuid2");
         reportData3.setProjectName("Project #2");
         reportData3.setUserGuid("someGuid1");
         reportData3.setFirstName("John");
         reportData3.setLastName("Doe");
-        reportData3.setTimeIn(Timestamp.valueOf("2018-01-01 09:00:00"));
-        reportData3.setTimeOut(Timestamp.valueOf("2018-01-01 17:00:00"));
+        reportData3.setTimeIn(LocalDateTime.of(2018, 1, 1, 9, 0, 0));
+        reportData3.setTimeOut(LocalDateTime.of(2018, 1, 1, 17, 0, 0));
         List<ReportData> reportDatas = Arrays.asList(reportData1, reportData2, reportData3);
         when(reportRepository.findAllReportingInformation(organizationId)).thenReturn(reportDatas);
 
@@ -466,8 +466,8 @@ public class ReportServiceTest {
 
     @Test
     public void hoursBasedOnCheckInCheckOut_happyPath() throws Exception {
-        Timestamp checkIn = Timestamp.valueOf("2018-01-01 09:00:00");
-        Timestamp checkOut = Timestamp.valueOf("2018-01-01 16:30:00");
+        LocalDateTime checkIn = LocalDateTime.of(2018, 1, 1, 9, 0, 0);
+        LocalDateTime checkOut = LocalDateTime.of(2018, 1, 1, 16, 30, 0);
 
         double diffInHours = reportService.calculateHours(checkIn, checkOut);
 
@@ -477,8 +477,8 @@ public class ReportServiceTest {
     //todo: If checkOut is null, we cannot calculate hours, so return 0. We could potientially assume they're in the middle of volunteering and use now as the end. Need to ask the business.
     @Test
     public void hoursBasedOnCheckInCheckOut_checkOutNull() throws Exception {
-        Timestamp checkIn = Timestamp.valueOf("2018-01-01 09:00:00");
-        Timestamp checkOut = null;
+        LocalDateTime checkIn = LocalDateTime.of(2018, 1, 1, 9, 0, 0);
+        LocalDateTime checkOut = null;
 
         double diffInHours = reportService.calculateHours(checkIn, checkOut);
 
@@ -494,24 +494,24 @@ public class ReportServiceTest {
         reportData1.setUserGuid("someGuid");
         reportData1.setFirstName("John");
         reportData1.setLastName("Doe");
-        reportData1.setTimeIn(Timestamp.valueOf("2018-01-01 09:00:00"));
-        reportData1.setTimeOut(Timestamp.valueOf("2018-01-01 17:00:00"));
+        reportData1.setTimeIn(LocalDateTime.of(2018, 1, 1, 9, 0, 0));
+        reportData1.setTimeOut(LocalDateTime.of(2018, 1, 1, 17, 0, 0));
         ReportData reportData2 = new ReportData();
         reportData2.setProjectGuid("projectGuid2");
         reportData2.setProjectName("Project #2");
         reportData2.setUserGuid("someGuid");
         reportData2.setFirstName("Jane");
         reportData2.setLastName("Smith");
-        reportData2.setTimeIn(Timestamp.valueOf("2018-01-01 10:00:00"));
-        reportData2.setTimeOut(Timestamp.valueOf("2018-01-01 10:20:00"));
+        reportData2.setTimeIn(LocalDateTime.of(2018, 1, 1, 10, 0, 0));
+        reportData2.setTimeOut(LocalDateTime.of(2018, 1, 1, 10, 20, 0));
         List<ReportData> reportDatas = Arrays.asList(reportData1, reportData2);
         when(reportRepository.findAllReportingInformation(organizationId)).thenReturn(reportDatas);
 
         String reportDataAsCsv = reportService.getReportDataAsCsv(organizationId);
 
         assertEquals("ProjectName,FirstName,LastName,TimeIn,TimeOut\r\n" +
-                "Project #1,John,Doe,2018-01-01 09:00:00.0,2018-01-01 17:00:00.0\r\n" +
-                "Project #2,Jane,Smith,2018-01-01 10:00:00.0,2018-01-01 10:20:00.0", reportDataAsCsv);
+                "Project #1,John,Doe,2018-01-01T09:00,2018-01-01T17:00\r\n" +
+                "Project #2,Jane,Smith,2018-01-01T10:00,2018-01-01T10:20", reportDataAsCsv);
     }
 
 }
