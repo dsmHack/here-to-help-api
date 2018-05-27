@@ -4,11 +4,12 @@ import org.dsmhack.model.Organization;
 import org.dsmhack.model.Project;
 import org.dsmhack.repository.OrganizationRepository;
 import org.dsmhack.repository.ProjectRepository;
+import org.dsmhack.service.CodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,6 +22,9 @@ public class OrganizationController {
 
     @Autowired
     private ProjectRepository projectRepository;
+
+    @Autowired
+    private CodeGenerator codeGenerator;
 
     @GetMapping("/organizations")
     public List<Organization> getAllOrganizations() {
@@ -36,4 +40,11 @@ public class OrganizationController {
     public List<Project> findProjectsForOrganization(@PathVariable String organizationId) {
         return projectRepository.findByOrgGuid(organizationId);
     }
+
+    @PostMapping("/organizations")
+    public ResponseEntity<Organization> save(@Validated @RequestBody Organization organization) {
+        organization.setOrgGuid(codeGenerator.generateUUID());
+        return new ResponseEntity<>(organizationRepository.save(organization), HttpStatus.CREATED);
+    }
+
 }
