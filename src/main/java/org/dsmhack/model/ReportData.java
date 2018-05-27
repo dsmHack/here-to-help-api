@@ -2,26 +2,26 @@ package org.dsmhack.model;
 
 import com.google.gson.Gson;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class ReportData {
-    private UUID projectGuid;
+    private String projectGuid;
     private String projectName;
-    private UUID userGuid;
+    private String userGuid;
     private String firstName;
     private String lastName;
-    private Timestamp timeIn;
-    private Timestamp timeOut;
+    private LocalDateTime timeIn;
+    private LocalDateTime timeOut;
 
     public ReportData() {
     }
 
-    public UUID getProjectGuid() {
+    public String getProjectGuid() {
         return projectGuid;
     }
 
-    public ReportData setProjectGuid(UUID projectGuid) {
+    public ReportData setProjectGuid(String projectGuid) {
         this.projectGuid = projectGuid;
         return this;
     }
@@ -35,11 +35,11 @@ public class ReportData {
         return this;
     }
 
-    public UUID getUserGuid() {
+    public String getUserGuid() {
         return userGuid;
     }
 
-    public ReportData setUserGuid(UUID userGuid) {
+    public ReportData setUserGuid(String userGuid) {
         this.userGuid = userGuid;
         return this;
     }
@@ -62,20 +62,20 @@ public class ReportData {
         return this;
     }
 
-    public Timestamp getTimeIn() {
+    public LocalDateTime getTimeIn() {
         return timeIn;
     }
 
-    public ReportData setTimeIn(Timestamp timeIn) {
+    public ReportData setTimeIn(LocalDateTime timeIn) {
         this.timeIn = timeIn;
         return this;
     }
 
-    public Timestamp getTimeOut() {
+    public LocalDateTime getTimeOut() {
         return timeOut;
     }
 
-    public ReportData setTimeOut(Timestamp timeOut) {
+    public ReportData setTimeOut(LocalDateTime timeOut) {
         this.timeOut = timeOut;
         return this;
     }

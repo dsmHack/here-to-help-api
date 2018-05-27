@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface LoginTokenRepository extends JpaRepository<LoginToken, String> {
 
     LoginToken findByToken(String loginToken);
+
+    LoginToken findByUserGuid(String userGuid);
 }

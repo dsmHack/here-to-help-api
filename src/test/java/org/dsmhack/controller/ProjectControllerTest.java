@@ -12,18 +12,14 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
@@ -31,9 +27,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -75,7 +69,7 @@ public class ProjectControllerTest {
 
     @Test
     public void postCallsGuidGeneratorToGenerateUUIDBeforeSavingProject() throws Exception {
-        UUID projectId = UUID.randomUUID();
+        String projectId = "randomUUID";
         when(codeGenerator.generateUUID()).thenReturn(projectId);
         projectController.save(new Project());
         ArgumentCaptor<Project> captor = ArgumentCaptor.forClass(Project.class);
@@ -173,30 +167,26 @@ public class ProjectControllerTest {
 
     @Test
     public void checkinReturns201() throws Exception {
-        String projectGuid = UUID.randomUUID().toString();
-        MvcResult mvcResult = mockMvc.perform(post("/projects/" + projectGuid + "/check-ins")
+        mockMvc.perform(post("/projects/12345/check-ins")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(UUID.randomUUID().toString()))
-                /*.andExpect(status().isCreated())*/.andReturn();
-        System.out.printf("blip");
+                .content("user-uuid"))
+                .andExpect(status().isCreated());
     }
 
     @Test
     public void postToCheckinCallsRepositoryWithCheckIn() throws Exception {
-        UUID projectGuid = UUID.randomUUID();
-        UUID userGuid = UUID.randomUUID();
-        projectController.checkUserIn(projectGuid, userGuid);
+        projectController.checkUserIn("12345", "userId");
         ArgumentCaptor<CheckIn> captor = ArgumentCaptor.forClass(CheckIn.class);
         verify(checkInRepository).save(captor.capture());
-        assertEquals(userGuid, captor.getValue().getUserGuid());
-        assertEquals(projectGuid, captor.getValue().getProjGuid());
+        assertEquals("userId", captor.getValue().getUserGuid());
+        assertEquals("12345", captor.getValue().getProjGuid());
     }
 
     @Test
     public void checkInReturnsCheckIn() throws Exception {
         CheckIn expectedCheckin = new CheckIn();
         when(checkInRepository.save(any(CheckIn.class))).thenReturn(expectedCheckin);
-        assertEquals(expectedCheckin, projectController.checkUserIn(UUID.randomUUID(), UUID.randomUUID()).getBody());
+        assertEquals(expectedCheckin, projectController.checkUserIn("12345", "userId").getBody());
     }
 
     @Test

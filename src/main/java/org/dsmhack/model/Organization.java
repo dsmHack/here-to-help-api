@@ -28,7 +28,7 @@ import java.util.UUID;
 public class Organization {
     @Id
     @Column
-    private UUID orgGuid;
+    private String orgGuid;
 
     @NotNull
     @Size(min = 1, max = 50)
@@ -72,11 +72,11 @@ public class Organization {
     @Column
     private String zip;
 
-    public UUID getOrgGuid() {
+    public String getOrgGuid() {
         return orgGuid;
     }
 
-    public Organization setOrgGuid(UUID orgGuid) {
+    public Organization setOrgGuid(String orgGuid) {
         this.orgGuid = orgGuid;
         return this;
     }

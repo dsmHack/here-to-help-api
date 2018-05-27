@@ -7,12 +7,8 @@ import org.dsmhack.repository.LoginTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class LoginService {
@@ -36,8 +32,8 @@ public class LoginService {
         emailSender.sendTo(user.getEmail(), token);
     }
 
-    private Timestamp twentyMinutesFromNow() {
+    private LocalDateTime twentyMinutesFromNow() {
         LocalDateTime tokenExpiration = LocalDateTime.now().plus(20, ChronoUnit.MINUTES);
-        return Timestamp.valueOf(tokenExpiration);
+        return tokenExpiration;
     }
 }

@@ -13,13 +13,10 @@
 
 package org.dsmhack.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.Gson;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -39,24 +36,24 @@ public class UserOrganization {
     @Embeddable
     public class MyKey implements Serializable {
         @Column
-        private UUID userGuid;
+        private String userGuid;
 
         @Column
-        private UUID orgGuid;
+        private String orgGuid;
 
-        public UUID getUserGuid() {
+        public String getUserGuid() {
             return userGuid;
         }
 
-        public void setUserGuid(UUID userGuid) {
+        public void setUserGuid(String userGuid) {
             this.userGuid = userGuid;
         }
 
-        public UUID getOrgGuid() {
+        public String getOrgGuid() {
             return orgGuid;
         }
 
-        public void setOrgGuid(UUID orgGuid) {
+        public void setOrgGuid(String orgGuid) {
             this.orgGuid = orgGuid;
         }
     }

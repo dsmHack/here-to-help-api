@@ -8,11 +8,10 @@ import org.dsmhack.repository.ReportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class ReportService {
@@ -103,7 +102,7 @@ public class ReportService {
         return uniqueUsers;
     }
 
-    ReportUser findUser(UUID guid, List<ReportUser> users) {
+    ReportUser findUser(String guid, List<ReportUser> users) {
         for (ReportUser user : users) {
             if (user.getUserGuid().equals(guid)) {
                 return user;
@@ -112,7 +111,7 @@ public class ReportService {
         return new ReportUser();
     }
 
-    boolean projectGuidExists(UUID guid, List<ReportProject> projects) {
+    boolean projectGuidExists(String guid, List<ReportProject> projects) {
         for (ReportProject project : projects) {
             if (project.getProjectGuid().equals(guid)) {
                 return true;
@@ -121,7 +120,7 @@ public class ReportService {
         return false;
     }
 
-    ReportProject findReportProject(UUID guid, List<ReportProject> projects) {
+    ReportProject findReportProject(String guid, List<ReportProject> projects) {
         for (ReportProject project: projects) {
             if (project.getProjectGuid().equals(guid)) {
                 return project;
@@ -130,7 +129,7 @@ public class ReportService {
         return new ReportProject();
     }
 
-    boolean userGuidExists(UUID guid, List<ReportUser> users) {
+    boolean userGuidExists(String guid, List<ReportUser> users) {
         for (ReportUser user : users) {
             if (user.getUserGuid().equals(guid)) {
                 return true;
@@ -139,10 +138,10 @@ public class ReportService {
         return false;
     }
 
-    double calculateHours(Timestamp checkIn, Timestamp checkOut) {
+    double calculateHours(LocalDateTime checkIn, LocalDateTime checkOut) {
         if (checkOut == null) {
             return 0;
         }
-        return (double) checkIn.toLocalDateTime().until(checkOut.toLocalDateTime(), ChronoUnit.MINUTES) / 60;
+        return (double) checkIn.until(checkOut, ChronoUnit.MINUTES) / 60;
     }
 }

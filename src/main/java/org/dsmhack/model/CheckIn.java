@@ -16,7 +16,7 @@ package org.dsmhack.model;
 import com.google.gson.Gson;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -25,51 +25,51 @@ public class CheckIn {
 
     @Id
     @Column
-    private UUID userGuid;
+    private String userGuid;
 
     @Column
-    private UUID projGuid;
+    private String projGuid;
 
     @Column
-    private Timestamp timeIn;
+    private LocalDateTime timeIn;
 
     @Column
-    private Timestamp timeOut;
+    private LocalDateTime timeOut;
 
     public CheckIn(){}
 
-    public UUID getUserGuid() {
+    public String getUserGuid() {
         return userGuid;
     }
 
-    public CheckIn setUserGuid(UUID userGuid) {
+    public CheckIn setUserGuid(String userGuid) {
         this.userGuid = userGuid;
         return this;
     }
 
-    public UUID getProjGuid() {
+    public String getProjGuid() {
         return projGuid;
     }
 
-    public CheckIn setProjGuid(UUID projGuid) {
+    public CheckIn setProjGuid(String projGuid) {
         this.projGuid = projGuid;
         return this;
     }
 
-    public Timestamp getTimeIn() {
+    public LocalDateTime getTimeIn() {
         return timeIn;
     }
 
-    public CheckIn setTimeIn(Timestamp timeIn) {
+    public CheckIn setTimeIn(LocalDateTime timeIn) {
         this.timeIn = timeIn;
         return this;
     }
 
-    public Timestamp getTimeOut() {
+    public LocalDateTime getTimeOut() {
         return timeOut;
     }
 
-    public CheckIn setTimeOut(Timestamp timeOut) {
+    public CheckIn setTimeOut(LocalDateTime timeOut) {
         this.timeOut = timeOut;
         return this;
     }
