@@ -22,10 +22,10 @@ public class AppUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userGuid) throws UsernameNotFoundException {
         LoginToken securityCode = loginTokenRepository.findByUserGuid(userGuid);
-        boolean isTokenExpired = securityCode.getTokenExpDate().isBefore(LocalDateTime.now());
+        boolean credentialsNonExpired = LocalDateTime.now().isBefore(securityCode.getTokenExpDate());
         if (securityCode == null) {
             throw new UsernameNotFoundException(userGuid);
         }
-        return new User(userGuid, securityCode.getToken(), true, true, isTokenExpired, true, Collections.emptyList());
+        return new User(userGuid, securityCode.getToken(), true, true, credentialsNonExpired, true, Collections.emptyList());
     }
 }
