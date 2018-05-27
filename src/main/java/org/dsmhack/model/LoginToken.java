@@ -28,7 +28,7 @@ public class LoginToken {
 
     @Id
     @Column
-    private UUID userGuid;
+    private String userGuid;
 
     @Column
     private String token;
@@ -36,11 +36,11 @@ public class LoginToken {
     @Column
     private LocalDateTime tokenExpDate;
 
-    public UUID getUserGuid() {
+    public String getUserGuid() {
         return userGuid;
     }
 
-    public LoginToken setUserGuid(UUID userGuid) {
+    public LoginToken setUserGuid(String userGuid) {
         this.userGuid = userGuid;
         return this;
     }

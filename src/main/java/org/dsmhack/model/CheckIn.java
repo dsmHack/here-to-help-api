@@ -25,10 +25,10 @@ public class CheckIn {
 
     @Id
     @Column
-    private UUID userGuid;
+    private String userGuid;
 
     @Column
-    private UUID projGuid;
+    private String projGuid;
 
     @Column
     private LocalDateTime timeIn;
@@ -38,20 +38,20 @@ public class CheckIn {
 
     public CheckIn(){}
 
-    public UUID getUserGuid() {
+    public String getUserGuid() {
         return userGuid;
     }
 
-    public CheckIn setUserGuid(UUID userGuid) {
+    public CheckIn setUserGuid(String userGuid) {
         this.userGuid = userGuid;
         return this;
     }
 
-    public UUID getProjGuid() {
+    public String getProjGuid() {
         return projGuid;
     }
 
-    public CheckIn setProjGuid(UUID projGuid) {
+    public CheckIn setProjGuid(String projGuid) {
         this.projGuid = projGuid;
         return this;
     }

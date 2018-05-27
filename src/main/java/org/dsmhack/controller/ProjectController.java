@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -40,9 +39,9 @@ public class ProjectController {
         return projectRepository.findAll();
     }
 
-    @GetMapping("/projects/{projectGuid}")
-    public Project getProjectById(@PathVariable String projectGuid) {
-        return projectRepository.findOne(projectGuid);
+    @GetMapping("/projects/{projectId}")
+    public Project getProjectById(@PathVariable String projectId) {
+        return projectRepository.findOne(projectId);
     }
 
     @PostMapping("/projects")
@@ -51,13 +50,13 @@ public class ProjectController {
         return new ResponseEntity<>(projectRepository.save(project), HttpStatus.CREATED);
     }
 
-    @GetMapping("/projects/{projectGuid}/check-ins")
-    public List<CheckIn> findAllCheckins(@PathVariable String projectGuid) {
-        return checkInRepository.findByProjGuid(projectGuid);
+    @GetMapping("/projects/{projectId}/check-ins")
+    public List<CheckIn> findAllCheckins(@PathVariable String projectId) {
+        return checkInRepository.findByProjGuid(projectId);
     }
 
-    @PostMapping("/projects/{projectGuid}/check-ins")
-    public ResponseEntity<CheckIn> checkUserIn(@PathVariable UUID projectGuid, @RequestBody UUID userGuid){
+    @PostMapping("/projects/{projectId}/check-ins")
+    public ResponseEntity<CheckIn> checkUserIn(@PathVariable String projectId, @RequestBody String userGuid){
         CheckIn checkIn = new CheckIn();
         checkIn.setUserGuid(userGuid);
         checkIn.setProjGuid(projectGuid);
@@ -65,11 +64,11 @@ public class ProjectController {
         return new ResponseEntity<>(checkInRepository.save(checkIn), HttpStatus.CREATED);
     }
 
-    @PostMapping("/projects/{projectGuid}/user")
-    public UserProject addUser(@PathVariable UUID projectGuid, @RequestBody UUID userGuid){
+    @PostMapping("/projects/{projectId}/user")
+    public UserProject addUser(@PathVariable String projectId, @RequestBody String userGuid){
         UserProject userProject = new UserProject();
         UserProject.MyKey myKey = new UserProject.MyKey();
-        myKey.setProjGuid(projectGuid);
+        myKey.setProjGuid(projectId);
         myKey.setUserGuid(userGuid);
 
         userProject.setMyKey(myKey);
