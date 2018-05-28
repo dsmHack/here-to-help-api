@@ -30,9 +30,11 @@ public class AppUserDetailsServiceTest {
         LoginToken loginToken = new LoginToken();
         loginToken.setToken("token");
         loginToken.setUserGuid("guid");
-        loginToken.setTokenExpDate(Timestamp.valueOf(LocalDateTime.MIN));
+        loginToken.setTokenExpDate(LocalDateTime.MIN);
         when(loginTokenRepository.findByUserGuid(anyString())).thenReturn(loginToken);
+
         UserDetails userDetails = appUserDetailsService.loadUserByUsername("any");
+
         assertFalse(userDetails.isCredentialsNonExpired());
     }
 }

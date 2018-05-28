@@ -59,7 +59,7 @@ public class ProjectController {
     public ResponseEntity<CheckIn> checkUserIn(@PathVariable String projectId, @RequestBody String userGuid){
         CheckIn checkIn = new CheckIn();
         checkIn.setUserGuid(userGuid);
-        checkIn.setProjGuid(projectGuid);
+        checkIn.setProjGuid(projectId);
         checkIn.setTimeIn(LocalDateTime.now());
         return new ResponseEntity<>(checkInRepository.save(checkIn), HttpStatus.CREATED);
     }
