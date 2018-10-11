@@ -31,6 +31,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         String header = request.getHeader(HEADER_STRING);
 
         if (header == null || !header.startsWith(TOKEN_PREFIX)) {
+            //todo: seems like the issue is here. This should call requiresAuthentication which should then call attemptAuthentication according to https://docs.spring.io/spring-security/site/docs/4.2.6.RELEASE/apidocs/org/springframework/security/web/authentication/AbstractAuthenticationProcessingFilter.html
             chain.doFilter(request, response);
             return;
         }

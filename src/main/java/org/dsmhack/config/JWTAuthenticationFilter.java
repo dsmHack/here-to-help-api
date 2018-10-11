@@ -34,6 +34,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res) throws AuthenticationException {
+        //todo: this never gets triggered, which is a problem
         try {
             LoginToken credentials = new ObjectMapper().readValue(req.getInputStream(), LoginToken.class);
             return authenticationManager.authenticate(
