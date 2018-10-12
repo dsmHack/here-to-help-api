@@ -45,16 +45,10 @@ public class LoginController {
         return new ResponseEntity(HttpStatus.CREATED);
     }
     
-    @PostMapping("/login/verifyCode")
+    @PostMapping("/login")
     public ResponseEntity<User> verifyCode(@RequestBody String securityToken) throws Exception {
         LoginToken loginToken = loginTokenRepository.findByToken(securityToken);
         User user = userRepository.findOne(loginToken.getUserGuid());
-        String token = Jwts.builder()
-                .setSubject(user.getUserGuid())
-                .setExpiration(new Date(System.currentTimeMillis() + THIRTY_MINUTES))
-                .signWith(SignatureAlgorithm.HS512, jwtEncryptionKey.getBytes())
-                .compact();
-
-        return ResponseEntity.ok().header(HEADER_STRING,TOKEN_PREFIX + token).body(user);
+        return ResponseEntity.ok().body(user);
     }
 }

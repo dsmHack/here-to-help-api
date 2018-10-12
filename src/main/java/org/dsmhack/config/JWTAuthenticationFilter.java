@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.dsmhack.model.LoginToken;
+import org.dsmhack.repository.LoginTokenRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -27,6 +29,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private final String jwtEncryptionKey;
     private final AuthenticationManager authenticationManager;
 
+
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager, String jwtEncryptionKey) {
         this.authenticationManager = authenticationManager;
         this.jwtEncryptionKey = jwtEncryptionKey;
@@ -34,11 +37,10 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res) throws AuthenticationException {
-        //todo: this never gets triggered, which is a problem
         try {
             LoginToken credentials = new ObjectMapper().readValue(req.getInputStream(), LoginToken.class);
             return authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(credentials.getUserGuid(), credentials.getToken(), new ArrayList<>())
+                new UsernamePasswordAuthenticationToken(credentials.getUserGuid(), credentials.getToken(), new ArrayList<>())
             );
         } catch (IOException e) {
             throw new RuntimeException(e);
