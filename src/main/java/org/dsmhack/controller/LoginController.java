@@ -46,8 +46,8 @@ public class LoginController {
     }
     
     @PostMapping("/login")
-    public ResponseEntity<User> verifyCode(@RequestBody String securityToken) throws Exception {
-        LoginToken loginToken = loginTokenRepository.findByToken(securityToken);
+    public ResponseEntity<User> verifyCode(@RequestBody LoginToken innerToken) throws Exception {
+        LoginToken loginToken = loginTokenRepository.findByToken(innerToken.getToken());
         User user = userRepository.findOne(loginToken.getUserGuid());
         return ResponseEntity.ok().body(user);
     }
