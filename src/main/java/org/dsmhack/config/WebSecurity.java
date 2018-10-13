@@ -35,7 +35,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/webjars/springfox-swagger-ui/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtEncryptionKey))
+                .addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtEncryptionKey, getApplicationContext()))
                 .addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtEncryptionKey))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
