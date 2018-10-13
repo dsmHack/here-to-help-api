@@ -28,7 +28,6 @@ import java.util.List;
 public class User {
     @Id
     @Column
-    //todo: eventually move move to UUID
     private String userGuid;
 
     @NotNull

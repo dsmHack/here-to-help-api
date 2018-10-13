@@ -40,9 +40,9 @@ public class UserController {
         return userRepository.findAll();
     }
 
-    @GetMapping("/users/{userId}")
-    public User getUserById(@PathVariable String userId) {
-        return userRepository.findOne(userId);
+    @GetMapping("/users/{userGuid}")
+    public User getUserById(@PathVariable String userGuid) {
+        return userRepository.findOne(userGuid);
     }
 
     @PostMapping("/users")
