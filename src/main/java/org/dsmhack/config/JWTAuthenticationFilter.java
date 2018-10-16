@@ -33,13 +33,11 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private final String jwtEncryptionKey;
     private final AuthenticationManager authenticationManager;
     private final LoginTokenRepository loginTokenRepository;
-    private final UserRepository userRepository;
 
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager, String jwtEncryptionKey, ApplicationContext ctx) {
         this.authenticationManager = authenticationManager;
         this.jwtEncryptionKey = jwtEncryptionKey;
         this.loginTokenRepository = ctx.getBean(LoginTokenRepository.class);
-        this.userRepository = ctx.getBean(UserRepository.class);
     }
 
     @Override
@@ -47,9 +45,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         try {
             LoginToken credentials = new ObjectMapper().readValue(req.getInputStream(), LoginToken.class);
             LoginToken loginToken = this.loginTokenRepository.findByToken(credentials.getToken());
-            String userGuid = loginToken.getUserGuid();
-            List<GrantedAuthority> roles = Collections.singletonList(new SimpleGrantedAuthority(userRepository.findOne(userGuid).getRole()));
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userGuid, loginToken.getToken(), roles);
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(loginToken.getUserGuid(), loginToken.getToken(), new ArrayList<>());
             return authenticationManager.authenticate(authentication);
         } catch (IOException e) {
             throw new RuntimeException(e);

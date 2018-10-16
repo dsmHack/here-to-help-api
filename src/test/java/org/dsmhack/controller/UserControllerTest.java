@@ -83,7 +83,7 @@ public class UserControllerTest {
                     .setFirstName("John")
                     .setLastName("Doe")
                     .setEmail("jdoe@example.com")
-                    .setRole("Volunteer")
+                    .setRole("ROLE_VOLUNTEER")
                     .toJson())
         ).andExpect(
             status().isCreated()
@@ -103,7 +103,7 @@ public class UserControllerTest {
                     .setFirstName("John")
                     .setLastName("Doe")
                     .setEmail("jdoe@example.com")
-                    .setRole("Organization Administrator")
+                    .setRole("ROLE_ORGANIZATION_ADMINISTRATOR")
                     .toJson())
         ).andExpect(
             status().isCreated()
@@ -123,7 +123,7 @@ public class UserControllerTest {
                     .setFirstName("John")
                     .setLastName("Doe")
                     .setEmail("jdoe@example.com")
-                    .setRole("dsmHack Administrator")
+                    .setRole("ROLE_DSMHACK_ADMINISTRATOR")
                     .toJson())
         ).andExpect(
             status().isCreated()
@@ -177,7 +177,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void postUserByIdReturns400_roleVolunteer() throws Exception {
+    public void postUserByIdReturns400_volunteer() throws Exception {
         mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
 
         MvcResult mvcResult = mockMvc.perform(
