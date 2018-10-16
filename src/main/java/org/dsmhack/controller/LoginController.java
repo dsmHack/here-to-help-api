@@ -26,9 +26,6 @@ public class LoginController {
     private static final String TOKEN_PREFIX = "Bearer ";
     private static final String HEADER_STRING = "Authorization";
 
-    @Value("${jwtSecret}")
-    private String jwtEncryptionKey;
-
     @Autowired
     private LoginService loginService;
 
