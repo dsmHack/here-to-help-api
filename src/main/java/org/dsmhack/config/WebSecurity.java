@@ -19,7 +19,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
-    @Value("${jwtSecret}")
+    @Value("${jwt.secret}")
     private String jwtEncryptionKey;
 
     @Autowired
@@ -28,13 +28,14 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/login/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/login/sendCode").permitAll()
                 .antMatchers(HttpMethod.GET, "/swagger**").permitAll()
                 .antMatchers(HttpMethod.GET, "/swagger-resources/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/v2/api-docs/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/webjars/springfox-swagger-ui/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtEncryptionKey))
+                .addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtEncryptionKey, getApplicationContext()))
                 .addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtEncryptionKey))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }

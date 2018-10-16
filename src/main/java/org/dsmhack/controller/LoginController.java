@@ -26,9 +26,6 @@ public class LoginController {
     private static final String TOKEN_PREFIX = "Bearer ";
     private static final String HEADER_STRING = "Authorization";
 
-    @Value("${jwtSecret}")
-    private String jwtEncryptionKey;
-
     @Autowired
     private LoginService loginService;
 
@@ -45,16 +42,9 @@ public class LoginController {
         return new ResponseEntity(HttpStatus.CREATED);
     }
     
-    @PostMapping("/login/verifyCode")
-    public ResponseEntity<User> verifyCode(@RequestBody String securityToken) throws Exception {
+    @PostMapping("/login")
+    public User verifyCode(@RequestBody String securityToken) throws Exception {
         LoginToken loginToken = loginTokenRepository.findByToken(securityToken);
-        User user = userRepository.findOne(loginToken.getUserGuid());
-        String token = Jwts.builder()
-                .setSubject(user.getUserGuid())
-                .setExpiration(new Date(System.currentTimeMillis() + THIRTY_MINUTES))
-                .signWith(SignatureAlgorithm.HS512, jwtEncryptionKey.getBytes())
-                .compact();
-
-        return ResponseEntity.ok().header(HEADER_STRING,TOKEN_PREFIX + token).body(user);
+        return userRepository.findOne(loginToken.getUserGuid());
     }
 }
