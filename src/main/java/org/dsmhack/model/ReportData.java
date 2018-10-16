@@ -3,7 +3,6 @@ package org.dsmhack.model;
 import com.google.gson.Gson;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 public class ReportData {
     private String projectGuid;

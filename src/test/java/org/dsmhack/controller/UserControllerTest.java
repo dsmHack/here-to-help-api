@@ -1,6 +1,5 @@
 package org.dsmhack.controller;
 
-import com.google.gson.Gson;
 import org.dsmhack.model.User;
 import org.dsmhack.repository.UserRepository;
 import org.dsmhack.service.CodeGenerator;

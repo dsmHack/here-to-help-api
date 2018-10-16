@@ -1,6 +1,5 @@
 package org.dsmhack.controller;
 
-import org.dsmhack.model.ReportData;
 import org.dsmhack.model.ReportOrganization;
 import org.dsmhack.service.ReportService;
 import org.junit.Test;
@@ -12,9 +11,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ReportControllerTest {
