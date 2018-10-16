@@ -21,7 +21,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
-    @Value("${jwtSecret}")
+    @Value("${jwt.secret}")
     private String jwtEncryptionKey;
 
     @Autowired
