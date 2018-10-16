@@ -17,7 +17,6 @@ import com.google.gson.Gson;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.UUID;
 
 @Entity
 @Table

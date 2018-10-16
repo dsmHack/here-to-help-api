@@ -2,12 +2,10 @@ package org.dsmhack.controller;
 
 import org.dsmhack.model.CheckIn;
 import org.dsmhack.model.Project;
-import org.dsmhack.model.User;
 import org.dsmhack.model.UserProject;
 import org.dsmhack.repository.CheckInRepository;
 import org.dsmhack.repository.ProjectRepository;
 import org.dsmhack.repository.UserProjectRepository;
-import org.dsmhack.repository.UserRepository;
 import org.dsmhack.service.CodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
