@@ -28,17 +28,15 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-        String header = request.getHeader(HEADER_STRING);
+        final String header = request.getHeader(HEADER_STRING);
 
-        boolean doesNotHaveBearer = header == null || !header.startsWith(TOKEN_PREFIX);
-        if (doesNotHaveBearer) {
-            chain.doFilter(request, response);
-            return;
+        final boolean hasBearer = header != null && header.startsWith(TOKEN_PREFIX);
+        if (hasBearer) {
+            UsernamePasswordAuthenticationToken authentication = getAuthentication(request);
+
+            SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 
-        UsernamePasswordAuthenticationToken authentication = getAuthentication(request);
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
         chain.doFilter(request, response);
     }
 

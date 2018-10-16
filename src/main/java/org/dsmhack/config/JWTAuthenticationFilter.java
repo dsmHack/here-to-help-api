@@ -41,8 +41,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res) throws AuthenticationException {
         try {
-            LoginToken credentials = new ObjectMapper().readValue(req.getInputStream(), LoginToken.class);
-            LoginToken loginToken = this.loginTokenRepository.findByToken(credentials.getToken());
+            String securityToken = req.getReader().lines().reduce("", (accumulator, actual) -> accumulator + actual);
+            LoginToken loginToken = this.loginTokenRepository.findByToken(securityToken);
             return authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginToken.getUserGuid(), loginToken.getToken(), new ArrayList<>())
             );
