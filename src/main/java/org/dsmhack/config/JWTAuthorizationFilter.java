@@ -1,8 +1,12 @@
 package org.dsmhack.config;
 
 import io.jsonwebtoken.Jwts;
+import org.dsmhack.repository.UserRepository;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -11,18 +15,20 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     private static final String TOKEN_PREFIX = "Bearer ";
     private static final String HEADER_STRING = "Authorization";
 
     private final String jwtEncryptionKey;
-    private AuthenticationManager authenticationManager;
+    private final UserRepository userRepository;
 
-    public JWTAuthorizationFilter(AuthenticationManager authManager, String jwtEncryptionKey) {
+    public JWTAuthorizationFilter(AuthenticationManager authManager, String jwtEncryptionKey, ApplicationContext ctx) {
         super(authManager);
         this.jwtEncryptionKey = jwtEncryptionKey;
+        this.userRepository = ctx.getBean(UserRepository.class);
     }
 
     @Override
@@ -50,7 +56,8 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
                     .getSubject();
 
             if (user != null) {
-                return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
+                List<GrantedAuthority> roles = Collections.singletonList(new SimpleGrantedAuthority(userRepository.findOne(user).getRole()));
+                return new UsernamePasswordAuthenticationToken(user, null, roles);
             }
             return null;
         }

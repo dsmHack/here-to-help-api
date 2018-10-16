@@ -28,7 +28,6 @@ import java.util.List;
 public class User {
     @Id
     @Column
-    //todo: eventually move move to UUID
     private String userGuid;
 
     @NotNull
@@ -49,7 +48,7 @@ public class User {
 
     @NotNull
     @Size(min = 1, max = 50)
-    @Pattern(regexp = "dsmHack Administrator|Organization Administrator|Volunteer")
+    @Pattern(regexp = "ROLE_DSMHACK_ADMINISTRATOR|ROLE_ORGANIZATION_ADMINISTRATOR|ROLE_VOLUNTEER")
     @Column
     private String role;
 

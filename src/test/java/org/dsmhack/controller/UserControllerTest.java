@@ -82,7 +82,7 @@ public class UserControllerTest {
                     .setFirstName("John")
                     .setLastName("Doe")
                     .setEmail("jdoe@example.com")
-                    .setRole("Volunteer")
+                    .setRole("ROLE_VOLUNTEER")
                     .toJson())
         ).andExpect(
             status().isCreated()
@@ -102,7 +102,7 @@ public class UserControllerTest {
                     .setFirstName("John")
                     .setLastName("Doe")
                     .setEmail("jdoe@example.com")
-                    .setRole("Organization Administrator")
+                    .setRole("ROLE_ORGANIZATION_ADMINISTRATOR")
                     .toJson())
         ).andExpect(
             status().isCreated()
@@ -122,7 +122,7 @@ public class UserControllerTest {
                     .setFirstName("John")
                     .setLastName("Doe")
                     .setEmail("jdoe@example.com")
-                    .setRole("dsmHack Administrator")
+                    .setRole("ROLE_DSMHACK_ADMINISTRATOR")
                     .toJson())
         ).andExpect(
             status().isCreated()

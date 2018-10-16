@@ -474,7 +474,6 @@ public class ReportServiceTest {
         assertEquals(7.5, diffInHours, 0.0001);
     }
 
-    //todo: If checkOut is null, we cannot calculate hours, so return 0. We could potientially assume they're in the middle of volunteering and use now as the end. Need to ask the business.
     @Test
     public void hoursBasedOnCheckInCheckOut_checkOutNull() throws Exception {
         LocalDateTime checkIn = LocalDateTime.of(2018, 1, 1, 9, 0, 0);

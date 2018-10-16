@@ -5,12 +5,15 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.dsmhack.model.LoginToken;
 import org.dsmhack.repository.LoginTokenRepository;
+import org.dsmhack.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
@@ -20,8 +23,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private static final long THIRTY_MINUTES = 750_000;
@@ -43,9 +45,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         try {
             String securityToken = req.getReader().lines().reduce("", (accumulator, actual) -> accumulator + actual);
             LoginToken loginToken = this.loginTokenRepository.findByToken(securityToken);
-            return authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginToken.getUserGuid(), loginToken.getToken(), new ArrayList<>())
-            );
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(loginToken.getUserGuid(), loginToken.getToken(), new ArrayList<>());
+            return authenticationManager.authenticate(authentication);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
