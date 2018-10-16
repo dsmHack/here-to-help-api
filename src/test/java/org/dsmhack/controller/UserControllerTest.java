@@ -177,7 +177,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void postUserByIdReturns400_volunteer() throws Exception {
+    public void postUserByIdReturns400_roleVolunteer() throws Exception {
         mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
 
         MvcResult mvcResult = mockMvc.perform(
