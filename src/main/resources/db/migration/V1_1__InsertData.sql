@@ -10,14 +10,17 @@ VALUES ('c84936e4-2f0f-11e8-b467-0ed5f89f718b','Community Foundation Of Des Moin
 insert into project (proj_guid,org_guid,name,description,start_date,end_date) values ('c8493824-2f0f-11e8-b467-0ed5f89f718b','c849343c-2f0f-11e8-b467-0ed5f89f718b','Planting Bamboo','We are planting lots of Bamboo',now(), null);
 insert into project (proj_guid,org_guid,name,description,start_date,end_date) values ('c8493950-2f0f-11e8-b467-0ed5f89f718b','c849343c-2f0f-11e8-b467-0ed5f89f718b','Big Hug','We are giving lots of Hugs',now(), null);
 
-insert into user (user_guid,first_name,last_name,email,role) values ('c8493c34-2f0f-11e8-b467-0ed5f89f718b','Amanda','Panda','apanda@gmail.com','ROLE_DSMHACK_ADMINISTRATOR');
-insert into user (user_guid,first_name,last_name,email,role) values ('c84940da-2f0f-11e8-b467-0ed5f89f718b','Mike','Panda','mpanda@gmail.com','ROLE_VOLUNTEER');
+insert into user (user_guid,first_name,last_name,email,role) values ('c8493c34-2f0f-11e8-b467-0ed5f89f718b','Amanda','Panda','tbrobston@sourceallies.com','ROLE_DSMHACK_ADMINISTRATOR');
+insert into user (user_guid,first_name,last_name,email,role) values ('c84940da-2f0f-11e8-b467-0ed5f89f718b','Mike','Panda','anthonybrobston@live.com','ROLE_ORGANIZATION_ADMINISTRATOR');
+insert into user (user_guid,first_name,last_name,email,role) values ('c84943c4-2f0f-11e8-b467-0ed5f89f718b','Jan','Panda','anthonybrobston@gmail.com','ROLE_VOLUNTEER');
 
 insert into user_organization (user_guid,org_guid) values ('c8493c34-2f0f-11e8-b467-0ed5f89f718b','c849343c-2f0f-11e8-b467-0ed5f89f718b');
 insert into user_organization (user_guid,org_guid) values ('c84940da-2f0f-11e8-b467-0ed5f89f718b','c849343c-2f0f-11e8-b467-0ed5f89f718b');
+insert into user_organization (user_guid,org_guid) values ('c84943c4-2f0f-11e8-b467-0ed5f89f718b','c849343c-2f0f-11e8-b467-0ed5f89f718b');
 
 insert into check_in (user_guid,proj_guid,time_in,time_out) values ('c8493c34-2f0f-11e8-b467-0ed5f89f718b', 'c8493824-2f0f-11e8-b467-0ed5f89f718b','2017-01-01 09:00:00', '2017-01-01 17:00:00');
 insert into check_in (user_guid,proj_guid,time_in,time_out) values ('c8493c34-2f0f-11e8-b467-0ed5f89f718b', 'c8493950-2f0f-11e8-b467-0ed5f89f718b','2017-01-01 09:00:00', '2017-01-01 15:00:00');
+insert into check_in (user_guid,proj_guid,time_in,time_out) values ('c84943c4-2f0f-11e8-b467-0ed5f89f718b', 'c8493950-2f0f-11e8-b467-0ed5f89f718b','2017-01-01 09:00:00', '2017-01-01 15:00:00');
 
 insert into check_in (user_guid,proj_guid,time_in,time_out) values ('c84940da-2f0f-11e8-b467-0ed5f89f718b', 'c8493824-2f0f-11e8-b467-0ed5f89f718b','2017-01-01 09:00:00', '2017-01-01 17:00:00');
 insert into check_in (user_guid,proj_guid,time_in,time_out) values ('c84940da-2f0f-11e8-b467-0ed5f89f718b', 'c8493824-2f0f-11e8-b467-0ed5f89f718b','2017-01-02 09:00:00', '2017-01-02 15:00:00');
