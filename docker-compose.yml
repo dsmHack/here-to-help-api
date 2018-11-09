@@ -13,6 +13,7 @@ services:
         condition: service_healthy
     env_file:
       - api.env
+    restart: unless-stopped
 
   mysql:
     image: mysql:5.5.59
@@ -23,3 +24,4 @@ services:
       - 3306:3306
     healthcheck:
       test: "exit 0"
+    restart: unless-stopped
