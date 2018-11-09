@@ -33,11 +33,13 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private final String jwtEncryptionKey;
     private final AuthenticationManager authenticationManager;
     private final LoginTokenRepository loginTokenRepository;
+    private final UserRepository userRepository;
 
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager, String jwtEncryptionKey, ApplicationContext ctx) {
         this.authenticationManager = authenticationManager;
         this.jwtEncryptionKey = jwtEncryptionKey;
         this.loginTokenRepository = ctx.getBean(LoginTokenRepository.class);
+        this.userRepository = ctx.getBean(UserRepository.class);
     }
 
     @Override
@@ -58,11 +60,16 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             FilterChain chain,
                                             Authentication auth) throws IOException, ServletException {
 
+        String userGuid = ((User) auth.getPrincipal()).getUsername();
         String token = Jwts.builder()
-                .setSubject(((User) auth.getPrincipal()).getUsername())
+                .setSubject(userGuid)
                 .setExpiration(new Date(System.currentTimeMillis() + THIRTY_MINUTES))
                 .signWith(SignatureAlgorithm.HS512, jwtEncryptionKey.getBytes())
                 .compact();
         response.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
+
+        response.getWriter().write(userRepository.findOne(userGuid).toJson());
+        response.getWriter().flush();
+        response.getWriter().close();
     }
 }
