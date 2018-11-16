@@ -12,7 +12,7 @@ services:
       mysql:
         condition: service_healthy
     env_file:
-      - api.env
+      - .env
 
   mysql:
     image: mysql:5.5.59

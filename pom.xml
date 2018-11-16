@@ -9,11 +9,11 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <flyway.user>root</flyway.user>
-        <flyway.password>password</flyway.password>
-        <flyway.database.url>jdbc:mysql://mysql:3306/heretohelp</flyway.database.url>
+        <flyway.user>${env.datasourceusername}</flyway.user>
+        <flyway.password>${env.datasourcepassword}</flyway.password>
+        <flyway.database.url>${env.datasourceurl}</flyway.database.url>
         <flyway.placeholders.stored-procedure-user>user</flyway.placeholders.stored-procedure-user>
-        <flyway.baseline-on-migrate>true</flyway.baseline-on-migrate>
+        <flyway.baseline-on-migrate>${env.flywaybaselineonmigrate}</flyway.baseline-on-migrate>
     </properties>
 
     <parent>

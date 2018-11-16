@@ -2,7 +2,7 @@
 
 ### How to build:
 
-- Create env: `cp api.env.example api.env`
+- Create env: `cp .env.example .env`
 - Build: `docker run -it --rm --name maven-build -v "$(pwd)":/project maven:3.3-jdk-8 mvn -f project/ clean package`
 
 ### How to run:
