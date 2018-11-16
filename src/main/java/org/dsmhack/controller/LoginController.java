@@ -34,6 +34,9 @@ public class LoginController {
     @PostMapping("/login/sendCode")
     public ResponseEntity login(@RequestBody String emailAddress) {
         User user = userRepository.findByEmail(emailAddress);
+        if (user == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
         loginService.login(user);
         return new ResponseEntity(HttpStatus.CREATED);
     }
