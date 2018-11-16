@@ -7,7 +7,7 @@ services:
     volumes:
       - ./target/here-to-help-1.0-SNAPSHOT.jar:/app.jar
     ports:
-      - "${JAVA_PORT}:8080"
+      - ${JAVA_PORT}:8080
     depends_on:
       mysql:
         condition: service_healthy
@@ -20,6 +20,6 @@ services:
       MYSQL_ROOT_PASSWORD: ${DATASOURCE_PASSWORD}
       MYSQL_DATABASE: heretohelp
     ports:
-      - "${DATASOURCE_PORT}:3306"
+      - ${DATASOURCE_PORT}:3306
     healthcheck:
       test: "exit 0"
