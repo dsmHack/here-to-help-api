@@ -125,9 +125,9 @@
                 <version>4.1.2</version>
                 <configuration>
                     <driver>com.mysql.jdbc.Driver</driver>
-                    <url>${flyway.database.url}</url>
-                    <user>${flyway.user}</user>
-                    <password>${flyway.password}</password>
+                    <url>${env.datasourceurl}</url>
+                    <user>${env.datasourceusername}</user>
+                    <password>${env.datasourcepassword}</password>
                     <sqlMigrationPrefix>v</sqlMigrationPrefix>
                     <schemas>
                         <schema>heretohelp</schema>
