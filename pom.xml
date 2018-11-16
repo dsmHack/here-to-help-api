@@ -11,7 +11,7 @@
     <properties>
         <flyway.user>${env.DATASOURCE_USERNAME}</flyway.user>
         <flyway.password>${env.DATASOURCE_PASSWORD}</flyway.password>
-        <flyway.database.url>${env.DATASOURCE_URL}</flyway.database.url>
+        <flyway.database.url>jdbc:mysql://${env.DATASOURCE_HOST}:${env.DATASOURCE_PORT}}/heretohelp</flyway.database.url>
         <flyway.placeholders.stored-procedure-user>user</flyway.placeholders.stored-procedure-user>
         <flyway.baseline-on-migrate>${env.FLYWAY_BASELINE_ON_MIGRATE}</flyway.baseline-on-migrate>
     </properties>
@@ -125,7 +125,7 @@
                 <version>4.1.2</version>
                 <configuration>
                     <driver>com.mysql.jdbc.Driver</driver>
-                    <url>${env.DATASOURCE_URL}</url>
+                    <url>jdbc:mysql://${env.DATASOURCE_HOST}:${env.DATASOURCE_PORT}}/heretohelp</url>
                     <user>${env.DATASOURCE_USERNAME}</user>
                     <password>${env.DATASOURCE_PASSWORD}</password>
                     <sqlMigrationPrefix>v</sqlMigrationPrefix>
