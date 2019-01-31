@@ -17,11 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class LoginController {
-
-    private static final long THIRTY_MINUTES = 750_000;
-    private static final String TOKEN_PREFIX = "Bearer ";
-    private static final String HEADER_STRING = "Authorization";
-
     @Autowired
     private LoginService loginService;
 
@@ -39,7 +34,7 @@ public class LoginController {
     }
     
     @PostMapping("/login")
-    public User verifyCode(@RequestBody String securityToken) throws Exception {
+    public User verifyCode(@RequestBody String securityToken) {
         LoginToken loginToken = loginTokenRepository.findByToken(securityToken);
         return userRepository.findOne(loginToken.getUserGuid());
     }

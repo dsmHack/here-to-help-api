@@ -71,10 +71,10 @@ public class OrganizationControllerTest {
 
     @Test
     public void getOrganizationReturnsListOfOrganizations() throws Exception {
-        List<Organization> expoectedReposonse = Arrays.asList(new Organization(), new Organization());
-        when(organizationRepository.findAll()).thenReturn(expoectedReposonse);
+        List<Organization> expectedResponse = Arrays.asList(new Organization(), new Organization());
+        when(organizationRepository.findAll()).thenReturn(expectedResponse);
         List<Organization> allOrganizations = organizationController.getAllOrganizations();
-        assertEquals(expoectedReposonse, allOrganizations);
+        assertEquals(expectedResponse, allOrganizations);
     }
 
     @Test

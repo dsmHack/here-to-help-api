@@ -1,6 +1,8 @@
 package org.dsmhack.controller;
 
+import org.dsmhack.model.LoginToken;
 import org.dsmhack.model.User;
+import org.dsmhack.repository.LoginTokenRepository;
 import org.dsmhack.repository.UserRepository;
 import org.dsmhack.service.LoginService;
 import org.junit.Before;
@@ -19,10 +21,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 public class LoginControllerTest {
-
     private MockMvc mockMvc;
 
     @InjectMocks
@@ -34,6 +36,9 @@ public class LoginControllerTest {
     @Mock
     private UserRepository userRepository;
 
+    @Mock
+    private LoginTokenRepository loginTokenRepository;
+
     @Before
     public void setup() {
         when(userRepository.findByEmail(anyString())).thenReturn(new User());
@@ -41,7 +46,7 @@ public class LoginControllerTest {
     }
 
     @Test
-    public void loginReturns201() throws Exception {
+    public void loginSendCodeReturns201() throws Exception {
         mockMvc.perform(post("/login/sendCode")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("email address"))
@@ -49,9 +54,41 @@ public class LoginControllerTest {
     }
 
     @Test
-    public void loginCallsLoginServiceWithEmailAddress() throws Exception {
+    public void loginSendCodeCallsLoginServiceWithEmailAddress() throws Exception {
         loginController.login("test@aol.com");
         verify(loginService).login(any(User.class));
     }
 
+    @Test
+    public void loginReturns200() throws Exception {
+        String securityToken = "securityToken";
+        String userGuid = "userGuid";
+        User user = new User();
+        LoginToken loginToken = new LoginToken()
+                .setUserGuid(userGuid);
+        when(loginTokenRepository.findByToken(securityToken)).thenReturn(loginToken);
+        when(userRepository.findOne(userGuid)).thenReturn(user);
+
+        mockMvc.perform(post("/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(securityToken))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void loginCallsLoginTokenRepositoryWithSecurityTokenAndReturnsUser() throws Exception {
+        String securityToken = "securityToken";
+        String userGuid = "userGuid";
+        User expectedUser = new User();
+        LoginToken loginToken = new LoginToken()
+                .setUserGuid(userGuid);
+        when(loginTokenRepository.findByToken(securityToken)).thenReturn(loginToken);
+        when(userRepository.findOne(userGuid)).thenReturn(expectedUser);
+
+        User actualUser = loginController.verifyCode(securityToken);
+        
+        assertEquals(expectedUser, actualUser);
+        verify(loginTokenRepository).findByToken(securityToken);
+        verify(userRepository).findOne(userGuid);
+    }
 }
