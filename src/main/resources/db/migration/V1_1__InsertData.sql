@@ -11,7 +11,7 @@ insert into project (proj_guid,org_guid,name,description,start_date,end_date) va
 insert into project (proj_guid,org_guid,name,description,start_date,end_date) values ('c8493950-2f0f-11e8-b467-0ed5f89f718b','c849343c-2f0f-11e8-b467-0ed5f89f718b','Big Hug','We are giving lots of Hugs',now(), null);
 
 insert into user (user_guid,first_name,last_name,email,role) values ('c8493c34-2f0f-11e8-b467-0ed5f89f718b','Amanda','Panda','apanda@gmail.com','ROLE_DSMHACK_ADMINISTRATOR');
-insert into user (user_guid,first_name,last_name,email,role) values ('c84940da-2f0f-11e8-b467-0ed5f89f718b','Mike','Panda','mpanda@gmail.com','ROLE_VOLUNTEER');
+insert into user (user_guid,first_name,last_name,email,role) values ('c84940da-2f0f-11e8-b467-0ed5f89f718b','Mike','Panda','anthonybrobston@gmail.com','ROLE_VOLUNTEER');
 
 insert into user_organization (user_guid,org_guid) values ('c8493c34-2f0f-11e8-b467-0ed5f89f718b','c849343c-2f0f-11e8-b467-0ed5f89f718b');
 insert into user_organization (user_guid,org_guid) values ('c84940da-2f0f-11e8-b467-0ed5f89f718b','c849343c-2f0f-11e8-b467-0ed5f89f718b');
