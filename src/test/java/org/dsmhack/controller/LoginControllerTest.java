@@ -11,9 +11,12 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.util.Arrays;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -85,9 +88,10 @@ public class LoginControllerTest {
         when(loginTokenRepository.findByToken(securityToken)).thenReturn(loginToken);
         when(userRepository.findOne(userGuid)).thenReturn(expectedUser);
 
-        User actualUser = loginController.verifyCode(securityToken);
-        
-        assertEquals(expectedUser, actualUser);
+        ResponseEntity responseEntity = loginController.verifyCode(securityToken);
+
+        assertEquals(expectedUser, responseEntity.getBody());
+        assertEquals(Arrays.asList("Authorization"), responseEntity.getHeaders().getAccessControlExposeHeaders());
         verify(loginTokenRepository).findByToken(securityToken);
         verify(userRepository).findOne(userGuid);
     }

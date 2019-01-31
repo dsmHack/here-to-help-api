@@ -6,13 +6,14 @@ import org.dsmhack.repository.LoginTokenRepository;
 import org.dsmhack.repository.UserRepository;
 import org.dsmhack.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -34,8 +35,11 @@ public class LoginController {
     }
     
     @PostMapping("/login")
-    public User verifyCode(@RequestBody String securityToken) {
+    public ResponseEntity<User> verifyCode(@RequestBody String securityToken) {
         LoginToken loginToken = loginTokenRepository.findByToken(securityToken);
-        return userRepository.findOne(loginToken.getUserGuid());
+        User user = userRepository.findOne(loginToken.getUserGuid());
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("access-control-expose-headers", "Authorization");
+        return new ResponseEntity<>(user, headers, HttpStatus.OK);
     }
 }
