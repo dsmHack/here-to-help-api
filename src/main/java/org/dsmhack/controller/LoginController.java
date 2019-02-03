@@ -6,7 +6,6 @@ import org.dsmhack.repository.LoginTokenRepository;
 import org.dsmhack.repository.UserRepository;
 import org.dsmhack.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,30 +16,29 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class LoginController {
+  private static final long THIRTY_MINUTES = 750_000;
+  private static final String TOKEN_PREFIX = "Bearer ";
+  private static final String HEADER_STRING = "Authorization";
 
-    private static final long THIRTY_MINUTES = 750_000;
-    private static final String TOKEN_PREFIX = "Bearer ";
-    private static final String HEADER_STRING = "Authorization";
+  @Autowired
+  private LoginService loginService;
 
-    @Autowired
-    private LoginService loginService;
+  @Autowired
+  private UserRepository userRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+  @Autowired
+  private LoginTokenRepository loginTokenRepository;
 
-    @Autowired
-    private LoginTokenRepository loginTokenRepository;
+  @PostMapping("/login/sendCode")
+  public ResponseEntity login(@RequestBody String emailAddress) {
+    User user = userRepository.findByEmail(emailAddress);
+    loginService.login(user);
+    return new ResponseEntity(HttpStatus.CREATED);
+  }
 
-    @PostMapping("/login/sendCode")
-    public ResponseEntity login(@RequestBody String emailAddress) {
-        User user = userRepository.findByEmail(emailAddress);
-        loginService.login(user);
-        return new ResponseEntity(HttpStatus.CREATED);
-    }
-    
-    @PostMapping("/login")
-    public User verifyCode(@RequestBody String securityToken) throws Exception {
-        LoginToken loginToken = loginTokenRepository.findByToken(securityToken);
-        return userRepository.findOne(loginToken.getUserGuid());
-    }
+  @PostMapping("/login")
+  public User verifyCode(@RequestBody String securityToken) throws Exception {
+    LoginToken loginToken = loginTokenRepository.findByToken(securityToken);
+    return userRepository.findOne(loginToken.getUserGuid());
+  }
 }
