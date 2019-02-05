@@ -78,6 +78,7 @@ public class LoginControllerTest {
         ).andExpect(
                 status().isNotFound()
         ).andReturn();
+    }
 
     public void loginReturns200() throws Exception {
         String securityToken = "securityToken";
