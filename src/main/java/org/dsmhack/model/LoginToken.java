@@ -24,7 +24,6 @@ import java.time.LocalDateTime;
 @Entity
 @Table
 public class LoginToken {
-
     @Id
     @Column
     private String userGuid;
