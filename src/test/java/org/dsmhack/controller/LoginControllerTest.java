@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
@@ -56,17 +57,29 @@ public class LoginControllerTest {
     public void loginSendCodeReturns201() throws Exception {
         mockMvc.perform(post("/login/sendCode")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("email address"))
+                .content("test@aol.com"))
                 .andExpect(status().isCreated());
     }
 
     @Test
-    public void loginSendCodeCallsLoginServiceWithEmailAddress() throws Exception {
+    public void loginCallsLoginServiceWithEmailAddress() throws Exception {
         loginController.login("test@aol.com");
         verify(loginService).login(any(User.class));
     }
 
     @Test
+    public void emailDoesNotExist() throws Exception {
+        when(userRepository.findByEmail(anyString())).thenReturn(null);
+
+        MvcResult mvcResult = mockMvc.perform(
+                post("/login/sendCode")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("test@aol.com")
+        ).andExpect(
+                status().isNotFound()
+        ).andReturn();
+    }
+
     public void loginReturns200() throws Exception {
         String securityToken = "securityToken";
         String userGuid = "userGuid";
