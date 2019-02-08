@@ -17,35 +17,35 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class OrganizationController {
-    @Autowired
-    private OrganizationRepository organizationRepository;
+  @Autowired
+  private OrganizationRepository organizationRepository;
 
-    @Autowired
-    private ProjectRepository projectRepository;
+  @Autowired
+  private ProjectRepository projectRepository;
 
-    @Autowired
-    private CodeGenerator codeGenerator;
+  @Autowired
+  private CodeGenerator codeGenerator;
 
-    @GetMapping("/organizations")
-    public List<Organization> getAllOrganizations() {
-        return organizationRepository.findAll();
-    }
+  @GetMapping("/organizations")
+  public List<Organization> getAllOrganizations() {
+    return organizationRepository.findAll();
+  }
 
-    @GetMapping("/organizations/{organizationId}")
-    public Organization getOrganizationBy(@PathVariable String organizationId) {
-        return organizationRepository.findOne(organizationId);
-    }
+  @GetMapping("/organizations/{organizationId}")
+  public Organization getOrganizationBy(@PathVariable String organizationId) {
+    return organizationRepository.findOne(organizationId);
+  }
 
-    @GetMapping("/organizations/{organizationId}/projects")
-    public List<Project> findProjectsForOrganization(@PathVariable String organizationId) {
-        return projectRepository.findByOrgGuid(organizationId);
-    }
+  @GetMapping("/organizations/{organizationId}/projects")
+  public List<Project> findProjectsForOrganization(@PathVariable String organizationId) {
+    return projectRepository.findByOrgGuid(organizationId);
+  }
 
-    @PostMapping("/organizations")
-    @Secured("ROLE_DSMHACK_ADMINISTRATOR")
-    public ResponseEntity<Organization> save(@Validated @RequestBody Organization organization) {
-        organization.setOrgGuid(codeGenerator.generateUUID());
-        return new ResponseEntity<>(organizationRepository.save(organization), HttpStatus.CREATED);
-    }
+  @PostMapping("/organizations")
+  @Secured("ROLE_DSMHACK_ADMINISTRATOR")
+  public ResponseEntity<Organization> save(@Validated @RequestBody Organization organization) {
+    organization.setOrgGuid(codeGenerator.generateUUID());
+    return new ResponseEntity<>(organizationRepository.save(organization), HttpStatus.CREATED);
+  }
 
 }

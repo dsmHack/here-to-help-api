@@ -11,16 +11,16 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class ReportController {
-    @Autowired
-    private ReportService reportService;
+  @Autowired
+  private ReportService reportService;
 
-    @GetMapping("/organizations/{organizationId}/reports/json")
-    public ReportOrganization getReportDataAsJson(@PathVariable String organizationId) {
-        return reportService.getReportDataAsJson(organizationId);
-    }
+  @GetMapping("/organizations/{organizationId}/reports/json")
+  public ReportOrganization getReportDataAsJson(@PathVariable String organizationId) {
+    return reportService.getReportDataAsJson(organizationId);
+  }
 
-    @GetMapping("/organizations/{organizationId}/reports/csv")
-    public String getReportDataAsCsv(@PathVariable String organizationId) {
-        return reportService.getReportDataAsCsv(organizationId);
-    }
+  @GetMapping("/organizations/{organizationId}/reports/csv")
+  public String getReportDataAsCsv(@PathVariable String organizationId) {
+    return reportService.getReportDataAsCsv(organizationId);
+  }
 }

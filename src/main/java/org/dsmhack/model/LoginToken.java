@@ -24,44 +24,44 @@ import java.time.LocalDateTime;
 @Entity
 @Table
 public class LoginToken {
-    @Id
-    @Column
-    private String userGuid;
+  @Id
+  @Column
+  private String userGuid;
 
-    @Column
-    private String token;
+  @Column
+  private String token;
 
-    @Column
-    private LocalDateTime tokenExpDate;
+  @Column
+  private LocalDateTime tokenExpDate;
 
-    public String getUserGuid() {
-        return userGuid;
-    }
+  public String getUserGuid() {
+    return userGuid;
+  }
 
-    public LoginToken setUserGuid(String userGuid) {
-        this.userGuid = userGuid;
-        return this;
-    }
+  public LoginToken setUserGuid(String userGuid) {
+    this.userGuid = userGuid;
+    return this;
+  }
 
-    public String getToken() {
-        return token;
-    }
+  public String getToken() {
+    return token;
+  }
 
-    public LoginToken setToken(String token) {
-        this.token = token;
-        return this;
-    }
+  public LoginToken setToken(String token) {
+    this.token = token;
+    return this;
+  }
 
-    public LocalDateTime getTokenExpDate() {
-        return tokenExpDate;
-    }
+  public LocalDateTime getTokenExpDate() {
+    return tokenExpDate;
+  }
 
-    public LoginToken setTokenExpDate(LocalDateTime tokenExpDate) {
-        this.tokenExpDate = tokenExpDate;
-        return this;
-    }
+  public LoginToken setTokenExpDate(LocalDateTime tokenExpDate) {
+    this.tokenExpDate = tokenExpDate;
+    return this;
+  }
 
-    public String toJson() {
-        return new Gson().toJson(this);
-    }
+  public String toJson() {
+    return new Gson().toJson(this);
+  }
 }

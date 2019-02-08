@@ -19,48 +19,48 @@ import java.util.Collections;
 import java.util.List;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
-    private static final String TOKEN_PREFIX = "Bearer ";
-    private static final String HEADER_STRING = "Authorization";
+  private static final String TOKEN_PREFIX = "Bearer ";
+  private static final String HEADER_STRING = "Authorization";
 
-    private final String jwtEncryptionKey;
-    private final UserRepository userRepository;
+  private final String jwtEncryptionKey;
+  private final UserRepository userRepository;
 
-    public JWTAuthorizationFilter(AuthenticationManager authManager, String jwtEncryptionKey, ApplicationContext ctx) {
-        super(authManager);
-        this.jwtEncryptionKey = jwtEncryptionKey;
-        this.userRepository = ctx.getBean(UserRepository.class);
+  public JWTAuthorizationFilter(AuthenticationManager authManager, String jwtEncryptionKey, ApplicationContext ctx) {
+    super(authManager);
+    this.jwtEncryptionKey = jwtEncryptionKey;
+    this.userRepository = ctx.getBean(UserRepository.class);
+  }
+
+  @Override
+  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+          throws IOException, ServletException {
+    final String header = request.getHeader(HEADER_STRING);
+
+    final boolean hasBearer = header != null && header.startsWith(TOKEN_PREFIX);
+    if (hasBearer) {
+      UsernamePasswordAuthenticationToken authentication = getAuthentication(request);
+
+      SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
-            throws IOException, ServletException {
-        final String header = request.getHeader(HEADER_STRING);
+    chain.doFilter(request, response);
+  }
 
-        final boolean hasBearer = header != null && header.startsWith(TOKEN_PREFIX);
-        if (hasBearer) {
-            UsernamePasswordAuthenticationToken authentication = getAuthentication(request);
+  private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
+    String token = request.getHeader(HEADER_STRING);
+    if (token != null) {
+      String user = Jwts.parser()
+              .setSigningKey(jwtEncryptionKey.getBytes())
+              .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
+              .getBody()
+              .getSubject();
 
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        }
-
-        chain.doFilter(request, response);
+      if (user != null) {
+        List<GrantedAuthority> roles = Collections.singletonList(new SimpleGrantedAuthority(userRepository.findOne(user).getRole()));
+        return new UsernamePasswordAuthenticationToken(user, null, roles);
+      }
+      return null;
     }
-
-    private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-        String token = request.getHeader(HEADER_STRING);
-        if (token != null) {
-            String user = Jwts.parser()
-                    .setSigningKey(jwtEncryptionKey.getBytes())
-                    .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
-                    .getBody()
-                    .getSubject();
-
-            if (user != null) {
-                List<GrantedAuthority> roles = Collections.singletonList(new SimpleGrantedAuthority(userRepository.findOne(user).getRole()));
-                return new UsernamePasswordAuthenticationToken(user, null, roles);
-            }
-            return null;
-        }
-        return null;
-    }
+    return null;
+  }
 }

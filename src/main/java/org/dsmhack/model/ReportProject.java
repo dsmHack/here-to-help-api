@@ -2,7 +2,7 @@ package org.dsmhack.model;
 
 import com.google.gson.Gson;
 
-public class ReportProject   {
+public class ReportProject {
   private String projectGuid;
   private String name;
   private double totalHours = 0;

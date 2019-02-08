@@ -32,129 +32,129 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 public class OrganizationControllerTest {
 
-    private MockMvc mockMvc;
+  private MockMvc mockMvc;
 
-    @InjectMocks
-    private OrganizationController organizationController;
+  @InjectMocks
+  private OrganizationController organizationController;
 
-    @Mock
-    private OrganizationRepository organizationRepository;
+  @Mock
+  private OrganizationRepository organizationRepository;
 
-    @Mock
-    private ProjectRepository projectRepository;
+  @Mock
+  private ProjectRepository projectRepository;
 
-    @Mock
-    private CodeGenerator codeGenerator;
+  @Mock
+  private CodeGenerator codeGenerator;
 
-    @Before
-    public void init() {
-        mockMvc = MockMvcBuilders.standaloneSetup(organizationController).build();
-    }
+  @Before
+  public void init() {
+    mockMvc = MockMvcBuilders.standaloneSetup(organizationController).build();
+  }
 
-    @Test
-    public void defaultMappingReturns200() throws Exception {
-        mockMvc.perform(get("/organizations"))
-                .andExpect(status().isOk());
-    }
+  @Test
+  public void defaultMappingReturns200() throws Exception {
+    mockMvc.perform(get("/organizations"))
+            .andExpect(status().isOk());
+  }
 
-    @Test
-    public void getOrgByIdReturns200() throws Exception {
-        mockMvc.perform(get("/organizations/1"))
-                .andExpect(status().isOk());
-    }
+  @Test
+  public void getOrgByIdReturns200() throws Exception {
+    mockMvc.perform(get("/organizations/1"))
+            .andExpect(status().isOk());
+  }
 
-    @Test
-    public void getOrganizationCallsRepositoryFindAll() throws Exception {
-        organizationController.getAllOrganizations();
-        verify(organizationRepository).findAll();
-    }
+  @Test
+  public void getOrganizationCallsRepositoryFindAll() throws Exception {
+    organizationController.getAllOrganizations();
+    verify(organizationRepository).findAll();
+  }
 
-    @Test
-    public void getOrganizationReturnsListOfOrganizations() throws Exception {
-        List<Organization> expectedResponse = Arrays.asList(new Organization(), new Organization());
-        when(organizationRepository.findAll()).thenReturn(expectedResponse);
-        List<Organization> allOrganizations = organizationController.getAllOrganizations();
-        assertEquals(expectedResponse, allOrganizations);
-    }
+  @Test
+  public void getOrganizationReturnsListOfOrganizations() throws Exception {
+    List<Organization> expectedResponse = Arrays.asList(new Organization(), new Organization());
+    when(organizationRepository.findAll()).thenReturn(expectedResponse);
+    List<Organization> allOrganizations = organizationController.getAllOrganizations();
+    assertEquals(expectedResponse, allOrganizations);
+  }
 
-    @Test
-    public void getOrganizationByReturnsOrganization() throws Exception {
-        Organization organization = new Organization();
-        when(organizationRepository.findOne(anyString())).thenReturn(organization);
-        assertEquals(organization, organizationController.getOrganizationBy(""));
-    }
+  @Test
+  public void getOrganizationByReturnsOrganization() throws Exception {
+    Organization organization = new Organization();
+    when(organizationRepository.findOne(anyString())).thenReturn(organization);
+    assertEquals(organization, organizationController.getOrganizationBy(""));
+  }
 
-    @Test
-    public void findProjectsForOrganizationReturns200() throws Exception {
-        mockMvc.perform(get("/organizations/12341235135/projects"))
-                .andExpect(status().isOk());
-    }
+  @Test
+  public void findProjectsForOrganizationReturns200() throws Exception {
+    mockMvc.perform(get("/organizations/12341235135/projects"))
+            .andExpect(status().isOk());
+  }
 
-    @Test
-    public void findProjectsReturnsProjectsFromRepository() throws Exception {
-        List<Project> expectedProjects = Arrays.asList(new Project(), new Project());
-        when(projectRepository.findByOrgGuid("orgUUID")).thenReturn(expectedProjects);
-        assertEquals(expectedProjects, organizationController.findProjectsForOrganization("orgUUID"));
-    }
+  @Test
+  public void findProjectsReturnsProjectsFromRepository() throws Exception {
+    List<Project> expectedProjects = Arrays.asList(new Project(), new Project());
+    when(projectRepository.findByOrgGuid("orgUUID")).thenReturn(expectedProjects);
+    assertEquals(expectedProjects, organizationController.findProjectsForOrganization("orgUUID"));
+  }
 
-    @Test
-    public void postOrganizationByIdReturns201() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(
+  @Test
+  public void postOrganizationByIdReturns201() throws Exception {
+    MvcResult mvcResult = mockMvc.perform(
             post("/organizations")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(new Organization()
-                    .setName("name")
-                    .setDescription("description")
-                    .setWebsiteUrl("websiteUrl")
-                    .toJson())
-        ).andExpect(
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(new Organization()
+                            .setName("name")
+                            .setDescription("description")
+                            .setWebsiteUrl("websiteUrl")
+                            .toJson())
+    ).andExpect(
             status().isCreated()
-        ).andReturn();
+    ).andReturn();
 
-        assertEquals(null, mvcResult.getResolvedException());
-    }
+    assertEquals(null, mvcResult.getResolvedException());
+  }
 
-    @Test
-    public void postUserByIdReturns400_notNull() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(
+  @Test
+  public void postUserByIdReturns400_notNull() throws Exception {
+    MvcResult mvcResult = mockMvc.perform(
             post("/organizations")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{}")
-        ).andExpect(
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content("{}")
+    ).andExpect(
             status().isBadRequest()
-        ).andReturn();
+    ).andReturn();
 
-        String message = mvcResult.getResolvedException().getMessage();
-        assertTrue(message.contains("NotNull.organization.name"));
-        assertTrue(message.contains("NotNull.organization.description"));
-        assertTrue(message.contains("NotNull.organization.websiteUrl"));
-    }
+    String message = mvcResult.getResolvedException().getMessage();
+    assertTrue(message.contains("NotNull.organization.name"));
+    assertTrue(message.contains("NotNull.organization.description"));
+    assertTrue(message.contains("NotNull.organization.websiteUrl"));
+  }
 
-    @Test
-    public void postUserByIdReturns400_size() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(
+  @Test
+  public void postUserByIdReturns400_size() throws Exception {
+    MvcResult mvcResult = mockMvc.perform(
             post("/organizations")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(new Organization()
-                    .setName("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-                    .setDescription("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
-                    .setWebsiteUrl("ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc")
-                    .toJson())
-        ).andExpect(
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(new Organization()
+                            .setName("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+                            .setDescription("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+                            .setWebsiteUrl("ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc")
+                            .toJson())
+    ).andExpect(
             status().isBadRequest()
-        ).andReturn();
+    ).andReturn();
 
-        String message = mvcResult.getResolvedException().getMessage();
-        assertTrue(message.contains("Size.organization.name"));
-        assertTrue(message.contains("Size.organization.description"));
-        assertTrue(message.contains("Size.organization.websiteUrl"));
-    }
+    String message = mvcResult.getResolvedException().getMessage();
+    assertTrue(message.contains("Size.organization.name"));
+    assertTrue(message.contains("Size.organization.description"));
+    assertTrue(message.contains("Size.organization.websiteUrl"));
+  }
 
-    @Test
-    public void postReturnsSavedProject() throws Exception {
-        Organization expectedOrganization = new Organization();
-        when(organizationRepository.save(any(Organization.class))).thenReturn(expectedOrganization);
-        Organization actualOrganization = organizationController.save(new Organization()).getBody();
-        assertEquals(expectedOrganization, actualOrganization);
-    }
+  @Test
+  public void postReturnsSavedProject() throws Exception {
+    Organization expectedOrganization = new Organization();
+    when(organizationRepository.save(any(Organization.class))).thenReturn(expectedOrganization);
+    Organization actualOrganization = organizationController.save(new Organization()).getBody();
+    assertEquals(expectedOrganization, actualOrganization);
+  }
 }

@@ -8,12 +8,12 @@ import java.util.UUID;
 @Service
 public class CodeGenerator {
 
-    public String generateUUID(){
-        return UUID.randomUUID().toString();
-    }
+  public String generateUUID() {
+    return UUID.randomUUID().toString();
+  }
 
-    public String generateLoginToken(){
-        int uniqueSixDigitCode = 100000 + new Random().nextInt(900000);
-        return String.valueOf(uniqueSixDigitCode) ;
-    }
+  public String generateLoginToken() {
+    int uniqueSixDigitCode = 100000 + new Random().nextInt(900000);
+    return String.valueOf(uniqueSixDigitCode);
+  }
 }

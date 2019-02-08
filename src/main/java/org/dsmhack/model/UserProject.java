@@ -21,44 +21,44 @@ import java.io.Serializable;
 @Entity
 @Table
 public class UserProject {
-    @EmbeddedId
-    private MyKey myKey;
+  @EmbeddedId
+  private MyKey myKey;
 
-    public MyKey getMyKey() {
-        return myKey;
+  public MyKey getMyKey() {
+    return myKey;
+  }
+
+  public void setMyKey(MyKey myKey) {
+    this.myKey = myKey;
+  }
+
+  public String toJson() {
+    return new Gson().toJson(this);
+  }
+
+  @Embeddable
+  public static class MyKey implements Serializable {
+    @Column
+    private String userGuid;
+
+    @Column
+    private String projGuid;
+
+    public String getUserGuid() {
+      return userGuid;
     }
 
-    public void setMyKey(MyKey myKey) {
-        this.myKey = myKey;
+    public void setUserGuid(String userGuid) {
+      this.userGuid = userGuid;
     }
 
-    @Embeddable
-    public static class MyKey implements Serializable {
-        @Column
-        private String userGuid;
-
-        @Column
-        private String projGuid;
-
-        public String getUserGuid() {
-            return userGuid;
-        }
-
-        public void setUserGuid(String userGuid) {
-            this.userGuid = userGuid;
-        }
-
-        public String getProjGuid() {
-            return projGuid;
-        }
-
-        public void setProjGuid(String projGuid) {
-            this.projGuid = projGuid;
-        }
+    public String getProjGuid() {
+      return projGuid;
     }
 
-    public String toJson() {
-        return new Gson().toJson(this);
+    public void setProjGuid(String projGuid) {
+      this.projGuid = projGuid;
     }
+  }
 }
 
