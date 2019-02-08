@@ -182,6 +182,12 @@
                             <failsOnError>true</failsOnError>
                             <violationSeverity>warning</violationSeverity>
                             <failOnViolation>true</failOnViolation>
+                            <suppressionsLocation>
+                                checkstyle-suppressions.xml
+                            </suppressionsLocation>
+                            <suppressionsFileExpression>
+                                checkstyle.suppressions.file
+                            </suppressionsFileExpression>
                         </configuration>
                     </execution>
                 </executions>

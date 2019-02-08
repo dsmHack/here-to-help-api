@@ -2,6 +2,9 @@ package org.dsmhack.controller;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+
+import java.util.Date;
+
 import org.dsmhack.model.LoginToken;
 import org.dsmhack.model.User;
 import org.dsmhack.repository.LoginTokenRepository;
@@ -15,9 +18,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Date;
-
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -38,34 +38,34 @@ public class LoginController {
   @Autowired
   private LoginTokenRepository loginTokenRepository;
 
-    @PostMapping("/login/sendCode")
-    public ResponseEntity login(@RequestBody String emailAddress) {
-        User user = userRepository.findByEmail(emailAddress);
-        if (user == null) {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
-        }
-        loginService.login(user);
-        return new ResponseEntity(HttpStatus.CREATED);
+  @PostMapping("/login/sendCode")
+  public ResponseEntity login(@RequestBody String emailAddress) {
+    User user = userRepository.findByEmail(emailAddress);
+    if (user == null) {
+      return new ResponseEntity(HttpStatus.NOT_FOUND);
+    }
+    loginService.login(user);
+    return new ResponseEntity(HttpStatus.CREATED);
+  }
+
+  @PostMapping("/login")
+  public ResponseEntity<User> verifyCode(@RequestBody String securityToken) {
+    LoginToken loginToken = loginTokenRepository.findByToken(securityToken);
+
+    if (loginToken != null) {
+      User user = userRepository.findOne(loginToken.getUserGuid());
+      byte[] bytes = jwtSecret.getBytes();
+      String token = Jwts.builder()
+              .setSubject(user.getUserGuid())
+              .setExpiration(new Date(System.currentTimeMillis() + THIRTY_MINUTES))
+              .signWith(SignatureAlgorithm.HS512, bytes)
+              .compact();
+      return ResponseEntity.ok()
+              .header("access-control-expose-headers", "Authorization")
+              .header(HEADER_STRING, TOKEN_PREFIX + token)
+              .body(user);
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<User> verifyCode(@RequestBody String securityToken) {
-        LoginToken loginToken = loginTokenRepository.findByToken(securityToken);
-
-        if (loginToken != null) {
-            User user = userRepository.findOne(loginToken.getUserGuid());
-            byte[] bytes = jwtSecret.getBytes();
-            String token = Jwts.builder()
-                    .setSubject(user.getUserGuid())
-                    .setExpiration(new Date(System.currentTimeMillis() + THIRTY_MINUTES))
-                    .signWith(SignatureAlgorithm.HS512, bytes)
-                    .compact();
-            return ResponseEntity.ok()
-                    .header("access-control-expose-headers", "Authorization")
-                    .header(HEADER_STRING,TOKEN_PREFIX + token)
-                    .body(user);
-        }
-
-        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-    }
+    return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+  }
 }
