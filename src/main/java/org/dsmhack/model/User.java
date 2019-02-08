@@ -10,18 +10,23 @@
  * Do not edit the class manually.
  */
 
-
 package org.dsmhack.model;
 
 import com.google.gson.Gson;
-import org.hibernate.validator.constraints.Email;
 
-import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.List;
+
+import org.hibernate.validator.constraints.Email;
 
 @Entity
 @Table

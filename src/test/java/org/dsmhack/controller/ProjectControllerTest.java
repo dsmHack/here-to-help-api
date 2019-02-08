@@ -70,7 +70,7 @@ public class ProjectControllerTest {
   @Test
   public void postCallsGuidGeneratorToGenerateUUIDBeforeSavingProject() throws Exception {
     String projectId = "randomUUID";
-    when(codeGenerator.generateUUID()).thenReturn(projectId);
+    when(codeGenerator.generateUuid()).thenReturn(projectId);
     projectController.save(new Project());
     ArgumentCaptor<Project> captor = ArgumentCaptor.forClass(Project.class);
     verify(projectRepository).save(captor.capture());

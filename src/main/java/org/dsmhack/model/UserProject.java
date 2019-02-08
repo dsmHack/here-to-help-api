@@ -15,8 +15,11 @@ package org.dsmhack.model;
 
 import com.google.gson.Gson;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import javax.persistence.Embeddable;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table

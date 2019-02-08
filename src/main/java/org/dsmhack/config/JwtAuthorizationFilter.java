@@ -18,21 +18,23 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
+public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
   private static final String TOKEN_PREFIX = "Bearer ";
   private static final String HEADER_STRING = "Authorization";
 
   private final String jwtEncryptionKey;
   private final UserRepository userRepository;
 
-  public JWTAuthorizationFilter(AuthenticationManager authManager, String jwtEncryptionKey, ApplicationContext ctx) {
+  public JwtAuthorizationFilter(
+      AuthenticationManager authManager, String jwtEncryptionKey, ApplicationContext ctx) {
     super(authManager);
     this.jwtEncryptionKey = jwtEncryptionKey;
     this.userRepository = ctx.getBean(UserRepository.class);
   }
 
   @Override
-  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+  protected void doFilterInternal(
+      HttpServletRequest request, HttpServletResponse response, FilterChain chain)
           throws IOException, ServletException {
     final String header = request.getHeader(HEADER_STRING);
 
@@ -56,7 +58,8 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
               .getSubject();
 
       if (user != null) {
-        List<GrantedAuthority> roles = Collections.singletonList(new SimpleGrantedAuthority(userRepository.findOne(user).getRole()));
+        List<GrantedAuthority> roles = Collections.singletonList(
+            new SimpleGrantedAuthority(userRepository.findOne(user).getRole()));
         return new UsernamePasswordAuthenticationToken(user, null, roles);
       }
       return null;

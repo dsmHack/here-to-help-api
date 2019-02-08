@@ -10,8 +10,8 @@ public class CodeGeneratorTest {
   @Test
   public void generateGuidReturnsUniqueUUID() throws Exception {
     CodeGenerator codeGenerator = new CodeGenerator();
-    String firstUUID = codeGenerator.generateUUID();
-    String secondUUID = codeGenerator.generateUUID();
+    String firstUUID = codeGenerator.generateUuid();
+    String secondUUID = codeGenerator.generateUuid();
     assertNotEquals(firstUUID, secondUUID);
   }
 

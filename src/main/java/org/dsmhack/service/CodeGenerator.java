@@ -1,14 +1,14 @@
 package org.dsmhack.service;
 
-import org.springframework.stereotype.Service;
-
 import java.util.Random;
 import java.util.UUID;
+
+import org.springframework.stereotype.Service;
 
 @Service
 public class CodeGenerator {
 
-  public String generateUUID() {
+  public String generateUuid() {
     return UUID.randomUUID().toString();
   }
 

@@ -11,7 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -44,7 +50,7 @@ public class ProjectController {
 
   @PostMapping("/projects")
   public ResponseEntity<Project> save(@Validated @RequestBody Project project) {
-    project.setProjGuid(codeGenerator.generateUUID());
+    project.setProjGuid(codeGenerator.generateUuid());
     return new ResponseEntity<>(projectRepository.save(project), HttpStatus.CREATED);
   }
 
@@ -54,7 +60,10 @@ public class ProjectController {
   }
 
   @PostMapping("/projects/{projectId}/check-ins")
-  public ResponseEntity<CheckIn> checkUserIn(@PathVariable String projectId, @RequestBody String userGuid) {
+  public ResponseEntity<CheckIn> checkUserIn(
+      @PathVariable String projectId,
+      @RequestBody String userGuid
+  ) {
     CheckIn checkIn = new CheckIn();
     checkIn.setUserGuid(userGuid);
     checkIn.setProjGuid(projectId);

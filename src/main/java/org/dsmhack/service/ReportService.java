@@ -24,11 +24,13 @@ public class ReportService {
     for (ReportData reportData : reportDatas) {
       double totalHours = calculateHours(reportData.getTimeIn(), reportData.getTimeOut());
 
-      ReportProject organizationProject = findReportProject(reportData.getProjectGuid(), reportOrganization.getProjects());
+      ReportProject organizationProject =
+              findReportProject(reportData.getProjectGuid(), reportOrganization.getProjects());
       organizationProject.setTotalHours(organizationProject.getTotalHours() + totalHours);
 
       ReportUser reportUser = findUser(reportData.getUserGuid(), reportOrganization.getUsers());
-      ReportProject userProject = findReportProject(reportData.getProjectGuid(), reportUser.getProjects());
+      ReportProject userProject =
+              findReportProject(reportData.getProjectGuid(), reportUser.getProjects());
       userProject.setTotalHours(userProject.getTotalHours() + totalHours);
       reportUser.setTotalHours(reportUser.getTotalHours() + totalHours);
 

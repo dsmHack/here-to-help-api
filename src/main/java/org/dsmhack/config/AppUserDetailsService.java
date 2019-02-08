@@ -25,6 +25,14 @@ public class AppUserDetailsService implements UserDetailsService {
     if (securityCode == null) {
       throw new UsernameNotFoundException(userGuid);
     }
-    return new User(userGuid, securityCode.getToken(), true, true, credentialsNonExpired, true, Collections.emptyList());
+    return new User(
+        userGuid,
+        securityCode.getToken(),
+        true,
+        true,
+        credentialsNonExpired,
+        true,
+        Collections.emptyList()
+    );
   }
 }

@@ -198,7 +198,7 @@ public class UserControllerTest {
   @Test
   public void postCallsGuidGeneratorToGenerateUUIDBeforeSavingUser() throws Exception {
     String userId = "uuid";
-    when(codeGenerator.generateUUID()).thenReturn(userId);
+    when(codeGenerator.generateUuid()).thenReturn(userId);
     userController.save(new User());
     ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
     verify(userRepository).save(captor.capture());
