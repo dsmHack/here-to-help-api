@@ -12,7 +12,6 @@ import java.time.temporal.ChronoUnit;
 
 @Service
 public class LoginService {
-
     @Autowired
     private CodeGenerator codeGenerator;
 
