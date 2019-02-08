@@ -1,6 +1,11 @@
 package org.dsmhack.repository;
 
-import com.sendgrid.*;
+import com.sendgrid.Content;
+import com.sendgrid.Email;
+import com.sendgrid.Mail;
+import com.sendgrid.Method;
+import com.sendgrid.Request;
+import com.sendgrid.SendGrid;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
