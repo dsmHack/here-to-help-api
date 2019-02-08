@@ -6,8 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LoginTokenRepository extends JpaRepository<LoginToken, String> {
+  LoginToken findByToken(String loginToken);
 
-    LoginToken findByToken(String loginToken);
-
-    LoginToken findByUserGuid(String userGuid);
+  LoginToken findByUserGuid(String userGuid);
 }

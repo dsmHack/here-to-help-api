@@ -16,6 +16,7 @@ package org.dsmhack.model;
 import com.google.gson.Gson;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
