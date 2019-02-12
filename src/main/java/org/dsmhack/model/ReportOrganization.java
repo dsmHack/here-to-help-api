@@ -5,7 +5,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReportOrganization   {
+public class ReportOrganization {
   private List<ReportProject> projects = new ArrayList<ReportProject>();
   private List<ReportUser> users = new ArrayList<ReportUser>();
   private double totalHours = 0;

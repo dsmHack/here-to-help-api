@@ -15,101 +15,102 @@ package org.dsmhack.model;
 
 import com.google.gson.Gson;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
 
 @Entity
 @Table
 public class Project {
-    @Id
-    @Column
-    private String projGuid;
+  @Id
+  @Column
+  private String projGuid;
 
-    @NotNull
-    @Size(min = 1, max = 36)
-    @Column
-    private String orgGuid;
+  @NotNull
+  @Size(min = 1, max = 36)
+  @Column
+  private String orgGuid;
 
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column
-    private String name;
+  @NotNull
+  @Size(min = 1, max = 50)
+  @Column
+  private String name;
 
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column
-    private String description;
+  @NotNull
+  @Size(min = 1, max = 50)
+  @Column
+  private String description;
 
-    @Column
-    private LocalDateTime startDate;
+  @Column
+  private LocalDateTime startDate;
 
-    @Column
-    private LocalDateTime endDate;
+  @Column
+  private LocalDateTime endDate;
 
-    public Project() {
-    }
+  public Project() {
+  }
 
-    public String getProjGuid() {
-        return projGuid;
-    }
+  public String getProjGuid() {
+    return projGuid;
+  }
 
-    public Project setProjGuid(String projGuid) {
-        this.projGuid = projGuid;
-        return this;
-    }
+  public Project setProjGuid(String projGuid) {
+    this.projGuid = projGuid;
+    return this;
+  }
 
-    public String getOrgGuid() {
-        return orgGuid;
-    }
+  public String getOrgGuid() {
+    return orgGuid;
+  }
 
-    public Project setOrgGuid(String orgGuid) {
-        this.orgGuid = orgGuid;
-        return this;
-    }
+  public Project setOrgGuid(String orgGuid) {
+    this.orgGuid = orgGuid;
+    return this;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public Project setName(String name) {
-        this.name = name;
-        return this;
-    }
+  public Project setName(String name) {
+    this.name = name;
+    return this;
+  }
 
-    public String getDescription() {
-        return description;
-    }
+  public String getDescription() {
+    return description;
+  }
 
-    public Project setDescription(String description) {
-        this.description = description;
-        return this;
-    }
+  public Project setDescription(String description) {
+    this.description = description;
+    return this;
+  }
 
-    public LocalDateTime getStartDate() {
-        return startDate;
-    }
+  public LocalDateTime getStartDate() {
+    return startDate;
+  }
 
-    public Project setStartDate(LocalDateTime startDate) {
-        this.startDate = startDate;
-        return this;
-    }
+  public Project setStartDate(LocalDateTime startDate) {
+    this.startDate = startDate;
+    return this;
+  }
 
-    public LocalDateTime getEndDate() {
-        return endDate;
-    }
+  public LocalDateTime getEndDate() {
+    return endDate;
+  }
 
-    public Project setEndDate(LocalDateTime endDate) {
-        this.endDate = endDate;
-        return this;
-    }
+  public Project setEndDate(LocalDateTime endDate) {
+    this.endDate = endDate;
+    return this;
+  }
 
-    public String toJson() {
-        return new Gson().toJson(this);
-    }
+  public String toJson() {
+    return new Gson().toJson(this);
+  }
 }
 

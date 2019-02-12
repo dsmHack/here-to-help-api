@@ -10,42 +10,47 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class OrganizationController {
-    @Autowired
-    private OrganizationRepository organizationRepository;
+  @Autowired
+  private OrganizationRepository organizationRepository;
 
-    @Autowired
-    private ProjectRepository projectRepository;
+  @Autowired
+  private ProjectRepository projectRepository;
 
-    @Autowired
-    private CodeGenerator codeGenerator;
+  @Autowired
+  private CodeGenerator codeGenerator;
 
-    @GetMapping("/organizations")
-    public List<Organization> getAllOrganizations() {
-        return organizationRepository.findAll();
-    }
+  @GetMapping("/organizations")
+  public List<Organization> getAllOrganizations() {
+    return organizationRepository.findAll();
+  }
 
-    @GetMapping("/organizations/{organizationId}")
-    public Organization getOrganizationBy(@PathVariable String organizationId) {
-        return organizationRepository.findOne(organizationId);
-    }
+  @GetMapping("/organizations/{organizationId}")
+  public Organization getOrganizationBy(@PathVariable String organizationId) {
+    return organizationRepository.findOne(organizationId);
+  }
 
-    @GetMapping("/organizations/{organizationId}/projects")
-    public List<Project> findProjectsForOrganization(@PathVariable String organizationId) {
-        return projectRepository.findByOrgGuid(organizationId);
-    }
+  @GetMapping("/organizations/{organizationId}/projects")
+  public List<Project> findProjectsForOrganization(@PathVariable String organizationId) {
+    return projectRepository.findByOrgGuid(organizationId);
+  }
 
-    @PostMapping("/organizations")
-    @Secured("ROLE_DSMHACK_ADMINISTRATOR")
-    public ResponseEntity<Organization> save(@Validated @RequestBody Organization organization) {
-        organization.setOrgGuid(codeGenerator.generateUUID());
-        return new ResponseEntity<>(organizationRepository.save(organization), HttpStatus.CREATED);
-    }
+  @PostMapping("/organizations")
+  @Secured("ROLE_DSMHACK_ADMINISTRATOR")
+  public ResponseEntity<Organization> save(@Validated @RequestBody Organization organization) {
+    organization.setOrgGuid(codeGenerator.generateUuid());
+    return new ResponseEntity<>(organizationRepository.save(organization), HttpStatus.CREATED);
+  }
 
 }

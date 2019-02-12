@@ -15,69 +15,70 @@ package org.dsmhack.model;
 
 import com.google.gson.Gson;
 
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.time.LocalDateTime;
 
 @Entity
 @Table
 public class CheckIn {
 
-    @Id
-    @Column
-    private String userGuid;
+  @Id
+  @Column
+  private String userGuid;
 
-    @Column
-    private String projGuid;
+  @Column
+  private String projGuid;
 
-    @Column
-    private LocalDateTime timeIn;
+  @Column
+  private LocalDateTime timeIn;
 
-    @Column
-    private LocalDateTime timeOut;
+  @Column
+  private LocalDateTime timeOut;
 
-    public CheckIn(){}
+  public CheckIn() {
+  }
 
-    public String getUserGuid() {
-        return userGuid;
-    }
+  public String getUserGuid() {
+    return userGuid;
+  }
 
-    public CheckIn setUserGuid(String userGuid) {
-        this.userGuid = userGuid;
-        return this;
-    }
+  public CheckIn setUserGuid(String userGuid) {
+    this.userGuid = userGuid;
+    return this;
+  }
 
-    public String getProjGuid() {
-        return projGuid;
-    }
+  public String getProjGuid() {
+    return projGuid;
+  }
 
-    public CheckIn setProjGuid(String projGuid) {
-        this.projGuid = projGuid;
-        return this;
-    }
+  public CheckIn setProjGuid(String projGuid) {
+    this.projGuid = projGuid;
+    return this;
+  }
 
-    public LocalDateTime getTimeIn() {
-        return timeIn;
-    }
+  public LocalDateTime getTimeIn() {
+    return timeIn;
+  }
 
-    public CheckIn setTimeIn(LocalDateTime timeIn) {
-        this.timeIn = timeIn;
-        return this;
-    }
+  public CheckIn setTimeIn(LocalDateTime timeIn) {
+    this.timeIn = timeIn;
+    return this;
+  }
 
-    public LocalDateTime getTimeOut() {
-        return timeOut;
-    }
+  public LocalDateTime getTimeOut() {
+    return timeOut;
+  }
 
-    public CheckIn setTimeOut(LocalDateTime timeOut) {
-        this.timeOut = timeOut;
-        return this;
-    }
+  public CheckIn setTimeOut(LocalDateTime timeOut) {
+    this.timeOut = timeOut;
+    return this;
+  }
 
-    public String toJson() {
-        return new Gson().toJson(this);
-    }
+  public String toJson() {
+    return new Gson().toJson(this);
+  }
 }
 

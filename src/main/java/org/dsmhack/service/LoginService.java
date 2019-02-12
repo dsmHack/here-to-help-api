@@ -12,27 +12,27 @@ import java.time.temporal.ChronoUnit;
 
 @Service
 public class LoginService {
-    @Autowired
-    private CodeGenerator codeGenerator;
+  @Autowired
+  private CodeGenerator codeGenerator;
 
-    @Autowired
-    private EmailSender emailSender;
+  @Autowired
+  private EmailSender emailSender;
 
-    @Autowired
-    private LoginTokenRepository loginTokenRepository;
+  @Autowired
+  private LoginTokenRepository loginTokenRepository;
 
-    public void login(User user) {
-        String token = codeGenerator.generateLoginToken();
-        LoginToken loginToken = new LoginToken();
-        loginToken.setToken(token);
-        loginToken.setUserGuid(user.getUserGuid());
-        loginToken.setTokenExpDate(twentyMinutesFromNow());
-        loginTokenRepository.save(loginToken);
-        emailSender.sendTo(user.getEmail(), token);
-    }
+  public void login(User user) {
+    String token = codeGenerator.generateLoginToken();
+    LoginToken loginToken = new LoginToken();
+    loginToken.setToken(token);
+    loginToken.setUserGuid(user.getUserGuid());
+    loginToken.setTokenExpDate(twentyMinutesFromNow());
+    loginTokenRepository.save(loginToken);
+    emailSender.sendTo(user.getEmail(), token);
+  }
 
-    private LocalDateTime twentyMinutesFromNow() {
-        LocalDateTime tokenExpiration = LocalDateTime.now().plus(20, ChronoUnit.MINUTES);
-        return tokenExpiration;
-    }
+  private LocalDateTime twentyMinutesFromNow() {
+    LocalDateTime tokenExpiration = LocalDateTime.now().plus(20, ChronoUnit.MINUTES);
+    return tokenExpiration;
+  }
 }

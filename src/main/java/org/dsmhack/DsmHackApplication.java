@@ -7,8 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories
 @SpringBootApplication
 public class DsmHackApplication {
-
-    public static void main(String[] args) {
-        SpringApplication.run(DsmHackApplication.class);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(DsmHackApplication.class);
+  }
 }

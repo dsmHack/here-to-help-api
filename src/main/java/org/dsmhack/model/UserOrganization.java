@@ -15,50 +15,54 @@ package org.dsmhack.model;
 
 import com.google.gson.Gson;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table
 public class UserOrganization {
-    @EmbeddedId
-    private MyKey myKey;
+  @EmbeddedId
+  private MyKey myKey;
 
-    public MyKey getMyKey() {
-        return myKey;
+  public MyKey getMyKey() {
+    return myKey;
+  }
+
+  public void setMyKey(MyKey myKey) {
+    this.myKey = myKey;
+  }
+
+  public String toJson() {
+    return new Gson().toJson(this);
+  }
+
+  @Embeddable
+  public class MyKey implements Serializable {
+    @Column
+    private String userGuid;
+
+    @Column
+    private String orgGuid;
+
+    public String getUserGuid() {
+      return userGuid;
     }
 
-    public void setMyKey(MyKey myKey) {
-        this.myKey = myKey;
+    public void setUserGuid(String userGuid) {
+      this.userGuid = userGuid;
     }
 
-    @Embeddable
-    public class MyKey implements Serializable {
-        @Column
-        private String userGuid;
-
-        @Column
-        private String orgGuid;
-
-        public String getUserGuid() {
-            return userGuid;
-        }
-
-        public void setUserGuid(String userGuid) {
-            this.userGuid = userGuid;
-        }
-
-        public String getOrgGuid() {
-            return orgGuid;
-        }
-
-        public void setOrgGuid(String orgGuid) {
-            this.orgGuid = orgGuid;
-        }
+    public String getOrgGuid() {
+      return orgGuid;
     }
 
-    public String toJson() {
-        return new Gson().toJson(this);
+    public void setOrgGuid(String orgGuid) {
+      this.orgGuid = orgGuid;
     }
+  }
 }
 

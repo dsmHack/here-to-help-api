@@ -17,45 +17,45 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ReportControllerTest {
-    private MockMvc mockMvc;
-    @InjectMocks
-    private ReportController reportController;
-    @Mock
-    private ReportService reportService;
+  private MockMvc mockMvc;
+  @InjectMocks
+  private ReportController reportController;
+  @Mock
+  private ReportService reportService;
 
-    @Test
-    public void getReportDataAsJsonByOrgIdReturns200() throws Exception {
-        mockMvc = MockMvcBuilders.standaloneSetup(reportController).build();
-        mockMvc.perform(get("/organizations/1/reports/json"))
-                .andExpect(status().isOk());
-    }
+  @Test
+  public void getReportDataAsJsonByOrgIdReturns200() throws Exception {
+    mockMvc = MockMvcBuilders.standaloneSetup(reportController).build();
+    mockMvc.perform(get("/organizations/1/reports/json"))
+            .andExpect(status().isOk());
+  }
 
-    @Test
-    public void getReportDataAsJsonReturnsReportOrganization() throws Exception {
-        String organizationId = "12341235135";
-        ReportOrganization expectedReportOrganization = new ReportOrganization();
-        when(reportService.getReportDataAsJson(organizationId)).thenReturn(expectedReportOrganization);
+  @Test
+  public void getReportDataAsJsonReturnsReportOrganization() throws Exception {
+    String organizationId = "12341235135";
+    ReportOrganization expectedReportOrganization = new ReportOrganization();
+    when(reportService.getReportDataAsJson(organizationId)).thenReturn(expectedReportOrganization);
 
-        ReportOrganization actualReportOrganization = reportController.getReportDataAsJson(organizationId);
+    ReportOrganization actualReportOrganization = reportController.getReportDataAsJson(organizationId);
 
-        assertEquals(expectedReportOrganization, actualReportOrganization);
-    }
+    assertEquals(expectedReportOrganization, actualReportOrganization);
+  }
 
-    @Test
-    public void getReportDataAsCsvByOrgIdReturns200() throws Exception {
-        mockMvc = MockMvcBuilders.standaloneSetup(reportController).build();
-        mockMvc.perform(get("/organizations/1/reports/csv"))
-                .andExpect(status().isOk());
-    }
+  @Test
+  public void getReportDataAsCsvByOrgIdReturns200() throws Exception {
+    mockMvc = MockMvcBuilders.standaloneSetup(reportController).build();
+    mockMvc.perform(get("/organizations/1/reports/csv"))
+            .andExpect(status().isOk());
+  }
 
-    @Test
-    public void getReportDataAsCsvReturnsReportOrganization() throws Exception {
-        String organizationId = "12341235135";
-        String expectedReportDataAsCsv = "reportDataAsCsv";
-        when(reportService.getReportDataAsCsv(organizationId)).thenReturn(expectedReportDataAsCsv);
+  @Test
+  public void getReportDataAsCsvReturnsReportOrganization() throws Exception {
+    String organizationId = "12341235135";
+    String expectedReportDataAsCsv = "reportDataAsCsv";
+    when(reportService.getReportDataAsCsv(organizationId)).thenReturn(expectedReportDataAsCsv);
 
-        String actualReportDataAsCsv = reportController.getReportDataAsCsv(organizationId);
+    String actualReportDataAsCsv = reportController.getReportDataAsCsv(organizationId);
 
-        assertEquals(expectedReportDataAsCsv, actualReportDataAsCsv);
-    }
+    assertEquals(expectedReportDataAsCsv, actualReportDataAsCsv);
+  }
 }

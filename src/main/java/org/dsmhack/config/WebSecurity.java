@@ -21,36 +21,37 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
-    @Value("${jwt.secret}")
-    private String jwtEncryptionKey;
+  @Value("${jwt.secret}")
+  private String jwtEncryptionKey;
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+  @Autowired
+  private UserDetailsService userDetailsService;
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable().authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/login/sendCode").permitAll()
-                .antMatchers(HttpMethod.POST, "/login").permitAll()
-                .antMatchers(HttpMethod.GET, "/swagger**").permitAll()
-                .antMatchers(HttpMethod.GET, "/swagger-resources/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/v2/api-docs/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/webjars/springfox-swagger-ui/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtEncryptionKey, getApplicationContext()))
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-    }
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http.cors().and().csrf().disable().authorizeRequests()
+            .antMatchers(HttpMethod.POST, "/login/sendCode").permitAll()
+            .antMatchers(HttpMethod.POST, "/login").permitAll()
+            .antMatchers(HttpMethod.GET, "/swagger**").permitAll()
+            .antMatchers(HttpMethod.GET, "/swagger-resources/**").permitAll()
+            .antMatchers(HttpMethod.GET, "/v2/api-docs/**").permitAll()
+            .antMatchers(HttpMethod.GET, "/webjars/springfox-swagger-ui/**").permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .addFilter(new JwtAuthorizationFilter(
+                authenticationManager(), jwtEncryptionKey, getApplicationContext()))
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+  }
 
-    @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
-    }
+  @Override
+  public void configure(AuthenticationManagerBuilder auth) throws Exception {
+    auth.userDetailsService(userDetailsService);
+  }
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
-        return source;
-    }
+  @Bean
+  public CorsConfigurationSource corsConfigurationSource() {
+    final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+    return source;
+  }
 }
