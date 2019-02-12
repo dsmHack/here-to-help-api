@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -9,11 +9,11 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <flyway.user>root</flyway.user>
-        <flyway.password>password</flyway.password>
-        <flyway.database.url>jdbc:mysql://mysql:3306/heretohelp</flyway.database.url>
+        <flyway.user>${env.DATASOURCE_USERNAME}</flyway.user>
+        <flyway.password>${env.DATASOURCE_PASSWORD}</flyway.password>
+        <flyway.database.url>jdbc:mysql://${env.DATASOURCE_HOST}:${env.DATASOURCE_PORT}}/heretohelp</flyway.database.url>
         <flyway.placeholders.stored-procedure-user>user</flyway.placeholders.stored-procedure-user>
-        <flyway.baseline-on-migrate>true</flyway.baseline-on-migrate>
+        <flyway.baseline-on-migrate>${env.FLYWAY_BASELINE_ON_MIGRATE}</flyway.baseline-on-migrate>
     </properties>
 
     <parent>
@@ -113,6 +113,31 @@
             <version>0.8.2</version>
         </dependency>
         <dependency>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+            <version>8.17</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-checkstyle-plugin</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.2.11</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-core</artifactId>
+            <version>2.2.11</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>2.2.11</version>
+        </dependency>
+        <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
             <version>2.3.0</version>
@@ -135,9 +160,9 @@
                 <version>4.1.2</version>
                 <configuration>
                     <driver>com.mysql.jdbc.Driver</driver>
-                    <url>${flyway.database.url}</url>
-                    <user>${flyway.user}</user>
-                    <password>${flyway.password}</password>
+                    <url>jdbc:mysql://${env.DATASOURCE_HOST}:${env.DATASOURCE_PORT}}/heretohelp</url>
+                    <user>${env.DATASOURCE_USERNAME}</user>
+                    <password>${env.DATASOURCE_PASSWORD}</password>
                     <sqlMigrationPrefix>v</sqlMigrationPrefix>
                     <schemas>
                         <schema>heretohelp</schema>
@@ -166,24 +191,56 @@
                         <goals>
                             <goal>check</goal>
                         </goals>
-                        <configuration><rules><rule>
-                            <element>CLASS</element>
-                            <limits>
-                                <limit>
-                                    <counter>LINE</counter>
-                                    <value>COVEREDRATIO</value>
-                                    <minimum>0.80</minimum>
-                                </limit>
-                                <limit>
-                                    <counter>BRANCH</counter>
-                                    <value>COVEREDRATIO</value>
-                                    <minimum>0.80</minimum>
-                                </limit>
-                            </limits>
-                            <excludes>
-                                <exclude>com.xyz.ClassToExclude</exclude>
-                            </excludes>
-                        </rule></rules></configuration>
+                        <configuration>
+                            <rules>
+                                <rule>
+                                    <element>CLASS</element>
+                                    <limits>
+                                        <limit>
+                                            <counter>LINE</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.80</minimum>
+                                        </limit>
+                                        <limit>
+                                            <counter>BRANCH</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.80</minimum>
+                                        </limit>
+                                    </limits>
+                                    <excludes>
+                                        <exclude>com.xyz.ClassToExclude</exclude>
+                                    </excludes>
+                                </rule>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.17</version>
+                <executions>
+                    <execution>
+                        <id>checkstyle</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <configLocation>google_checks.xml</configLocation>
+                            <encoding>UTF-8</encoding>
+                            <consoleOutput>true</consoleOutput>
+                            <failsOnError>true</failsOnError>
+                            <violationSeverity>warning</violationSeverity>
+                            <failOnViolation>true</failOnViolation>
+                            <suppressionsLocation>
+                                checkstyle-suppressions.xml
+                            </suppressionsLocation>
+                            <suppressionsFileExpression>
+                                checkstyle.suppressions.file
+                            </suppressionsFileExpression>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

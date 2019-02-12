@@ -18,22 +18,22 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class AppUserDetailsServiceTest {
 
-    @InjectMocks
-    private AppUserDetailsService appUserDetailsService;
+  @InjectMocks
+  private AppUserDetailsService appUserDetailsService;
 
-    @Mock
-    private LoginTokenRepository loginTokenRepository;
+  @Mock
+  private LoginTokenRepository loginTokenRepository;
 
-    @Test
-    public void setsCredentialsExpiredWhenTokenExpirationBeforeTimeNow() throws Exception {
-        LoginToken loginToken = new LoginToken();
-        loginToken.setToken("token");
-        loginToken.setUserGuid("guid");
-        loginToken.setTokenExpDate(LocalDateTime.MIN);
-        when(loginTokenRepository.findByUserGuid(anyString())).thenReturn(loginToken);
+  @Test
+  public void setsCredentialsExpiredWhenTokenExpirationBeforeTimeNow() throws Exception {
+    LoginToken loginToken = new LoginToken();
+    loginToken.setToken("token");
+    loginToken.setUserGuid("guid");
+    loginToken.setTokenExpDate(LocalDateTime.MIN);
+    when(loginTokenRepository.findByUserGuid(anyString())).thenReturn(loginToken);
 
-        UserDetails userDetails = appUserDetailsService.loadUserByUsername("any");
+    UserDetails userDetails = appUserDetailsService.loadUserByUsername("any");
 
-        assertFalse(userDetails.isCredentialsNonExpired());
-    }
+    assertFalse(userDetails.isCredentialsNonExpired());
+  }
 }
