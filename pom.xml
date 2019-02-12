@@ -9,11 +9,11 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <flyway.user>root</flyway.user>
-        <flyway.password>password</flyway.password>
-        <flyway.database.url>jdbc:mysql://mysql:3306/heretohelp</flyway.database.url>
+        <flyway.user>${env.DATASOURCE_USERNAME}</flyway.user>
+        <flyway.password>${env.DATASOURCE_PASSWORD}</flyway.password>
+        <flyway.database.url>jdbc:mysql://${env.DATASOURCE_HOST}:${env.DATASOURCE_PORT}}/heretohelp</flyway.database.url>
         <flyway.placeholders.stored-procedure-user>user</flyway.placeholders.stored-procedure-user>
-        <flyway.baseline-on-migrate>true</flyway.baseline-on-migrate>
+        <flyway.baseline-on-migrate>${env.FLYWAY_BASELINE_ON_MIGRATE}</flyway.baseline-on-migrate>
     </properties>
 
     <parent>
@@ -155,9 +155,9 @@
                 <version>4.1.2</version>
                 <configuration>
                     <driver>com.mysql.jdbc.Driver</driver>
-                    <url>${flyway.database.url}</url>
-                    <user>${flyway.user}</user>
-                    <password>${flyway.password}</password>
+                    <url>jdbc:mysql://${env.DATASOURCE_HOST}:${env.DATASOURCE_PORT}}/heretohelp</url>
+                    <user>${env.DATASOURCE_USERNAME}</user>
+                    <password>${env.DATASOURCE_PASSWORD}</password>
                     <sqlMigrationPrefix>v</sqlMigrationPrefix>
                     <schemas>
                         <schema>heretohelp</schema>
