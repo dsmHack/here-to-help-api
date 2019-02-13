@@ -193,9 +193,6 @@
                                             <minimum>0.00</minimum>
                                         </limit>
                                     </limits>
-                                    <excludes>
-                                        <exclude>com.xyz.ClassToExclude</exclude>
-                                    </excludes>
                                 </rule>
                             </rules>
                         </configuration>
